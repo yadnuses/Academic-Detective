@@ -1,0 +1,86 @@
+{
+  "agent": "dududu",
+  "signal_analysis": {
+    "overall_assessment": "最高置信度信号达 0.85，存在值得深入调查的强异常。",
+    "key_patterns": [
+      "temporal_clustering: 3 个时间标记信号，可能存在时间窗口压缩"
+    ],
+    "grouped": {
+      "by_type": {
+        "duplicate_submission": 1,
+        "content_reuse": 1,
+        "suspicious_gap": 1
+      },
+      "by_source": {
+        "preprint_monitor": 3
+      }
+    },
+    "highest_confidence_signal": {
+      "type": "suspicious_gap",
+      "confidence": 0.85,
+      "description": "期刊论文《Health AI》发表于2022-11-01，对应预印本上传于2023-01-10，期刊早于预印本70天"
+    }
+  },
+  "cross_module_chains": [
+    {
+      "chain_type": "general_suspicion_cluster",
+      "confidence": 0.74,
+      "contributing_signals": [
+        {
+          "type": "duplicate_submission",
+          "source": "preprint_monitor",
+          "confidence": 0.72
+        },
+        {
+          "type": "content_reuse",
+          "source": "preprint_monitor",
+          "confidence": 0.65
+        },
+        {
+          "type": "suspicious_gap",
+          "source": "preprint_monitor",
+          "confidence": 0.85
+        }
+      ],
+      "description": "检测到 3 个独立信号，虽未形成明确命名链条，但信号密度已超出随机噪声预期，建议继续深挖。"
+    }
+  ],
+  "hypothesis_evaluations": [
+    {
+      "hypothesis_id": 1,
+      "verdict": "plausible",
+      "reasoning": "假设可信度为 plausible，现有 2 个相关信号，平均置信度 0.69。",
+      "supporting_signals_count": 2,
+      "suggested_tools": [
+        "review_cycle_analyzer",
+        "crossref_event_tracker",
+        "preprint_monitor"
+      ]
+    },
+    {
+      "hypothesis_id": 2,
+      "verdict": "supported",
+      "reasoning": "假设可信度为 strongly_suggested，现有 2 个相关信号，平均置信度 0.69。",
+      "supporting_signals_count": 2,
+      "suggested_tools": [
+        "crossref_event_tracker",
+        "editorial_self_publishing_detector",
+        "preprint_monitor"
+      ]
+    },
+    {
+      "hypothesis_id": 3,
+      "verdict": "plausible",
+      "reasoning": "黄毛标记为大胆猜测，但现有证据中存在 0.72 置信度的支持信号，使该假设升级为值得验证的方向。",
+      "supporting_signals_count": 2,
+      "suggested_tools": [
+        "stats_reverse_engineer",
+        "image_metadata_extractor",
+        "editorial_self_publishing_detector",
+        "preprint_monitor"
+      ]
+    }
+  ],
+  "confidence_overall": 0.7355,
+  "critical": false
+}

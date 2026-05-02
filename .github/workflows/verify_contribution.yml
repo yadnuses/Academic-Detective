@@ -1,0 +1,39 @@
+# .github/workflows/verify_contribution.yml
+name: Verify Community Contribution
+
+on:
+  pull_request:
+    paths:
+      - 'community_cases/pending/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Validate contribution structure
+        run: |
+          # 验证贡献目录结构
+          for dir in community_cases/pending/*/; do
+            [ -d "$dir" ] || continue
+            name=$(basename "$dir")
+            echo "Validating: $name"
+            for required in profile.json report.md evidence_links.md; do
+              if [ ! -f "${dir}${required}" ]; then
+                echo "❌ Missing required file: ${required}"
+                exit 1
+              fi
+            done
+            echo "✅ $name OK"
+          done
+      - name: Check for sensitive data
+        run: |
+          # 检查是否包含姓名、邮箱等个人信息
+          if grep -r -i -l "sk-[a-zA-Z0-9]\|api_key\|@.*\.com" community_cases/pending/ 2>/dev/null; then
+            echo "❌ 发现可能的敏感数据"
+            exit 1
+          fi

@@ -1,0 +1,43 @@
+{
+  "name": "格式一致性自检清单",
+  "description": "检查报告格式是否符合要求",
+  "rules": [
+    {
+      "id": "F01",
+      "name": "论文指代具体",
+      "pattern": "论文[1234567890一二三四五六七八九十]",
+      "severity": "error",
+      "description": "禁止使用论文1/2/3编号，必须使用具体标题指代"
+    },
+    {
+      "id": "F02",
+      "name": "章节编号正确",
+      "pattern": "^##\\s*\\d+\\.",
+      "severity": "warning",
+      "check_method": "manual",
+      "description": "章节编号应连续，无跳号"
+    },
+    {
+      "id": "F03",
+      "name": "置信度标注",
+      "pattern": "置信度|confidence",
+      "severity": "warning",
+      "description": "关键结论应标注置信度"
+    },
+    {
+      "id": "F04",
+      "name": "免责声明存在",
+      "forbidden_keywords": [],
+      "severity": "error",
+      "check_method": "manual",
+      "description": "报告末尾必须包含免责声明"
+    },
+    {
+      "id": "F05",
+      "name": "无页脚信息",
+      "forbidden_keywords": ["页脚", "footer", "page ", "第 .* 页"],
+      "severity": "warning",
+      "description": "报告不应包含页脚信息"
+    }
+  ]
+}

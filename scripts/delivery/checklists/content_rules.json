@@ -1,0 +1,56 @@
+{
+  "name": "内容完整性自检清单",
+  "description": "检查报告内容是否完整、平衡、具体",
+  "rules": [
+    {
+      "id": "C01",
+      "name": "九步法覆盖",
+      "required_chapters": 9,
+      "severity": "error",
+      "description": "报告应覆盖全部9个章节"
+    },
+    {
+      "id": "C02",
+      "name": "证据链完整",
+      "forbidden_keywords": [],
+      "severity": "warning",
+      "check_method": "manual",
+      "description": "每个关键结论应有证据支撑"
+    },
+    {
+      "id": "C03",
+      "name": "两面性平衡",
+      "pattern": "优势|亮点|正面|不足|局限|风险",
+      "severity": "warning",
+      "description": "报告应同时呈现正面和负面发现"
+    },
+    {
+      "id": "C04",
+      "name": "局限性声明",
+      "pattern": "局限性|局限|信息缺口|待确认",
+      "severity": "warning",
+      "description": "报告应声明调查局限性"
+    },
+    {
+      "id": "C05",
+      "name": "内容具体不概括",
+      "pattern": "(?:该学者|此人|相关论文|相关研究|相关活动)(?:的|有|在|等)",
+      "severity": "error",
+      "description": "内容应具体指向具体事实，避免泛泛而谈"
+    },
+    {
+      "id": "C06",
+      "name": "关键数据标注来源",
+      "pattern": "\\d+篇|\\d+%|\\d+分",
+      "severity": "warning",
+      "description": "关键数据应标注来源或计算方式"
+    },
+    {
+      "id": "C07",
+      "name": "风险评级明确",
+      "pattern": "风险评级|总体风险|综合评级",
+      "severity": "warning",
+      "description": "报告应给出明确的风险评级"
+    }
+  ]
+}

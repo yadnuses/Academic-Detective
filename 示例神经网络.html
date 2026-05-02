@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>张三 - 学术关系网络图谱</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+  :root {
+    --space-black: #000000;
+    --spectral-white: #f0f0fa;
+    --apple-blue: #0071e3;
+    --apple-blue-hover: #0077ed;
+    --ghost-bg: rgba(240, 240, 250, 0.1);
+    --ghost-border: rgba(240, 240, 250, 0.35);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--space-black);
+    color: var(--spectral-white);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .header {
+    position: fixed; top: 0; left: 0; right: 0; height: 48px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; z-index: 100;
+  }
+  .header h1 { font-size: 18px; font-weight: 600; letter-spacing: -0.3px; }
+  .header h1 span { font-weight: 400; color: rgba(240,240,250,0.5); }
+  .header .badge {
+    background: rgba(0, 113, 227, 0.2); color: var(--spectral-white);
+    font-size: 12px; padding: 3px 10px; border-radius: 12px;
+    font-weight: 500; border: 1px solid rgba(0, 113, 227, 0.35);
+  }
+  .sidebar {
+    position: fixed; top: 48px; left: 0; bottom: 0; width: 280px;
+    background: rgba(0, 0, 0, 0.6);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 20px; overflow-y: auto; z-index: 90;
+  }
+  .sidebar h2 {
+    font-size: 13px; color: rgba(240,240,250,0.5);
+    margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.8px;
+    font-weight: 500;
+  }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+  .stat-card {
+    background: rgba(240, 240, 250, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px; padding: 12px; text-align: center;
+  }
+  .stat-card .value { font-size: 22px; font-weight: 700; color: var(--spectral-white); }
+  .stat-card .label { font-size: 11px; color: rgba(240,240,250,0.5); margin-top: 4px; }
+  .legend-item { display: flex; align-items: center; margin-bottom: 8px; font-size: 13px; color: var(--spectral-white); }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; }
+  .legend-line { width: 24px; height: 2px; margin-right: 8px; }
+  .node-detail {
+    margin-top: 20px; padding: 12px;
+    background: rgba(240, 240, 250, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px; font-size: 13px; line-height: 1.6; min-height: 80px;
+    color: var(--spectral-white);
+  }
+  .node-detail.empty { color: rgba(240,240,250,0.4); font-style: italic; }
+  #graph-container {
+    position: fixed; top: 48px; left: 280px; right: 0; bottom: 0;
+    background: var(--space-black);
+  }
+  .tooltip {
+    position: absolute; padding: 8px 12px;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    color: var(--spectral-white); border-radius: 8px; font-size: 12px;
+    pointer-events: none; opacity: 0; transition: opacity 0.15s;
+    max-width: 280px; line-height: 1.5;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .controls {
+    position: fixed; bottom: 20px; right: 20px; z-index: 100;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .controls button {
+    width: 44px; height: 44px; border-radius: 50%; border: none;
+    background: rgba(240, 240, 250, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    color: var(--spectral-white);
+    cursor: pointer; font-size: 18px; display: flex; align-items: center;
+    justify-content: center; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .controls button:hover {
+    background: rgba(240, 240, 250, 0.2);
+    transform: scale(1.08);
+  }
+  .filter-group { margin-bottom: 16px; }
+  .filter-group label {
+    display: flex; align-items: center; font-size: 13px;
+    margin-bottom: 6px; cursor: pointer; color: var(--spectral-white);
+  }
+  .filter-group input { margin-right: 6px; accent-color: var(--apple-blue); }
+  .warning-banner {
+    background: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    color: #f0c040;
+    padding: 10px 12px; border-radius: 8px; font-size: 12px;
+    margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>张三 <span style="font-weight:400;color:#7f8c8d;">学术关系网络图谱</span></h1>
+  <span class="badge">11 节点 / 10 关系</span>
+</div>
+
+<div class="sidebar">
+  <h2>网络统计</h2>
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="value">11</div>
+      <div class="label">总节点</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">10</div>
+      <div class="label">总关系</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">0.091</div>
+      <div class="label">网络密度</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">2</div>
+      <div class="label">异常信号</div>
+    </div>
+  </div>
+
+  <h2>节点图例</h2>
+  <div class="legend-item"><span class="legend-dot" style="background:#e74c3c;"></span>调查对象</div>
+<div class="legend-item"><span class="legend-dot" style="background:#2980b9;"></span>导师</div>
+<div class="legend-item"><span class="legend-dot" style="background:#27ae60;"></span>合作者</div>
+<div class="legend-item"><span class="legend-dot" style="background:#8e44ad;"></span>编委/期刊</div>
+<div class="legend-item"><span class="legend-dot" style="background:#f39c12;"></span>机构</div>
+<div class="legend-item"><span class="legend-dot" style="background:#1abc9c;"></span>引用者</div>
+<div class="legend-item"><span class="legend-dot" style="background:#95a5a6;"></span>未知</div>
+
+
+  <h2>关系图例</h2>
+  <div class="legend-item"><span class="legend-line" style="background: #2980b9;"></span>导师</div>
+<div class="legend-item"><span class="legend-line" style="background: #27ae60;"></span>合作</div>
+<div class="legend-item"><span class="legend-line" style="background: #8e44ad;"></span>编委</div>
+<div class="legend-item"><span class="legend-line" style="background: #f39c12;"></span>机构关联</div>
+<div class="legend-item"><span class="legend-line" style="background: #1abc9c;"></span>引用</div>
+<div class="legend-item"><span class="legend-line" style="border-top: 2px dashed #e67e22;"></span>互引</div>
+
+
+  <h2>图层过滤</h2>
+  <div class="filter-group">
+    <label><input type="checkbox" value="scholar" checked> 调查对象</label>
+<label><input type="checkbox" value="advisor" checked> 导师</label>
+<label><input type="checkbox" value="collaborator" checked> 合作者</label>
+<label><input type="checkbox" value="editorial" checked> 编委/期刊</label>
+<label><input type="checkbox" value="institution" checked> 机构</label>
+<label><input type="checkbox" value="citer" checked> 引用者</label>
+
+  </div>
+
+  <h2>选中节点详情</h2>
+  <div class="node-detail empty" id="node-detail">点击节点查看详细信息</div>
+
+  <div class="warning-banner">⚠️ 检测到 2 条引用异常信号，包括高频互引或集中引用。建议结合 citation_profiler.py 输出进行交叉验证。</div>
+</div>
+
+<div id="graph-container"></div>
+<div class="tooltip" id="tooltip"></div>
+
+<div class="controls">
+  <button onclick="resetZoom()" title="重置视图">⟲</button>
+  <button onclick="toggleAnimation()" title="暂停/继续">⏸</button>
+</div>
+
+<script>
+const networkData = {"nodes": [{"id": "scholar", "name": "张三", "type": "scholar", "institution": "北京大学", "detail": "调查对象: 张三 (北京大学)"}, {"id": "advisor_李四", "name": "李四", "type": "advisor", "institution": "清华大学", "detail": "导师: 李四 (清华大学)"}, {"id": "collab_0_王五", "name": "王五", "type": "collaborator", "institution": "复旦大学", "detail": "合作者: 王五 | 机构: 复旦大学 | 合作论文: 8 篇 | 合作时段: 2015-2023"}, {"id": "collab_1_赵六", "name": "赵六", "type": "collaborator", "institution": "上海交通大学", "detail": "合作者: 赵六 | 机构: 上海交通大学 | 合作论文: 5 篇 | 合作时段: 2018-2022"}, {"id": "collab_2_孙七", "name": "孙七", "type": "collaborator", "institution": "北京大学", "detail": "合作者: 孙七 | 机构: 北京大学 | 合作论文: 12 篇 | 合作时段: 2010-2024"}, {"id": "edit_0_经济研究", "name": "经济研究", "type": "editorial", "institution": "", "detail": "期刊: 经济研究 | 职务: 编委 | 起始: 2018"}, {"id": "edit_1_管理世界", "name": "管理世界", "type": "editorial", "institution": "", "detail": "期刊: 管理世界 | 职务: 副主编 | 起始: 2020"}, {"id": "inst_0_中国社会科学院", "name": "中国社会科学院", "type": "institution", "institution": "", "detail": "机构: 中国社会科学院 | 关系: 兼职研究员"}, {"id": "inst_1_某咨询公司", "name": "某咨询公司", "type": "institution", "institution": "", "detail": "机构: 某咨询公司 | 关系: 顾问"}, {"id": "citer_王五", "name": "王五", "type": "citer", "institution": "", "detail": "高频引用者: 王五 | Author '王五' cited 8 times"}, {"id": "citer_赵六", "name": "赵六", "type": "citer", "institution": "", "detail": "高频引用者: 赵六 | Author '赵六' cited 4 times in 2022"}], "links": [{"source": "scholar", "target": "advisor_李四", "type": "advisor_of", "detail": "张三 的导师是 李四", "weight": 1, "is_anomaly": false}, {"source": "scholar", "target": "collab_0_王五", "type": "collaborates_with", "detail": "张三 与 王五 存在合作关系", "weight": 8, "is_anomaly": false}, {"source": "scholar", "target": "collab_1_赵六", "type": "collaborates_with", "detail": "张三 与 赵六 存在合作关系", "weight": 5, "is_anomaly": false}, {"source": "scholar", "target": "collab_2_孙七", "type": "collaborates_with", "detail": "张三 与 孙七 存在合作关系", "weight": 12, "is_anomaly": false}, {"source": "scholar", "target": "edit_0_经济研究", "type": "editorial_board", "detail": "张三 担任 经济研究 的 编委", "weight": 1, "is_anomaly": false}, {"source": "scholar", "target": "edit_1_管理世界", "type": "editorial_board", "detail": "张三 担任 管理世界 的 副主编", "weight": 1, "is_anomaly": false}, {"source": "scholar", "target": "inst_0_中国社会科学院", "type": "affiliated_with", "detail": "张三 与 中国社会科学院 存在 兼职研究员 关系", "weight": 1, "is_anomaly": false}, {"source": "scholar", "target": "inst_1_某咨询公司", "type": "affiliated_with", "detail": "张三 与 某咨询公司 存在 顾问 关系", "weight": 1, "is_anomaly": false}, {"source": "scholar", "target": "citer_王五", "type": "cites", "detail": "Author '王五' cited 8 times", "weight": 1, "is_anomaly": true}, {"source": "scholar", "target": "citer_赵六", "type": "cites", "detail": "Author '赵六' cited 4 times in 2022", "weight": 1, "is_anomaly": true}]};
+
+const width = document.getElementById('graph-container').clientWidth;
+const height = document.getElementById('graph-container').clientHeight;
+
+const svg = d3.select('#graph-container').append('svg')
+  .attr('width', width)
+  .attr('height', height)
+  .attr('viewBox', [0, 0, width, height]);
+
+// Zoom
+const g = svg.append('g');
+const zoom = d3.zoom()
+  .scaleExtent([0.3, 4])
+  .on('zoom', (e) => g.attr('transform', e.transform));
+svg.call(zoom);
+
+function resetZoom() {
+  svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity);
+}
+
+let animationEnabled = true;
+function toggleAnimation() {
+  animationEnabled = !animationEnabled;
+  if (animationEnabled) simulation.alpha(0.3).restart();
+  else simulation.stop();
+}
+
+// Color & radius maps
+const nodeTypes = {"scholar": {"label": "调查对象", "color": "#e74c3c", "radius": 24}, "advisor": {"label": "导师", "color": "#2980b9", "radius": 18}, "collaborator": {"label": "合作者", "color": "#27ae60", "radius": 16}, "editorial": {"label": "编委/期刊", "color": "#8e44ad", "radius": 16}, "institution": {"label": "机构", "color": "#f39c12", "radius": 18}, "citer": {"label": "引用者", "color": "#1abc9c", "radius": 12}, "unknown": {"label": "未知", "color": "#95a5a6", "radius": 10}};
+const linkTypes = {"advisor_of": {"label": "导师", "color": "#2980b9", "width": 3}, "collaborates_with": {"label": "合作", "color": "#27ae60", "width": 2}, "editorial_board": {"label": "编委", "color": "#8e44ad", "width": 2}, "affiliated_with": {"label": "机构关联", "color": "#f39c12", "width": 2}, "cites": {"label": "引用", "color": "#1abc9c", "width": 1}, "mutual_cite": {"label": "互引", "color": "#e67e22", "width": 2, "dash": true}};
+
+// Filters
+const activeTypes = new Set(Object.keys(nodeTypes));
+
+function updateFilters() {
+  document.querySelectorAll('.filter-group input').forEach(cb => {
+    if (cb.checked) activeTypes.add(cb.value);
+    else activeTypes.delete(cb.value);
+  });
+
+  const activeNodeIds = new Set(networkData.nodes
+    .filter(n => activeTypes.has(n.type))
+    .map(n => n.id));
+
+  nodeElements.style('opacity', d => activeNodeIds.has(d.id) ? 1 : 0.05)
+    .style('pointer-events', d => activeNodeIds.has(d.id) ? 'all' : 'none');
+  linkElements.style('opacity', d =>
+    activeNodeIds.has(d.source.id) && activeNodeIds.has(d.target.id) ? 0.6 : 0.02);
+  labelElements.style('opacity', d => activeNodeIds.has(d.id) ? 1 : 0.05);
+}
+
+// Simulation
+const simulation = d3.forceSimulation(networkData.nodes)
+  .force('link', d3.forceLink(networkData.links).id(d => d.id).distance(d => {
+    return d.type === 'advisor_of' ? 120 : d.type === 'collaborates_with' ? 100 : 140;
+  }))
+  .force('charge', d3.forceManyBody().strength(d => d.type === 'scholar' ? -800 : -400))
+  .force('center', d3.forceCenter(width / 2, height / 2))
+  .force('collide', d3.forceCollide().radius(d => (nodeTypes[d.type]?.radius || 10) + 8));
+
+// Links
+const linkElements = g.append('g')
+  .selectAll('line')
+  .data(networkData.links)
+  .join('line')
+  .attr('stroke', d => linkTypes[d.type]?.color || '#999')
+  .attr('stroke-width', d => linkTypes[d.type]?.width || 1)
+  .attr('stroke-opacity', 0.6)
+  .attr('stroke-dasharray', d => linkTypes[d.type]?.dash ? '5,5' : 'none');
+
+// Nodes
+const nodeElements = g.append('g')
+  .selectAll('circle')
+  .data(networkData.nodes)
+  .join('circle')
+  .attr('r', d => nodeTypes[d.type]?.radius || 10)
+  .attr('fill', d => nodeTypes[d.type]?.color || '#95a5a6')
+  .attr('stroke', '#1a1a2e')
+  .attr('stroke-width', 2.5)
+  .style('cursor', 'pointer')
+  .call(d3.drag()
+    .on('start', (e, d) => { if (!e.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+    .on('drag', (e, d) => { d.fx = e.x; d.fy = e.y; })
+    .on('end', (e, d) => { if (!e.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }));
+
+// Labels
+const labelElements = g.append('g')
+  .selectAll('text')
+  .data(networkData.nodes)
+  .join('text')
+  .text(d => d.name)
+  .attr('font-size', d => d.type === 'scholar' ? 14 : 11)
+  .attr('font-weight', d => d.type === 'scholar' ? 700 : 400)
+  .attr('fill', '#f0f0fa')
+  .attr('dx', d => (nodeTypes[d.type]?.radius || 10) + 4)
+  .attr('dy', 4)
+  .style('pointer-events', 'none')
+  .style('text-shadow', '0 0 4px rgba(0,0,0,0.8)');
+
+// Tooltip & detail
+const tooltip = d3.select('#tooltip');
+const detailBox = document.getElementById('node-detail');
+
+nodeElements
+  .on('mouseover', (e, d) => {
+    tooltip.style('opacity', 1)
+      .html(`<strong>${d.name}</strong><br/>类型: ${nodeTypes[d.type]?.label || d.type}<br/>${d.institution ? '机构: ' + d.institution + '<br/>' : ''}${d.detail || ''}`)
+      .style('left', (e.pageX + 12) + 'px')
+      .style('top', (e.pageY - 10) + 'px');
+  })
+  .on('mouseout', () => tooltip.style('opacity', 0))
+  .on('click', (e, d) => {
+    detailBox.classList.remove('empty');
+    detailBox.innerHTML = `<strong style="font-size:15px;color:${nodeTypes[d.type]?.color || '#f0f0fa'}">${d.name}</strong><br/><span style="color:rgba(240,240,250,0.5);font-size:12px">${nodeTypes[d.type]?.label || d.type}</span><br/><br/>${d.detail || '暂无详细信息'}`;
+    e.stopPropagation();
+  });
+
+svg.on('click', () => {
+  detailBox.classList.add('empty');
+  detailBox.textContent = '点击节点查看详细信息';
+});
+
+simulation.on('tick', () => {
+  linkElements
+    .attr('x1', d => d.source.x)
+    .attr('y1', d => d.source.y)
+    .attr('x2', d => d.target.x)
+    .attr('y2', d => d.target.y);
+  nodeElements
+    .attr('cx', d => d.x)
+    .attr('cy', d => d.y);
+  labelElements
+    .attr('x', d => d.x)
+    .attr('y', d => d.y);
+});
+
+// Initial filter setup
+document.querySelectorAll('.filter-group input').forEach(cb => {
+  cb.addEventListener('change', updateFilters);
+});
+</script>
+
+</body>
+</html>

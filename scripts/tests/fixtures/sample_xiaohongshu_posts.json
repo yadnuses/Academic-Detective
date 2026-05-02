@@ -1,0 +1,71 @@
+{
+  "query": {"name": "Alice Smith", "institution": "MIT"},
+  "aggregated": {
+    "matched": true,
+    "source": "xiaohongshu",
+    "name": "Alice Smith",
+    "institution": "MIT",
+    "review_count": 5,
+    "sentiment_distribution": {"positive": 2, "neutral": 1, "negative": 2},
+    "dimension_summary": {
+      "graduation_difficulty_avg": 3.0,
+      "workload_avg": 4.0,
+      "supportiveness_avg": 3.5
+    },
+    "recommendation_ratio": 0.6,
+    "credibility": {
+      "average_score": 0.65,
+      "top_reviews": [
+        {
+          "post_id": "abc123",
+          "title": "MIT CS PhD 导师评价",
+          "content_preview": "跟了Smith教授两年，整体体验还不错...",
+          "credibility_score": 0.85,
+          "sentiment": "positive",
+          "url": "https://www.xiaohongshu.com/discovery/item/abc123"
+        }
+      ]
+    },
+    "topics": {"funding": 3, "publication": 2, "graduation": 2, "workload": 4},
+    "red_flags": [
+      {"post_id": "def456", "issue": "push/压榨", "credibility": 0.7}
+    ],
+    "disclaimer": "本部分数据来自小红书平台匿名用户分享..."
+  },
+  "raw_reviews": [
+    {
+      "post_id": "abc123",
+      "title": "MIT CS PhD 导师评价",
+      "content": "跟了Smith教授两年，整体体验还不错。funding充足，改论文很仔细。毕业要求适中，一般5年可以毕业。",
+      "url": "https://www.xiaohongshu.com/discovery/item/abc123",
+      "likes": 120,
+      "comments": 15,
+      "sentiment": "positive",
+      "credibility": 0.85,
+      "dimensions": {
+        "graduation_difficulty": 3,
+        "workload": 3,
+        "supportiveness": 5,
+        "recommendation": true
+      },
+      "topics": ["funding", "graduation", "publication"]
+    },
+    {
+      "post_id": "def456",
+      "title": "MIT CS 选导师避雷",
+      "content": "Smith教授push比较严重，lab meeting每周两次，周末也要加班。但是funding确实足。",
+      "url": "https://www.xiaohongshu.com/discovery/item/def456",
+      "likes": 45,
+      "comments": 8,
+      "sentiment": "negative",
+      "credibility": 0.7,
+      "dimensions": {
+        "graduation_difficulty": 3,
+        "workload": 5,
+        "supportiveness": 3,
+        "recommendation": false
+      },
+      "topics": ["workload", "funding"]
+    }
+  ]
+}

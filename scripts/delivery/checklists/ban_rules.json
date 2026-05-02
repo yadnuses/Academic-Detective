@@ -1,0 +1,62 @@
+{
+  "name": "禁止条例自检清单",
+  "description": "检查报告中是否包含禁止出现的内容",
+  "rules": [
+    {
+      "id": "B01",
+      "name": "无破折号",
+      "forbidden_keywords": ["——"],
+      "severity": "error",
+      "description": "禁止使用破折号，用句号和逗号替代"
+    },
+    {
+      "id": "B02",
+      "name": "无否定句式",
+      "forbidden_keywords": ["并非", "不属于", "不存在", "没有"],
+      "severity": "error",
+      "description": "禁止否定句式，用正面直接描写替代"
+    },
+    {
+      "id": "B03",
+      "name": "无排比句",
+      "pattern": "([^，。；]+[，；]){2,}[^，。；]+[。]",
+      "severity": "warning",
+      "description": "避免并列堆砌的排比句式"
+    },
+    {
+      "id": "B04",
+      "name": "无形容词堆砌",
+      "pattern": "(显著|明显|严重|重大|深刻).{0,5}(显著|明显|严重|重大|深刻)",
+      "severity": "warning",
+      "description": "避免形容词堆砌，精准优先于华丽"
+    },
+    {
+      "id": "B05",
+      "name": "无比喻修辞",
+      "forbidden_keywords": ["像", "仿佛", "犹如", "如同"],
+      "severity": "warning",
+      "description": "避免过多比喻，一章节不超过两处"
+    },
+    {
+      "id": "B06",
+      "name": "无生成时间",
+      "forbidden_keywords": ["报告生成时间", "生成日期", "调查日期", "报告日期", "完成日期"],
+      "severity": "error",
+      "description": "删除所有报告生成时间、调查者身份、委托人信息"
+    },
+    {
+      "id": "B07",
+      "name": "无调查者身份",
+      "forbidden_keywords": ["小y", "Agent", "调查者", "分析者", "报告生成者"],
+      "severity": "error",
+      "description": "删除调查者身份信息"
+    },
+    {
+      "id": "B08",
+      "name": "无委托人信息",
+      "forbidden_keywords": ["周老师"],
+      "severity": "error",
+      "description": "删除委托人信息"
+    }
+  ]
+}

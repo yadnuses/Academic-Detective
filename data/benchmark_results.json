@@ -1,0 +1,1305 @@
+[
+  {
+    "researcher_id": "CASE_001",
+    "name": "Jingrong Tong",
+    "career_tier": "normal",
+    "discipline_id": "COMM_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 4.2065,
+    "risk_level": "medium",
+    "triggered_rules": [
+      {
+        "rule_id": "A001",
+        "rule_name": "Hyper_production",
+        "rule_name_zh": "超高产",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 2.6388,
+        "weighted_score": 2.6388,
+        "deviation": {
+          "metric": "avg_papers_per_year",
+          "observed_value": 17.6,
+          "benchmark_value": 1.5,
+          "deviation_score": 1.3194,
+          "deviation_direction": "high",
+          "anomaly_probability": 0.187
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_002",
+    "name": "刘翔峰",
+    "career_tier": "normal",
+    "discipline_id": "MED_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 0.6988,
+    "risk_level": "low",
+    "triggered_rules": [
+      {
+        "rule_id": "A003",
+        "rule_name": "Coauthor_concentration",
+        "rule_name_zh": "合作者高度集中",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.0,
+        "weighted_score": 0.0,
+        "deviation": {
+          "metric": "coauthor_concentration",
+          "observed_value": 0.85,
+          "benchmark_value": 0.8,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      },
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.6,
+        "weighted_score": 0.6,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 3.0,
+          "benchmark_value": 0.003,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_003",
+    "name": "刘阳",
+    "career_tier": "normal",
+    "discipline_id": "COMM_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 0.0,
+    "risk_level": "low",
+    "triggered_rules": []
+  },
+  {
+    "researcher_id": "CASE_004",
+    "name": "吴军军",
+    "career_tier": "normal",
+    "discipline_id": "COMM_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 4.0192,
+    "risk_level": "medium",
+    "triggered_rules": [
+      {
+        "rule_id": "A002",
+        "rule_name": "Citation_anomaly",
+        "rule_name_zh": "引用异常",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 2.4682,
+        "weighted_score": 2.4682,
+        "deviation": {
+          "metric": "h_index",
+          "observed_value": 1.0,
+          "benchmark_value": 4.0,
+          "deviation_score": -1.2341,
+          "deviation_direction": "low",
+          "anomaly_probability": 0.2172
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_005",
+    "name": "姚俊",
+    "career_tier": "normal",
+    "discipline_id": "COMM_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 0.0,
+    "risk_level": "low",
+    "triggered_rules": []
+  },
+  {
+    "researcher_id": "CASE_006",
+    "name": "朱俊河",
+    "career_tier": "normal",
+    "discipline_id": "COMM_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 4.0192,
+    "risk_level": "medium",
+    "triggered_rules": [
+      {
+        "rule_id": "A002",
+        "rule_name": "Citation_anomaly",
+        "rule_name_zh": "引用异常",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 2.4682,
+        "weighted_score": 2.4682,
+        "deviation": {
+          "metric": "h_index",
+          "observed_value": 1.0,
+          "benchmark_value": 4.0,
+          "deviation_score": -1.2341,
+          "deviation_direction": "low",
+          "anomaly_probability": 0.2172
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_007",
+    "name": "朱怡淼",
+    "career_tier": "normal",
+    "discipline_id": "COMM_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 0.0,
+    "risk_level": "low",
+    "triggered_rules": []
+  },
+  {
+    "researcher_id": "CASE_008",
+    "name": "李明华",
+    "career_tier": "normal",
+    "discipline_id": "COMM_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 3.6459,
+    "risk_level": "medium",
+    "triggered_rules": [
+      {
+        "rule_id": "A001",
+        "rule_name": "Hyper_production",
+        "rule_name_zh": "超高产",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 2.1468,
+        "weighted_score": 2.1468,
+        "deviation": {
+          "metric": "avg_papers_per_year",
+          "observed_value": 12.0,
+          "benchmark_value": 1.5,
+          "deviation_score": 1.0734,
+          "deviation_direction": "high",
+          "anomaly_probability": 0.2831
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_009",
+    "name": "杜琳",
+    "career_tier": "normal",
+    "discipline_id": "COMM_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 0.0,
+    "risk_level": "low",
+    "triggered_rules": []
+  },
+  {
+    "researcher_id": "CASE_010",
+    "name": "汤文军",
+    "career_tier": "leading",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 6.1321,
+    "risk_level": "high",
+    "triggered_rules": [
+      {
+        "rule_id": "A001",
+        "rule_name": "Hyper_production",
+        "rule_name_zh": "超高产",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 3.5484,
+        "weighted_score": 3.5484,
+        "deviation": {
+          "metric": "avg_papers_per_year",
+          "observed_value": 28.0,
+          "benchmark_value": 5.0,
+          "deviation_score": 1.7742,
+          "deviation_direction": "high",
+          "anomaly_probability": 0.076
+        }
+      },
+      {
+        "rule_id": "A008",
+        "rule_name": "Funding_anomaly",
+        "rule_name_zh": "基金命中率异常",
+        "severity_level": 2,
+        "weight": 0.8,
+        "triggered": true,
+        "raw_score": 7.6096,
+        "weighted_score": 6.0877,
+        "deviation": {
+          "metric": "funding_hit_rate",
+          "observed_value": 0.35,
+          "benchmark_value": 0.13,
+          "deviation_score": 3.8048,
+          "deviation_direction": "high",
+          "anomaly_probability": 0.0001
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_011",
+    "name": "汤铎铎",
+    "career_tier": "normal",
+    "discipline_id": "COMM_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 0.0,
+    "risk_level": "low",
+    "triggered_rules": []
+  },
+  {
+    "researcher_id": "CASE_012",
+    "name": "焦俊波",
+    "career_tier": "normal",
+    "discipline_id": "COMM_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 0.0,
+    "risk_level": "low",
+    "triggered_rules": []
+  },
+  {
+    "researcher_id": "CASE_013",
+    "name": "王新兵",
+    "career_tier": "top",
+    "discipline_id": "CS_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 0.0,
+    "risk_level": "low",
+    "triggered_rules": []
+  },
+  {
+    "researcher_id": "CASE_014",
+    "name": "田增山",
+    "career_tier": "normal",
+    "discipline_id": "CS_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 0.0,
+    "risk_level": "low",
+    "triggered_rules": []
+  },
+  {
+    "researcher_id": "CASE_015",
+    "name": "胡子欣",
+    "career_tier": "normal",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 6.986,
+    "risk_level": "high",
+    "triggered_rules": [
+      {
+        "rule_id": "A008",
+        "rule_name": "Funding_anomaly",
+        "rule_name_zh": "基金命中率异常",
+        "severity_level": 2,
+        "weight": 0.8,
+        "triggered": true,
+        "raw_score": 7.6096,
+        "weighted_score": 6.0877,
+        "deviation": {
+          "metric": "funding_hit_rate",
+          "observed_value": 0.35,
+          "benchmark_value": 0.13,
+          "deviation_score": 3.8048,
+          "deviation_direction": "high",
+          "anomaly_probability": 0.0001
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_016",
+    "name": "蔡正兰",
+    "career_tier": "normal",
+    "discipline_id": "COMM_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 0.0,
+    "risk_level": "low",
+    "triggered_rules": []
+  },
+  {
+    "researcher_id": "CASE_017",
+    "name": "计憬煊",
+    "career_tier": "normal",
+    "discipline_id": "COMM_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 4.0192,
+    "risk_level": "medium",
+    "triggered_rules": [
+      {
+        "rule_id": "A002",
+        "rule_name": "Citation_anomaly",
+        "rule_name_zh": "引用异常",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 2.4682,
+        "weighted_score": 2.4682,
+        "deviation": {
+          "metric": "h_index",
+          "observed_value": 1.0,
+          "benchmark_value": 4.0,
+          "deviation_score": -1.2341,
+          "deviation_direction": "low",
+          "anomaly_probability": 0.2172
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_018",
+    "name": "许畅",
+    "career_tier": "top",
+    "discipline_id": "CS_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 0.0,
+    "risk_level": "low",
+    "triggered_rules": []
+  },
+  {
+    "researcher_id": "CASE_019",
+    "name": "谢毅",
+    "career_tier": "top",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 0.0,
+    "risk_level": "low",
+    "triggered_rules": []
+  },
+  {
+    "researcher_id": "CASE_020",
+    "name": "谷文萍",
+    "career_tier": "normal",
+    "discipline_id": "MED_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 8.2402,
+    "risk_level": "high",
+    "triggered_rules": [
+      {
+        "rule_id": "A008",
+        "rule_name": "Funding_anomaly",
+        "rule_name_zh": "基金命中率异常",
+        "severity_level": 2,
+        "weight": 0.8,
+        "triggered": true,
+        "raw_score": 10.492,
+        "weighted_score": 8.3936,
+        "deviation": {
+          "metric": "funding_hit_rate",
+          "observed_value": 0.3,
+          "benchmark_value": 0.09,
+          "deviation_score": 5.246,
+          "deviation_direction": "high",
+          "anomaly_probability": 0.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_021",
+    "name": "贾冀川",
+    "career_tier": "normal",
+    "discipline_id": "COMM_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 3.8792,
+    "risk_level": "medium",
+    "triggered_rules": [
+      {
+        "rule_id": "A001",
+        "rule_name": "Hyper_production",
+        "rule_name_zh": "超高产",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 2.3448,
+        "weighted_score": 2.3448,
+        "deviation": {
+          "metric": "avg_papers_per_year",
+          "observed_value": 14.0,
+          "benchmark_value": 1.5,
+          "deviation_score": 1.1724,
+          "deviation_direction": "high",
+          "anomaly_probability": 0.241
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_022",
+    "name": "郝玉峰",
+    "career_tier": "top",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 0.0,
+    "risk_level": "low",
+    "triggered_rules": []
+  },
+  {
+    "researcher_id": "CASE_023",
+    "name": "陈昌凤",
+    "career_tier": "top",
+    "discipline_id": "COMM_CN_2020_2024",
+    "is_confirmed_misconduct": false,
+    "score": 0.0,
+    "risk_level": "low",
+    "triggered_rules": []
+  },
+  {
+    "researcher_id": "CASE_024",
+    "name": "翟天临",
+    "career_tier": "normal",
+    "discipline_id": "COMM_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 0.9116,
+    "risk_level": "low",
+    "triggered_rules": [
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.4,
+        "weighted_score": 0.4,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 2.0,
+          "benchmark_value": 0.0001,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_025",
+    "name": "张裕卿",
+    "career_tier": "normal",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 3.0759,
+    "risk_level": "medium",
+    "triggered_rules": [
+      {
+        "rule_id": "A003",
+        "rule_name": "Coauthor_concentration",
+        "rule_name_zh": "合作者高度集中",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.0,
+        "weighted_score": 0.0,
+        "deviation": {
+          "metric": "coauthor_concentration",
+          "observed_value": 0.88,
+          "benchmark_value": 0.8,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      },
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 3.4,
+        "weighted_score": 3.4,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 17.0,
+          "benchmark_value": 0.0005,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_026",
+    "name": "黄飞若",
+    "career_tier": "normal",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 2.0273,
+    "risk_level": "medium",
+    "triggered_rules": [
+      {
+        "rule_id": "A003",
+        "rule_name": "Coauthor_concentration",
+        "rule_name_zh": "合作者高度集中",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.0,
+        "weighted_score": 0.0,
+        "deviation": {
+          "metric": "coauthor_concentration",
+          "observed_value": 0.75,
+          "benchmark_value": 0.8,
+          "deviation_score": 0.0,
+          "deviation_direction": "low",
+          "anomaly_probability": 1.0
+        }
+      },
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 2.0,
+        "weighted_score": 2.0,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 10.0,
+          "benchmark_value": 0.0005,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_027",
+    "name": "贺海波",
+    "career_tier": "normal",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 1.6824,
+    "risk_level": "low",
+    "triggered_rules": [
+      {
+        "rule_id": "A003",
+        "rule_name": "Coauthor_concentration",
+        "rule_name_zh": "合作者高度集中",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.0,
+        "weighted_score": 0.0,
+        "deviation": {
+          "metric": "coauthor_concentration",
+          "observed_value": 0.7,
+          "benchmark_value": 0.8,
+          "deviation_score": 0.0,
+          "deviation_direction": "low",
+          "anomaly_probability": 1.0
+        }
+      },
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 1.6,
+        "weighted_score": 1.6,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 8.0,
+          "benchmark_value": 0.0005,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_028",
+    "name": "钟华",
+    "career_tier": "normal",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 6.6863,
+    "risk_level": "high",
+    "triggered_rules": [
+      {
+        "rule_id": "A001",
+        "rule_name": "Hyper_production",
+        "rule_name_zh": "超高产",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 2.8516,
+        "weighted_score": 2.8516,
+        "deviation": {
+          "metric": "avg_papers_per_year",
+          "observed_value": 14.0,
+          "benchmark_value": 5.0,
+          "deviation_score": 1.4258,
+          "deviation_direction": "high",
+          "anomaly_probability": 0.1539
+        }
+      },
+      {
+        "rule_id": "A003",
+        "rule_name": "Coauthor_concentration",
+        "rule_name_zh": "合作者高度集中",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.0,
+        "weighted_score": 0.0,
+        "deviation": {
+          "metric": "coauthor_concentration",
+          "observed_value": 0.9,
+          "benchmark_value": 0.8,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      },
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 14.0,
+        "weighted_score": 14.0,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 70.0,
+          "benchmark_value": 0.0005,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_029",
+    "name": "西安交大王某某",
+    "career_tier": "normal",
+    "discipline_id": "COMM_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 0.4766,
+    "risk_level": "low",
+    "triggered_rules": [
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.2,
+        "weighted_score": 0.2,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 1.0,
+          "benchmark_value": 0.0001,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_030",
+    "name": "对外经贸李某某",
+    "career_tier": "normal",
+    "discipline_id": "COMM_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 0.4766,
+    "risk_level": "low",
+    "triggered_rules": [
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.2,
+        "weighted_score": 0.2,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 1.0,
+          "benchmark_value": 0.0001,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_031",
+    "name": "天津大学/厦门大学硕士论文雷同",
+    "career_tier": "normal",
+    "discipline_id": "CS_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 0.4766,
+    "risk_level": "low",
+    "triggered_rules": [
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.2,
+        "weighted_score": 0.2,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 1.0,
+          "benchmark_value": 0.0002,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_032",
+    "name": "唐博/王立明",
+    "career_tier": "normal",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 0.244,
+    "risk_level": "low",
+    "triggered_rules": [
+      {
+        "rule_id": "A003",
+        "rule_name": "Coauthor_concentration",
+        "rule_name_zh": "合作者高度集中",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.0,
+        "weighted_score": 0.0,
+        "deviation": {
+          "metric": "coauthor_concentration",
+          "observed_value": 0.68,
+          "benchmark_value": 0.8,
+          "deviation_score": 0.0,
+          "deviation_direction": "low",
+          "anomaly_probability": 1.0
+        }
+      },
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.2,
+        "weighted_score": 0.2,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 1.0,
+          "benchmark_value": 0.0005,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_033",
+    "name": "陈磊/陈可斌",
+    "career_tier": "normal",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 0.244,
+    "risk_level": "low",
+    "triggered_rules": [
+      {
+        "rule_id": "A003",
+        "rule_name": "Coauthor_concentration",
+        "rule_name_zh": "合作者高度集中",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.0,
+        "weighted_score": 0.0,
+        "deviation": {
+          "metric": "coauthor_concentration",
+          "observed_value": 0.68,
+          "benchmark_value": 0.8,
+          "deviation_score": 0.0,
+          "deviation_direction": "low",
+          "anomaly_probability": 1.0
+        }
+      },
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.2,
+        "weighted_score": 0.2,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 1.0,
+          "benchmark_value": 0.0005,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_034",
+    "name": "周建",
+    "career_tier": "normal",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 0.4766,
+    "risk_level": "low",
+    "triggered_rules": [
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.2,
+        "weighted_score": 0.2,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 1.0,
+          "benchmark_value": 0.0005,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_035",
+    "name": "杨耀/王进进/李文彦",
+    "career_tier": "normal",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 0.4766,
+    "risk_level": "low",
+    "triggered_rules": [
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.2,
+        "weighted_score": 0.2,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 1.0,
+          "benchmark_value": 0.0005,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_036",
+    "name": "黄冠群",
+    "career_tier": "normal",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 0.4766,
+    "risk_level": "low",
+    "triggered_rules": [
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.2,
+        "weighted_score": 0.2,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 1.0,
+          "benchmark_value": 0.0005,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_037",
+    "name": "钟文/月福财",
+    "career_tier": "normal",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 0.4766,
+    "risk_level": "low",
+    "triggered_rules": [
+      {
+        "rule_id": "A003",
+        "rule_name": "Coauthor_concentration",
+        "rule_name_zh": "合作者高度集中",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.0,
+        "weighted_score": 0.0,
+        "deviation": {
+          "metric": "coauthor_concentration",
+          "observed_value": 0.72,
+          "benchmark_value": 0.8,
+          "deviation_score": 0.0,
+          "deviation_direction": "low",
+          "anomaly_probability": 1.0
+        }
+      },
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.4,
+        "weighted_score": 0.4,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 2.0,
+          "benchmark_value": 0.0005,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_038",
+    "name": "公绪合",
+    "career_tier": "normal",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 0.4766,
+    "risk_level": "low",
+    "triggered_rules": [
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.2,
+        "weighted_score": 0.2,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 1.0,
+          "benchmark_value": 0.0005,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_039",
+    "name": "周伟/刘涛/李永峰",
+    "career_tier": "normal",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 0.4766,
+    "risk_level": "low",
+    "triggered_rules": [
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.2,
+        "weighted_score": 0.2,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 1.0,
+          "benchmark_value": 0.0005,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_040",
+    "name": "林兴/韦锦斌等",
+    "career_tier": "normal",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 0.4766,
+    "risk_level": "low",
+    "triggered_rules": [
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.2,
+        "weighted_score": 0.2,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 1.0,
+          "benchmark_value": 0.0005,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_041",
+    "name": "燕东亮",
+    "career_tier": "normal",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 0.4766,
+    "risk_level": "low",
+    "triggered_rules": [
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.2,
+        "weighted_score": 0.2,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 1.0,
+          "benchmark_value": 0.0005,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_042",
+    "name": "甘莉",
+    "career_tier": "normal",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 0.4766,
+    "risk_level": "low",
+    "triggered_rules": [
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.2,
+        "weighted_score": 0.2,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 1.0,
+          "benchmark_value": 0.0005,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_043",
+    "name": "贺聚良",
+    "career_tier": "normal",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 0.4766,
+    "risk_level": "low",
+    "triggered_rules": [
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.2,
+        "weighted_score": 0.2,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 1.0,
+          "benchmark_value": 0.0005,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_044",
+    "name": "陈岩",
+    "career_tier": "normal",
+    "discipline_id": "CHEM_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 0.4766,
+    "risk_level": "low",
+    "triggered_rules": [
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 0.2,
+        "weighted_score": 0.2,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 1.0,
+          "benchmark_value": 0.0005,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_045",
+    "name": "批量撤稿模式原型（Tumor Biology等）",
+    "career_tier": "normal",
+    "discipline_id": "MED_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 9.82,
+    "risk_level": "high",
+    "triggered_rules": [
+      {
+        "rule_id": "A004",
+        "rule_name": "Fast_publication",
+        "rule_name_zh": "异常快速发表",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 3.1112,
+        "weighted_score": 3.1112,
+        "deviation": {
+          "metric": "median_review_days",
+          "observed_value": 20.0,
+          "benchmark_value": 90.0,
+          "deviation_score": -1.5556,
+          "deviation_direction": "low",
+          "anomaly_probability": 0.1198
+        }
+      },
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 21.4,
+        "weighted_score": 21.4,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 107.0,
+          "benchmark_value": 0.003,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  },
+  {
+    "researcher_id": "CASE_046",
+    "name": "Tumor Biology论文工厂模式",
+    "career_tier": "normal",
+    "discipline_id": "MED_CN_2020_2024",
+    "is_confirmed_misconduct": true,
+    "score": 9.82,
+    "risk_level": "high",
+    "triggered_rules": [
+      {
+        "rule_id": "A004",
+        "rule_name": "Fast_publication",
+        "rule_name_zh": "异常快速发表",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 3.1112,
+        "weighted_score": 3.1112,
+        "deviation": {
+          "metric": "median_review_days",
+          "observed_value": 20.0,
+          "benchmark_value": 90.0,
+          "deviation_score": -1.5556,
+          "deviation_direction": "low",
+          "anomaly_probability": 0.1198
+        }
+      },
+      {
+        "rule_id": "A005",
+        "rule_name": "Retraction_history",
+        "rule_name_zh": "撤稿历史",
+        "severity_level": 2,
+        "weight": 1.0,
+        "triggered": true,
+        "raw_score": 21.4,
+        "weighted_score": 21.4,
+        "deviation": {
+          "metric": "retraction_count",
+          "observed_value": 107.0,
+          "benchmark_value": 0.003,
+          "deviation_score": 0.0,
+          "deviation_direction": "high",
+          "anomaly_probability": 1.0
+        }
+      }
+    ]
+  }
+]

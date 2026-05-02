@@ -1,0 +1,9 @@
+# 配置模板已迁移
+# 
+# 请使用 scripts/config.template.yaml 作为最新配置模板。
+# 该模板已支持 domestic / international / cross_border 三种调查类型，
+# 并包含完整的 manual_sources、claims、investigation 字段定义。
+#
+# 用法：
+#   cp scripts/config.template.yaml ./config.yaml
+#   # 然后填写学者信息

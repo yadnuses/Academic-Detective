@@ -1,0 +1,55 @@
+{
+  "network_name": "湘雅系腐败网络",
+  "investigation_date": "2026-04-18",
+  "nodes": [
+    {"id": "n1", "name": "刘翔峰", "type": "core_subject", "institution": "中南大学湘雅二医院", "detail": "调查对象"},
+    {"id": "n2", "name": "罗帅宇", "type": "victim", "institution": "中南大学湘雅二医院", "detail": "研究生，已离世"},
+    {"id": "n3", "name": "谭志刚", "type": "accomplice", "institution": "中南大学湘雅二医院", "detail": "同事"}
+  ],
+  "links": [
+    {"source": "n1", "target": "n2", "type": "victimization", "detail": "导师-学生关系", "weight": 3, "is_anomaly": true},
+    {"source": "n1", "target": "n3", "type": "project_collab", "detail": "同事合作", "weight": 2, "is_anomaly": false}
+  ],
+  "timelines": [
+    {
+      "id": "t1",
+      "title": "刘翔峰职业晋升时间轴",
+      "events": [
+        {"date": "2018-06", "event": "晋升为副主任医师", "description": "晋升为副主任医师", "nodes": ["n1"]},
+        {"date": "2022-03", "event": "晋升为主任医师", "description": "晋升为主任医师", "nodes": ["n1"]}
+      ]
+    }
+  ],
+  "grants": [
+    {
+      "id": "g1",
+      "title": "国家自然科学基金项目",
+      "funding_agency": "NSFC",
+      "amount": "58万",
+      "pi": "n1",
+      "co_pis": ["n3"],
+      "period": "2020-2023"
+    }
+  ],
+  "negative_space": {
+    "matrix": {
+      "n1": {"official": 0.2, "anomalous": 0.8},
+      "n2": {"official": 0.1, "anomalous": 0.9},
+      "n3": {"official": 0.5, "anomalous": 0.5}
+    },
+    "questions": [
+      {"question": "是否存在论文工厂", "evidence": "多篇论文作者重叠度极高"}
+    ],
+    "score": 0.75
+  },
+  "cases": [
+    {
+      "id": "c1",
+      "name": "过度医疗举报案",
+      "title": "过度医疗举报",
+      "status": "investigating",
+      "parties": ["n1"],
+      "description": "患者举报刘翔峰存在过度医疗行为"
+    }
+  ]
+}

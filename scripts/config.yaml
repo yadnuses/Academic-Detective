@@ -1,0 +1,179 @@
+# Academic Investigation Configuration Template
+# Copy this file and fill in the scholar-specific information.
+
+# Basic Identity
+scholar:
+  name: "学者姓名"
+  institution: "所在机构"
+  department: "院系部门"
+  current_title: "现任职称（如：教授、研究员）"
+  academic_title: "学术头衔（如：博士生导师、副院长）"
+  birth_year: null  # 可选，如：1977
+  gender: ""        # 可选
+
+# Data sources manually collected by the investigator
+manual_sources:
+  # 知网、万方等数据库的导出文件路径
+  cnki_export: "./data/cnki_results.json"
+  wanfang_export: "./data/wanfang_results.json"
+  wos_export: "./data/wos_results.csv"
+  
+  # 机构官网快照或截图
+  institutional_snapshots:
+    - "./data/official_page_1.html"
+    - "./data/official_page_2.html"
+  
+  # 专著/学位论文 PDF 路径
+  pdfs:
+    monographs:
+      - path: "./pdfs/monograph_1.pdf"
+        title: "专著一名称"
+        year: 2017
+        publisher: "出版社"
+      - path: "./pdfs/monograph_2.pdf"
+        title: "专著二名称"
+        year: 2024
+        publisher: "出版社"
+    dissertation:
+      path: "./pdfs/dissertation.pdf"
+      title: "博士学位论文"
+      year: 2012
+      advisor: "导师姓名"
+  
+  # 新闻报道、会议手册等辅助材料
+  auxiliary:
+    - "./data/news_report_1.html"
+    - "./data/conference_manual.pdf"
+  
+  # 结构化学生评价数据库（如有）
+  student_review_db:
+    xlsx_path: "../（最全）导师评价表0210更新7.5w+评价.xlsx"
+    matched_result: "./data/reviews_matched.json"
+  
+  # 公开口碑采集（低可靠性，仅作辅助信号）
+  public_reputation:
+    daoshidianping_screenshots:
+      - "./data/daoshi_1.png"
+    zhihu_xiaohongshu_screenshots:
+      - "./data/zhihu_1.png"
+    researchgate_notes: "./data/researchgate_notes.md"
+
+  # 微信公众号文章采集（小道消息与传言的补充来源，需交叉验证）
+  wechat_articles:
+    search_keyword: "学者姓名"
+    output_dir: "./data/wechat_articles"
+    fetched_articles:
+      # - "./data/wechat_articles/文章标题.md"
+    summary_json: "./data/wechat_articles_summary.json"
+
+# Claims made by the scholar (from CV, lecture intros, official bios)
+claims:
+  papers:
+    total: "70余篇"
+    core_journals: "30余篇"
+    recent_3yr_total: "15篇"   # 学者自称近三年论文数
+  monographs:
+    total: "4部"
+  projects:
+    national_social_science: "3项"
+    nsfc_active: "2项在研"      # 学者自称国家自然科学基金在研项目
+  awards:
+    - "省级社科奖二等奖"
+
+# Investigation scope settings
+investigation:
+  date: "2026-04-19"
+  depth: standard  # options: quick, standard, exhaustive
+  investigation_type: domestic  # domestic / international / cross_border
+                                # auto-detected if omitted
+
+# International data sources (free APIs, auto-fetched)
+# Only used when investigation_type is "international" or "cross_border"
+international_sources:
+  openalex:
+    enabled: true
+    # No API key required
+  orcid:
+    enabled: true
+    # Public API, no key required for basic queries
+  semantic_scholar:
+    enabled: true
+    # Free tier: 5000 requests per 5 minutes
+  google_scholar:
+    enabled: true
+    # Uses scholarly library, rate-limited
+  pubpeer:
+    enabled: true
+    # Public API for comments
+  retraction_watch:
+    enabled: true
+    # CSV download (academic institutions free)
+  arxiv:
+    enabled: true
+    # No API key required
+
+# Xiaohongshu (小红书) review scraping settings
+# Unique data source: Chinese students' reviews of foreign advisors
+xiaohongshu:
+  enabled: true
+  max_results: 50
+  delay_seconds: 5.0  # Rate limit between requests
+  focus_areas:
+    - credential_verification
+    - output_quantity
+    - quality_assessment
+    - relationship_network
+    - anomaly_detection
+  
+  # Funding verification (manual search required)
+  funding_check:
+    nsfc_portal_searched: false   # Set to true after manual search on https://kd.nsfc.cn
+    nsfc_active_projects: null    # Number of active NSFC projects found
+    nsfc_last_search_date: null   # YYYY-MM-DD
+    provincial_projects_found: null
+    corporate_projects_found: null
+  
+  # Peer cohort for promotion timeline comparison
+  peer_cohort:
+    - name: "同事A"
+      associate_year: 2009
+      full_year: 2014
+    - name: "同事B"
+      associate_year: 2008
+      full_year: 2013
+
+# v3.0 Deep Evidence Layer
+# Scripts handle computational verification; humans interpret signals and make judgments.
+deep_evidence:
+  data_forensics:
+    enabled: true
+    stats_reverse_engineer: true    # Reverse-engineer reported statistics for consistency
+    image_metadata_extraction: true # Extract image creation timestamps and software fingerprints
+
+  publication_trace:
+    enabled: true
+    preprint_sources:
+      - arxiv
+      - biorxiv
+      - medrxiv
+      # - chemrxiv  # Uncomment when API support is added
+    check_bilingual: true           # Detect bilingual duplication (CNKI + English journals)
+    check_conference_overlap: true  # Detect conference-journal submission overlap
+
+  ethics_audit:
+    enabled: true
+    registry_sources:
+      - ChiCTR
+      - ClinicalTrials.gov
+
+  peer_review_intel:
+    enabled: true
+    cycle_benchmark_years: 3
+    check_editorial_self_publishing: true
+    check_recommended_reviewer_network: true
+
+# Output settings
+output:
+  report_dir: "./reports/"
+  save_raw_text: true      # Save PDF extracted text alongside JSON profiles
+  include_evidence_chain: true

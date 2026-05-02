@@ -1,0 +1,176 @@
+================================================================================
+  Academic Investigation Skill — 分析架构总图 (v3.0)
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  TIER 0: 用户入口层 (Entry Point)                                           │
+│  ─────────────────────────────────────                                      │
+│                                                                             │
+│  investigate.py  (CLI 编排器, 1,300+行)                                     │
+│  ├── init, step, advance, status, validate, score, prompt, watermark      │
+│  ├── wechat, xiaohongshu, visualize, timeline, grants, negative           │
+│  ├── retrospect, international-fetch/build, missing-report                │
+│  ├── review-aggregate, cross-border-merge                                 │
+│  ├── preprint-monitor, review-cycle          ← v3.0 P0                    │
+│  ├── stats-reverse-engineer, image-metadata  ← v3.0 P1                    │
+│  ├── ethics-parse, trial-registry            ← v3.0 P1                    │
+│  ├── conference-map, bilingual-detect        ← v3.0 P2                    │
+│  ├── crossref-events                         ← v3.0 P2                    │
+│  ├── editorial-selfpub, reviewer-network     ← v3.0 P2                    │
+│  └── retraction-history                      ← v3.0 P2                    │
+│      (共 32 个子命令)                                                       │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                      │
+                                      ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  TIER 1: 核心基础设施层 (Core Infrastructure)                               │
+│  ─────────────────────────────────────────────                              │
+│                                                                             │
+│  core/                                                                      │
+│  ├── case_manager.py      案件注册 & ID生成 (AD-YYYY-MM-DD-NNN)             │
+│  ├── config_loader.py     配置加载 (v1→v2 自动迁移)                         │
+│  ├── db.py                SQLite per-case 数据库 (9张表)                    │
+│  ├── router.py            调查类型路由 (domestic/international/cross_border)│
+│  ├── utils.py             日志、JSON读写、目录工具                          │
+│  └── watermark.py         零宽度水印嵌入/提取                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                      │
+                    ┌─────────────────┼─────────────────┐
+                    ▼                 ▼                 ▼
+┌───────────────────────┐ ┌───────────────────────┐ ┌───────────────────────┐
+│ TIER 2A: 国内学者轨道 │ │ TIER 2B: 国际导师轨道 │ │ TIER 2C: 海归学者轨道 │
+│ domestic/             │ │ international/        │ │ cross_border/         │
+│ ─────────────────     │ │ ──────────────────    │ │ ────────────────      │
+│                       │ │                       │ │                       │
+│ data_importer.py      │ │ data_fetcher.py       │ │ merger.py             │
+│   └─ CNKI/万方/WoS    │ │   └─ OpenAlex/S2/ORCID│ │   └─ 合并国内外数据   │
+│   └─ 去重 & 标准化    │ │   └─ GS/PubPeer/RW    │ │                       │
+│                       │ │                       │ │ validator.py          │
+│ data_validator.py     │ │ data_validator.py     │ │   └─ 跨境一致性校验   │
+│   └─ Schema校验       │ │   └─ 国际Schema校验   │ │                       │
+│   └─ 异常标记         │ │                       │ │                       │
+│                       │ │ scholar_data_builder  │ │                       │
+│ scholar_data_builder  │ │ evaluator.py          │ │                       │
+│   └─ 构建 scholar_data│ │   └─ JCR/CiteScore    │ │                       │
+│                       │ │   └─ 任期基准评估     │ │                       │
+│ review_matcher.py     │ │ heuristics_classifier │ │                       │
+│   └─ 导师评价网匹配   │ │   └─ I01-I07 异常检测 │ │                       │
+│   └─ 14维度情感分析   │ │                       │ │                       │
+│                       │ │ xiaohongshu_client    │ │                       │
+│ wechat_search.py      │ │   └─ 小红书导师评价   │ │                       │
+│   └─ 微信公众号文章   │ │                       │ │                       │
+│                       │ │ missing_reporter.py   │ │                       │
+│                       │ │   └─ 缺失信息报告     │ │                       │
+└───────────────────────┘ └───────────────────────┘ └───────────────────────┘
+           │                         │                         │
+           └─────────────────────────┴─────────────────────────┘
+                                      │
+                                      ▼  scholar_data.json
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  TIER 3: 共享分析引擎层 (Analysis Engines)                                  │
+│  ─────────────────────────────────────────                                  │
+│                                                                             │
+│  analysis/                                                                  │
+│  ├── text_profiler.py          PDF/文本提取 & 基础统计                      │
+│  ├── paper_quality_rubric.py   六维质量评分 (A/B+/B/C/D)                    │
+│  ├── hybrid_scorer.py          脚本+LLM混合评分工作流                       │
+│  ├── stylometry_profiler.py    语言风格计量学 & 代笔检测                    │
+│  ├── citation_profiler.py      引用结构分析 (自引/互引/卡特尔)              │
+│  ├── common_heuristics.py      共享异常规则 (C01-C07)                       │
+│  └── review_aggregator.py      多源评论合并 (国内+小红书+RMP)               │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                      │
+                                      ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  TIER 4: 关系网络层 (Network & Timeline)                                    │
+│  ───────────────────────────────────────                                    │
+│                                                                             │
+│  network/                                                                   │
+│  ├── network_visualizer.py     D3.js 交互式力导向关系图谱                   │
+│  ├── timeline_weaver.py        统一时间线编织 & 耦合窗口检测                │
+│  ├── grant_linker.py           基金号关联分析                               │
+│  ├── negative_space_analyzer.py 官方通报"缺失信息"分析                      │
+│  └── investigation_retrospector.py 调查复盘 & 经验提取                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                      │
+                    ┌─────────────────┴─────────────────┐
+                    ▼                                   ▼
+┌─────────────────────────────────┐ ┌───────────────────────────────────────┐
+│ TIER 5A: 报告生成层 (v2.0)      │ │ TIER 5B: 深度证据层 (v3.0)  ← 新增   │
+│ report/                         │ │ deep_evidence/                        │
+│ ─────────                       │ │ ─────────────────                     │
+│                                 │ │                                       │
+│ report_template.md              │ │ data_forensics/                       │
+│   └─ 国内学者报告模板           │ │   ├─ stats_reverse_engineer.py   P1 ✅│
+│                                 │ │   ├─ image_metadata_extractor.py P1 ✅│
+│ international_template.md       │ │   └─ (data_availability_validation    │
+│   └─ 国际导师报告模板           │ │       已删除)                         │
+│                                 │ │                                       │
+│ report_prompt_optimizer.py      │ │ publication_trace/                    │
+│   └─ 提示词优化器               │ │   ├─ preprint_monitor.py         P0 ✅│
+│                                 │ │   ├─ conference_paper_mapper.py  P2 ✅│
+│                                 │ │   ├─ bilingual_publication_detector ✅│
+│                                 │ │   └─ crossref_event_tracker.py   P2 ✅│
+│                                 │ │                                       │
+│                                 │ │ ethics_audit/                         │
+│                                 │ │   ├─ ethics_statement_parser.py  P1 ✅│
+│                                 │ │   └─ clinical_trial_registry_checker ✅│
+│                                 │ │                                       │
+│                                 │ │ peer_review_intel/                    │
+│                                 │ │   ├─ review_cycle_analyzer.py    P0 ✅│
+│                                 │ │   ├─ editorial_self_publishing_detector│
+│                                 │ │   │                                P2 ✅│
+│                                 │ │   ├─ recommended_reviewer_network  P2 ✅│
+│                                 │ │   └─ journal_retraction_history.py P2 ✅│
+│                                 │ │                                       │
+│                                 │ │ evidence_compiler/                    │
+│                                 │ │   ├─ signal_aggregator.py        P2 ✅│
+│                                 │ │   ├─ evidence_chain_builder.py   P2 ✅│
+│                                 │ │   └─ (journal_submission_packager     │
+│                                 │ │       已删除)                         │
+│                                 │ │                                       │
+└─────────────────────────────────┘ └───────────────────────────────────────┘
+                                      │
+                                      ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  TIER 6: Schema & 规范层                                                    │
+│  ─────────────────────────                                                  │
+│                                                                             │
+│  schema/                                                                    │
+│  ├── scholar_data.schema.json           国内学者数据Schema                  │
+│  ├── international_scholar.schema.json  国际学者数据Schema                  │
+│  └── corruption_network.schema.json     腐败网络Schema                      │
+│                                                                             │
+│  config.template.yaml               调查配置模板                          │
+│  evaluation_baselines.md            学科/机构分级评估基准                   │
+│  report_language_spec.md            报告语言规范                            │
+│  heuristics.md                      异常检测启发规则汇总                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+  数据流 (Data Flow)
+================================================================================
+
+  人工采集 ──→  data_importer / data_fetcher  ──→  scholar_data.json
+     ↑                                              │
+     │                                              ▼
+  CNKI/WoS/官网                              analysis/ (质量评分)
+  PDF/专著/学位论文                          network/ (关系图谱)
+     ↑                                              │
+     │                                              ▼
+  最终报告 ←── report/ ←── deep_evidence/ ←── 信号聚合
+  (Markdown/PDF)           (补充取证)
+
+================================================================================
+  关键数字 (v3.0 完成后)
+================================================================================
+
+  Python代码总量:     ~18,000+ 行
+  测试用例:           296 个 (全部通过)
+  CLI子命令:          32 个
+  已实现模块:         46 个 Python 文件
+  v3.0 deep_evidence: 5 个子模块, 12 个脚本, 全部实现
+  JSON Schema:        3 个
+  报告模板:           2 个 (国内/国际)
+
+================================================================================

@@ -1,0 +1,36 @@
+{
+  "id": "A123456789",
+  "display_name": "Alice Smith",
+  "orcid": "0000-0001-2345-6789",
+  "works_count": 42,
+  "cited_by_count": 3500,
+  "h_index": 28,
+  "works": [
+    {
+      "id": "W1",
+      "title": "Deep Learning for Natural Language Processing",
+      "publication_year": 2023,
+      "doi": "10.1109/TNNLS.2023.1234567",
+      "authorships": [
+        {"author": {"display_name": "Alice Smith"}, "raw_author_name": "Alice Smith"},
+        {"author": {"display_name": "Bob Jones"}, "raw_author_name": "Bob Jones"}
+      ],
+      "host_venue": {"display_name": "IEEE Transactions on Neural Networks", "type": "journal"},
+      "open_access": {"is_oa": false, "oa_status": "closed"},
+      "cited_by_count": 45
+    },
+    {
+      "id": "W2",
+      "title": "Attention Mechanisms in Vision Transformers",
+      "publication_year": 2022,
+      "doi": "10.1038/s42256-022-00512-3",
+      "authorships": [
+        {"author": {"display_name": "Charlie Brown"}, "raw_author_name": "Charlie Brown"},
+        {"author": {"display_name": "Alice Smith"}, "raw_author_name": "Alice Smith"}
+      ],
+      "host_venue": {"display_name": "Nature Machine Intelligence", "type": "journal"},
+      "open_access": {"is_oa": true, "oa_status": "gold"},
+      "cited_by_count": 120
+    }
+  ]
+}

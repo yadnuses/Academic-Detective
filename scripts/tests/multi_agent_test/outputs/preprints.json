@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "script": "preprint_monitor",
+    "version": "1.0",
+    "timestamp": "2026-04-17T09:00:00",
+    "input_file": "./data/papers.json"
+  },
+  "signals": [
+    {
+      "type": "duplicate_submission",
+      "description": "预印本 arXiv:2301.12345 提交日期 2023-01-15，期刊论文投稿日期 2023-01-20，重叠5天",
+      "confidence": 0.72,
+      "paper_id": "10.1000/abc123",
+      "source": "preprint_monitor",
+      "evidence": {
+        "preprint_date": "2023-01-15",
+        "journal_submission_date": "2023-01-20",
+        "overlap_days": 5,
+        "title": "Machine Learning in Healthcare"
+      }
+    },
+    {
+      "type": "content_reuse",
+      "description": "预印本 bioRxiv:2023.02.456 与期刊论文《ML in Health》摘要相似度91%",
+      "confidence": 0.65,
+      "paper_id": "10.1000/def456",
+      "source": "preprint_monitor",
+      "evidence": {
+        "preprint_date": "2023-02-01",
+        "journal_date": "2023-05-15",
+        "similarity": 0.91,
+        "title": "ML in Health"
+      }
+    },
+    {
+      "type": "suspicious_gap",
+      "description": "期刊论文《Health AI》发表于2022-11-01，对应预印本上传于2023-01-10，期刊早于预印本70天",
+      "confidence": 0.85,
+      "paper_id": "10.1000/ghi789",
+      "source": "preprint_monitor",
+      "evidence": {
+        "journal_date": "2022-11-01",
+        "preprint_date": "2023-01-10",
+        "gap_days": -70,
+        "title": "Health AI"
+      }
+    }
+  ],
+  "details": {
+    "preprints": [
+      {"source": "arxiv", "title": "Machine Learning in Healthcare", "date": "2023-01-15"},
+      {"source": "biorxiv", "title": "ML in Health", "date": "2023-02-01"},
+      {"source": "arxiv", "title": "Health AI", "date": "2023-01-10"}
+    ]
+  }
+}

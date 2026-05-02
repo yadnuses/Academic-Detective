@@ -1,0 +1,157 @@
+{
+  "name": "Prof. Alice Smith",
+  "institution": "MIT",
+  "investigation_date": "2026-04-18",
+  "investigation_type": "international",
+  "basic_profile": {
+    "name": "Prof. Alice Smith",
+    "institution": "MIT",
+    "institution_en": "Massachusetts Institute of Technology",
+    "current_title": "Associate Professor",
+    "academic_title": "PhD Advisor",
+    "department": "Computer Science",
+    "discipline": "computer_science",
+    "education_background": [
+      {"degree": "PhD", "field": "Computer Science", "institution": "Stanford University", "year": 2010, "country": "USA"}
+    ],
+    "career_timeline": [
+      {"year": 2010, "event": "PhD graduated", "institution": "Stanford University", "title": "PhD"},
+      {"year": 2011, "event": "Joined as Assistant Professor", "institution": "MIT", "title": "Assistant Professor"},
+      {"year": 2018, "event": "Promoted to Associate Professor", "institution": "MIT", "title": "Associate Professor"}
+    ],
+    "tenure_status": "tenured",
+    "orcid": "0000-0001-2345-6789",
+    "google_scholar_id": "ABC123",
+    "openalex_id": "A123456789"
+  },
+  "academic_outputs": {
+    "claimed_papers": 45,
+    "verified_papers": 42,
+    "claimed_monographs": 0,
+    "verified_monographs": 0,
+    "source_databases": ["openalex", "semantic_scholar", "google_scholar"],
+    "recent_3yr_papers": 8,
+    "paper_list": [
+      {
+        "title": "Deep Learning for Natural Language Processing",
+        "authors": ["Alice Smith", "Bob Jones"],
+        "journal": "IEEE Transactions on Neural Networks",
+        "year": 2023,
+        "doi": "10.1109/TNNLS.2023.1234567",
+        "citation_count": 45,
+        "jcr_quartile": 1,
+        "open_access": false,
+        "oa_type": "closed",
+        "author_position": "first"
+      },
+      {
+        "title": "Attention Mechanisms in Vision Transformers",
+        "authors": ["Charlie Brown", "Alice Smith"],
+        "journal": "Nature Machine Intelligence",
+        "year": 2022,
+        "doi": "10.1038/s42256-022-00512-3",
+        "citation_count": 120,
+        "jcr_quartile": 1,
+        "open_access": true,
+        "oa_type": "gold",
+        "author_position": "last"
+      },
+      {
+        "title": "Reinforcement Learning for Robotics",
+        "authors": ["Alice Smith", "David Lee", "Eve Wang"],
+        "journal": "Frontiers in Robotics and AI",
+        "year": 2024,
+        "doi": "10.3389/frobt.2024.567890",
+        "citation_count": 3,
+        "jcr_quartile": null,
+        "open_access": true,
+        "oa_type": "gold",
+        "author_position": "first",
+        "is_predatory_flag": false
+      }
+    ],
+    "preprints": [
+      {
+        "title": "Self-Supervised Learning Survey",
+        "source": "arXiv",
+        "identifier": "arXiv:2401.12345",
+        "year": 2024
+      }
+    ]
+  },
+  "quality_assessment": {
+    "originality_score": 82,
+    "theoretical_depth": 78,
+    "journal_quality": "Q1 dominant",
+    "metrics_summary": {
+      "h_index": 28,
+      "h_index_sources": ["google_scholar", "semantic_scholar"],
+      "i10_index": 45,
+      "total_citations": 3500,
+      "citations_per_paper": 83,
+      "self_citation_ratio": 0.12
+    },
+    "journal_quality_summary": {
+      "q1_count": 25,
+      "q2_count": 10,
+      "q3_count": 4,
+      "q4_count": 2,
+      "unknown_count": 1,
+      "oa_ratio": 0.35,
+      "predatory_flagged_count": 0
+    },
+    "tenure_evaluation": {
+      "applicable": true,
+      "years_since_phd": 16,
+      "institution_tier": "r1",
+      "meets_expectations": true,
+      "gaps": [],
+      "metrics": {}
+    }
+  },
+  "relationship_network": {
+    "advisors": [
+      {"name": "Prof. John Doe", "institution": "Stanford University", "relation": "phd_advisor"}
+    ],
+    "collaborators": [
+      {"name": "Bob Jones", "co_paper_count": 8, "institution": "Google Research"}
+    ],
+    "editorial_boards": [
+      {"journal": "IEEE TNNLS", "role": "Associate Editor", "start_year": 2020}
+    ],
+    "institutional_affiliations": [
+      {"institution": "MIT", "role": "Associate Professor", "start_year": 2011, "end_year": null}
+    ]
+  },
+  "anomalies": [],
+  "confidence_ratings": {
+    "basic_profile": "high",
+    "output_quantity": "high",
+    "quality_assessment": "medium",
+    "relationship_network": "medium",
+    "anomaly_detection": "low",
+    "student_reviews": "low"
+  },
+  "student_reviews": {
+    "status": "loaded",
+    "xiaohongshu": {
+      "matched": true,
+      "review_count": 5,
+      "sentiment_distribution": {"positive": 2, "neutral": 1, "negative": 2},
+      "dimension_summary": {
+        "graduation_difficulty_avg": 3.0,
+        "workload_avg": 4.0,
+        "supportiveness_avg": 3.5
+      },
+      "recommendation_ratio": 0.6,
+      "red_flags": []
+    }
+  },
+  "funding_verification": {
+    "grants": [
+      {"agency": "NSF", "title": "Deep Learning for NLP", "amount_usd": 500000, "start_year": 2020, "end_year": 2024, "role": "PI"}
+    ],
+    "total_funding_usd": 500000,
+    "has_major_grant": true
+  }
+}

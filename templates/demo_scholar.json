@@ -1,0 +1,82 @@
+{
+  "name": "李明华",
+  "institution": "复旦大学",
+  "investigation_date": "2026-04-17",
+  "basic_profile": {
+    "name": "李明华",
+    "institution": "复旦大学",
+    "current_title": "教授、博士生导师",
+    "academic_title": "教授",
+    "education_background": [
+      {"degree": "博士", "field": "金融学", "institution": "复旦大学", "year": 2008}
+    ],
+    "career_timeline": [
+      {"year": 2008, "event": "获得博士学位", "institution": "复旦大学"},
+      {"year": 2010, "event": "留校任教", "institution": "复旦大学"},
+      {"year": 2014, "event": "晋升为副教授", "institution": "复旦大学"},
+      {"year": 2019, "event": "晋升为教授", "institution": "复旦大学"}
+    ],
+    "overseas_experience": "2012-2013年赴哈佛大学访学一年"
+  },
+  "academic_outputs": {
+    "claimed_papers": 68,
+    "verified_papers": 52,
+    "claimed_monographs": 2,
+    "verified_monographs": 2,
+    "source_databases": ["CNKI", "Web of Science", "SSCI"],
+    "recent_3yr_papers": 15
+  },
+  "quality_assessment": {
+    "originality_score": 72,
+    "theoretical_depth": 68,
+    "journal_quality": "B+级为主"
+  },
+  "relationship_network": {
+    "advisor": {
+      "name": "陈建国",
+      "institution": "北京大学"
+    },
+    "key_collaborators": [
+      {"name": "王晓东", "institution": "上海交通大学", "co_paper_count": 14, "year_range": "2015-2024"},
+      {"name": "张丽华", "institution": "复旦大学", "co_paper_count": 9, "year_range": "2018-2024"},
+      {"name": "刘志强", "institution": "中国社会科学院", "co_paper_count": 6, "year_range": "2020-2023"},
+      {"name": "赵敏", "institution": "浙江大学", "co_paper_count": 4, "year_range": "2019-2022"},
+      {"name": "孙伟", "institution": "清华大学", "co_paper_count": 3, "year_range": "2021-2023"}
+    ],
+    "editorial_connections": [
+      {"journal": "金融研究", "role": "编委", "since": "2017"},
+      {"journal": "经济理论与经济管理", "role": "副主编", "since": "2020"},
+      {"journal": "International Review of Economics & Finance", "role": "Associate Editor", "since": "2021"}
+    ],
+    "institutional_dependencies": [
+      {"name": "上海证券交易所", "relationship": "特聘研究员"},
+      {"name": "某证券公司研究所", "relationship": "首席经济学家顾问"},
+      {"name": "中国金融学会", "relationship": "理事"},
+      {"name": "上海财经大学", "relationship": "兼职教授"}
+    ],
+    "citation_analysis": {
+      "status": "loaded",
+      "self_citation_ratio": 0.18,
+      "team_citation_ratio": 0.32,
+      "h_index_anomalies": 1,
+      "red_flags": [
+        {"signal": "Persistent citer (potential cartel)", "detail": "Author '王晓东' cited 14 times", "severity": "medium-high"},
+        {"signal": "Persistent citer (potential cartel)", "detail": "Author '张丽华' cited 9 times", "severity": "medium"},
+        {"signal": "Dense yearly citation", "detail": "Author '刘志强' cited 6 times in 2022", "severity": "medium"},
+        {"signal": "High self-citation cluster", "detail": "3 papers with >40% self-citation detected", "severity": "medium"}
+      ]
+    }
+  },
+  "anomalies": [
+    {"severity": "medium", "description": "合作论文的 62% 集中于两位合作者（王晓东、张丽华）"},
+    {"severity": "medium", "description": "自引率 18%，略超人文社科正常阈值（<20%）"},
+    {"severity": "low", "description": "在某证券公司担任顾问，存在潜在商业利益披露问题"}
+  ],
+  "confidence_ratings": {
+    "basic_profile": "high",
+    "output_quantity": "high",
+    "quality_assessment": "medium",
+    "relationship_network": "medium",
+    "anomaly_detection": "medium"
+  }
+}

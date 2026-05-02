@@ -1,0 +1,57 @@
+{
+  "agent": "laozhoumo",
+  "phase": "deep_evidence",
+  "status": "CRITICAL_DETECTED",
+  "timestamp": "2026-04-17T09:15:00",
+  "input_sources": [
+    "agent_logs/zhu_xiansheng/summary.json",
+    "agent_logs/huangmao/findings.json",
+    "agent_logs/dududu/recommendations.json"
+  ],
+  "summary": {
+    "signals_found": 3,
+    "max_confidence": 0.85,
+    "critical_marked": true,
+    "findings_from_huangmao": 3,
+    "recommendations_from_dududu": 3
+  },
+  "decision_required": true,
+  "decision_context": {
+    "location": "TEST-2026-0417 / deep_evidence / preprint_monitor",
+    "key_finding": "期刊论文《Health AI》发表于2022-11-01，对应预印本上传于2023-01-10，期刊早于预印本70天（置信度0.85）",
+    "impact": "物理上不可能的时间顺序，暗示发表流程存在严重异常",
+    "cross_signal_analysis": "三篇论文主题高度相关，时间线呈现'压缩'与'倒置'两种异常，嘟嘟嘟评估为系统性偏离"
+  },
+  "options": [
+    {
+      "label": "A. 验证审稿周期",
+      "description": "运行 review_cycle_analyzer，确认《Health AI》的投稿日期和审稿时长",
+      "priority": 1,
+      "suggested_by": "dududu + huangmao"
+    },
+    {
+      "label": "B. 追踪外部质疑",
+      "description": "运行 crossref_event_tracker，检查PubPeer讨论、撤稿标记、更正历史",
+      "priority": 2,
+      "suggested_by": "dududu + huangmao"
+    },
+    {
+      "label": "C. 深度数据取证",
+      "description": "运行 stats_reverse_engineer + image_metadata_extractor，检测统计异常和图片重复",
+      "priority": 3,
+      "suggested_by": "dududu + huangmao"
+    },
+    {
+      "label": "D. 记录并继续",
+      "description": "标记为高风险信号，继续执行当前任务流",
+      "priority": 4,
+      "suggested_by": "laozhoumo"
+    }
+  ],
+  "agent_status_after_pause": {
+    "zhu_xiansheng": "PAUSED (等待新指令)",
+    "huangmao": "PAUSED (漫游中，已提交3个发现)",
+    "dududu": "PAUSED (分析完成，已提交3条推荐)",
+    "laozhoumo": "WAITING_FOR_HUMAN_DECISION"
+  }
+}

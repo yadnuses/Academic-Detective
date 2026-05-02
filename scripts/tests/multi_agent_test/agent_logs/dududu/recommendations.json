@@ -1,0 +1,14 @@
+{
+  "agent": "dududu",
+  "recommendations": [
+    {
+      "priority": 2,
+      "tool": "evidence_compiler/signal_aggregator",
+      "reason": "高密度未分类信号集群 detected，建议用信号聚合器重新归类。",
+      "expected_value": "从无序信号中提取隐藏模式，生成新的假设方向",
+      "rule_id": "DYNAMIC-CLUSTER"
+    }
+  ],
+  "critical": false,
+  "confidence_overall": 0.7355
+}

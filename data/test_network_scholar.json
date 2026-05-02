@@ -1,0 +1,73 @@
+{
+  "name": "张三",
+  "institution": "北京大学",
+  "investigation_date": "2026-04-17",
+  "basic_profile": {
+    "name": "张三",
+    "institution": "北京大学",
+    "current_title": "教授",
+    "education_background": [
+      {"degree": "博士", "field": "经济学", "institution": "北京大学", "year": 2005}
+    ],
+    "career_timeline": [
+      {"year": 2005, "event": "获得博士学位", "institution": "北京大学"},
+      {"year": 2010, "event": "晋升为副教授", "institution": "北京大学"},
+      {"year": 2015, "event": "晋升为教授", "institution": "北京大学"}
+    ]
+  },
+  "academic_outputs": {
+    "claimed_papers": 50,
+    "verified_papers": 45,
+    "claimed_monographs": 3,
+    "verified_monographs": 3,
+    "source_databases": ["CNKI", "Web of Science"],
+    "recent_3yr_papers": 12
+  },
+  "quality_assessment": {
+    "originality_score": 75,
+    "theoretical_depth": 72,
+    "journal_quality": "A/B+混合"
+  },
+  "relationship_network": {
+    "advisor": {
+      "name": "李四",
+      "institution": "清华大学"
+    },
+    "key_collaborators": [
+      {"name": "王五", "institution": "复旦大学", "co_paper_count": 8, "year_range": "2015-2023"},
+      {"name": "赵六", "institution": "上海交通大学", "co_paper_count": 5, "year_range": "2018-2022"},
+      {"name": "孙七", "institution": "北京大学", "co_paper_count": 12, "year_range": "2010-2024"}
+    ],
+    "editorial_connections": [
+      {"journal": "经济研究", "role": "编委", "since": "2018"},
+      {"journal": "管理世界", "role": "副主编", "since": "2020"}
+    ],
+    "institutional_dependencies": [
+      {"name": "中国社会科学院", "relationship": "兼职研究员"},
+      {"name": "某咨询公司", "relationship": "顾问"}
+    ],
+    "citation_analysis": {
+      "status": "loaded",
+      "self_citation_ratio": 0.15,
+      "team_citation_ratio": 0.25,
+      "h_index_anomalies": 1,
+      "red_flags": [
+        {"signal": "Persistent citer (potential cartel)", "detail": "Author '王五' cited 8 times", "severity": "medium-high"},
+        {"signal": "Dense yearly citation", "detail": "Author '赵六' cited 4 times in 2022", "severity": "medium-high"}
+      ]
+    }
+  },
+  "anomalies": [],
+  "confidence_ratings": {
+    "basic_profile": "high",
+    "output_quantity": "high",
+    "quality_assessment": "medium",
+    "relationship_network": "medium",
+    "anomaly_detection": "medium",
+    "student_reviews": "low"
+  },
+  "student_reviews": {
+    "status": "no_report_found",
+    "matched": false
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "scholar_name": "张三",
+  "generated_at": "2026-04-17T17:21:41.495444",
+  "node_count": 11,
+  "link_count": 10,
+  "nodes": [
+    {
+      "id": "scholar",
+      "name": "张三",
+      "type": "scholar",
+      "institution": "北京大学",
+      "detail": "调查对象: 张三 (北京大学)"
+    },
+    {
+      "id": "advisor_李四",
+      "name": "李四",
+      "type": "advisor",
+      "institution": "清华大学",
+      "detail": "导师: 李四 (清华大学)"
+    },
+    {
+      "id": "collab_0_王五",
+      "name": "王五",
+      "type": "collaborator",
+      "institution": "复旦大学",
+      "co_paper_count": 8,
+      "detail": "合作者: 王五 | 机构: 复旦大学 | 合作论文: 8 篇 | 合作时段: 2015-2023"
+    },
+    {
+      "id": "collab_1_赵六",
+      "name": "赵六",
+      "type": "collaborator",
+      "institution": "上海交通大学",
+      "co_paper_count": 5,
+      "detail": "合作者: 赵六 | 机构: 上海交通大学 | 合作论文: 5 篇 | 合作时段: 2018-2022"
+    },
+    {
+      "id": "collab_2_孙七",
+      "name": "孙七",
+      "type": "collaborator",
+      "institution": "北京大学",
+      "co_paper_count": 12,
+      "detail": "合作者: 孙七 | 机构: 北京大学 | 合作论文: 12 篇 | 合作时段: 2010-2024"
+    },
+    {
+      "id": "edit_0_经济研究",
+      "name": "经济研究",
+      "type": "editorial",
+      "role": "编委",
+      "since": "2018",
+      "detail": "期刊: 经济研究 | 职务: 编委 | 起始: 2018"
+    },
+    {
+      "id": "edit_1_管理世界",
+      "name": "管理世界",
+      "type": "editorial",
+      "role": "副主编",
+      "since": "2020",
+      "detail": "期刊: 管理世界 | 职务: 副主编 | 起始: 2020"
+    },
+    {
+      "id": "inst_0_中国社会科学院",
+      "name": "中国社会科学院",
+      "type": "institution",
+      "relationship": "兼职研究员",
+      "detail": "机构: 中国社会科学院 | 关系: 兼职研究员"
+    },
+    {
+      "id": "inst_1_某咨询公司",
+      "name": "某咨询公司",
+      "type": "institution",
+      "relationship": "顾问",
+      "detail": "机构: 某咨询公司 | 关系: 顾问"
+    },
+    {
+      "id": "citer_王五",
+      "name": "王五",
+      "type": "citer",
+      "detail": "高频引用者: 王五 | Author '王五' cited 8 times",
+      "signal": "Persistent citer (potential cartel)"
+    },
+    {
+      "id": "citer_赵六",
+      "name": "赵六",
+      "type": "citer",
+      "detail": "高频引用者: 赵六 | Author '赵六' cited 4 times in 2022",
+      "signal": "Dense yearly citation"
+    }
+  ],
+  "links": [
+    {
+      "source": "scholar",
+      "target": "advisor_李四",
+      "type": "advisor_of",
+      "detail": "张三 的导师是 李四"
+    },
+    {
+      "source": "scholar",
+      "target": "collab_0_王五",
+      "type": "collaborates_with",
+      "detail": "张三 与 王五 存在合作关系",
+      "weight": 8
+    },
+    {
+      "source": "scholar",
+      "target": "collab_1_赵六",
+      "type": "collaborates_with",
+      "detail": "张三 与 赵六 存在合作关系",
+      "weight": 5
+    },
+    {
+      "source": "scholar",
+      "target": "collab_2_孙七",
+      "type": "collaborates_with",
+      "detail": "张三 与 孙七 存在合作关系",
+      "weight": 12
+    },
+    {
+      "source": "scholar",
+      "target": "edit_0_经济研究",
+      "type": "editorial_board",
+      "detail": "张三 担任 经济研究 的 编委"
+    },
+    {
+      "source": "scholar",
+      "target": "edit_1_管理世界",
+      "type": "editorial_board",
+      "detail": "张三 担任 管理世界 的 副主编"
+    },
+    {
+      "source": "scholar",
+      "target": "inst_0_中国社会科学院",
+      "type": "affiliated_with",
+      "detail": "张三 与 中国社会科学院 存在 兼职研究员 关系"
+    },
+    {
+      "source": "scholar",
+      "target": "inst_1_某咨询公司",
+      "type": "affiliated_with",
+      "detail": "张三 与 某咨询公司 存在 顾问 关系"
+    },
+    {
+      "source": "scholar",
+      "target": "citer_王五",
+      "type": "cites",
+      "detail": "Author '王五' cited 8 times",
+      "is_anomaly": true
+    },
+    {
+      "source": "scholar",
+      "target": "citer_赵六",
+      "type": "cites",
+      "detail": "Author '赵六' cited 4 times in 2022",
+      "is_anomaly": true
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "source_file": "test_paper.txt",
+  "extraction_timestamp": "2026-04-17T17:11:47.164647",
+  "basic_stats": {
+    "total_characters": 1351,
+    "chinese_characters": 501,
+    "english_words": 89,
+    "total_lines": 51,
+    "estimated_words": 590
+  },
+  "term_frequency": {
+    "political_discourse": {
+      "total": 0,
+      "details": {}
+    },
+    "academic_discourse": {
+      "total": 0,
+      "details": {}
+    },
+    "theory_terms": {
+      "total": 0,
+      "details": {}
+    },
+    "methodology": {
+      "total": 2,
+      "details": {
+        "定性": 1,
+        "定量": 1
+      }
+    }
+  },
+  "originality_markers": {
+    "total": 1,
+    "details": {
+      "我们发现": 1
+    }
+  },
+  "references": {
+    "found": true,
+    "count": 2,
+    "foreign_ratio": 0.5,
+    "latest_year": 2020,
+    "sample": "[1] Smith, J. et al. (2020). Data availability in academic research. Nature, 585, 123-125.\n[2] 李四. (2019). 学术规范研究. 北京: 科学出版社."
+  },
+  "chapter_structure": [
+    "第一章 引言",
+    "第二章 研究方法",
+    "第三章 研究结果",
+    "第四章 讨论",
+    "第五章 结论",
+    "3.1 数据可用性声明的现状",
+    "3.2 影响因素分析"
+  ],
+  "visual_elements": {
+    "figure_count": 1,
+    "table_count": 1,
+    "has_figures": true,
+    "has_tables": true,
+    "total_visual_elements": 2
+  },
+  "methods_section": {
+    "found": true,
+    "length": 147,
+    "preview": "本研究采用定量与定性相结合的方法。首先，我们从CNKI和Web of Science数据库中随机抽取了100篇2018-2023年间发表的论文。然后，我们使用内容分析法对每篇论文的数据可用性声明进行了编码。\n\n数据分析采用SPSS 26.0软件，使用卡方检验和Logistic回归分析影响因素。",
+    "has_quantitative_methods": true,
+    "has_qualitative_methods": true,
+    "method_type": "mixed"
+  },
+  "data_availability": {
+    "found": true,
+    "statement_preview": "statements is a widespread phenomenon. Our results show that 78% of papers lack clear data sharing policies. We conclude that institutional guidelines should mandate data availability declarations.",
+    "has_supplementary_material_reference": false,
+    "reproducibility_indicators": {
+      "mentions_open_data": false,
+      "mentions_code": true,
+      "mentions_replication": false
+    }
+  },
+  "author_contributions": {
+    "found": true,
+    "has_formal_credit_statement": false,
+    "statement_preview": "明\n张三：概念化、方法论、正式分析、写作——原稿。李四：调查、数据整理、可视化。王五：监督、资金获取、写作——审阅与编辑。\n\n参考文献\n[1] Smith, J. et al. (2020). Data availability in academic research. Nature, 585, 123-125.\n[2] 李四. (2019). 学术规范研究. 北京: 科学出版社.",
+    "detected_contribution_types": [
+      "可视化",
+      "调查",
+      "分析",
+      "数据",
+      "方法",
+      "写作",
+      "审阅"
+    ]
+  },
+  "english_abstract": {
+    "found": true,
+    "length": 369,
+    "word_count": 51,
+    "sentence_count": 5,
+    "avg_sentence_length": 10.2,
+    "has_structure": true,
+    "imrad_score": 4,
+    "has_keywords_section": true,
+    "quality_indicators": {
+      "has_objective": true,
+      "has_methods": true,
+      "has_results": true,
+      "has_conclusion": true
+    },
+    "preview": "This study investigates the core issues of data quality in academic investigations. Through analysis of 100 academic papers, we found that the absence of data availability statements is a widespread phenomenon. Our results show that 78% of papers lack clear data sharing policies. We conclude that institutional guidelines should mandate data availability declarations."
+  },
+  "text_preview": "测试论文标题：学术调查中的数据质量问题研究\n\n摘要\n本文研究了学术调查中数据质量的核心问题。通过对100篇学术论文的分析，我们发现数据可用性声明的缺失是一个普遍现象。\n\nAbstract\nThis study investigates the core issues of data quality in academic investigations. Through analysis of 100 academic papers, we found that the absence of data availability statements is a widespread phenomenon. Our results show that 78% of papers lack clear data sharing policies. We conclude that institutional guidelines should mandate data availability declarations.\n\nKeywords: data quality, academic investigation, reproducibility\n\n第一章 引言\n\n学术诚信是学术研究的基石。近年来，数据造假、图片重复使用等问题频发，引发了学术界的广泛关注。\n\n第二章 研究方法\n\n本研究采用定量与定性相结合的方法。首先，我们从CNKI和Web of Science数据库中随机抽取了100篇2018-2023年间发表的论文。然后，我们使用内容分析法对每篇论文的数据可用性声明进行了编码。\n\n数据分析采用SPSS 26.0软件，使用卡方检验和Logistic回归分析影响因素。\n\n第三章 研究结果\n\n3.1 数据可用性声明的现状\n\n如图1所示，仅有22%的论文包含了明确的数据可用性声明。表1展示了不同学科之间的差异。\n\n图1 数据可用性声明的比例分布\n\n表1 不同学科数据可用性声明的比较\n\n3.2 影响因素分析\n\n回归分析结果显示，期刊等级（OR=2.34, p<0.01）和研究领域（OR=1.89, p<0.05）是显著的影响因素。\n\n第四章 讨论\n\n本研究的发现与Smith等人(2020)的研究一致。值得注意的是，国内期刊在此方面明显滞后于国际期刊。\n\n第五章 结论\n\n综上所述，学术界亟需建立统一的数据可用性声明标准。\n\n数据可用性声明\n本研究使用的数据集可从GitHub仓库(https://github.com/example/dataset)获取。分析代码使用Python 3.9编写，已在Zenodo平台发布(DOI: 10.5281/zenodo.1234567)。\n\n作者贡献声明\n张三：概念化、方法论、正式分析、写作——原稿。李四：调查、数据整理、可视化。王五：监督、资金获取、写作——审阅与编辑。\n\n参考文献\n[1] Smith, J. et al. (2020). Data availability in academic research. Nature, 585, 123-125.\n[2] 李四. (2019). 学术规范研究. 北京: 科学出版社.\n"
+}

@@ -1,0 +1,23 @@
+# Academic Investigation Toolkit Dependencies
+
+# Data processing
+openpyxl>=3.1.0
+
+# YAML parsing (Python 3.11+ has built-in tomllib; PyYAML for config)
+PyYAML>=6.0
+
+# Testing
+pytest>=7.4.0
+
+# Optional: for wechat_search.py (camoufox/playwright)
+# playwright>=1.40.0
+
+# Optional: for xiaohongshu_client.py API mode
+# Install: pip install xhshow httpx playwright && playwright install chromium
+# xhshow>=0.1.9
+# httpx>=0.27.0
+# playwright>=1.40.0
+
+# Optional: for advanced NLP (stylometry/text profiling)
+# nltk>=3.8.0
+# scikit-learn>=1.3.0

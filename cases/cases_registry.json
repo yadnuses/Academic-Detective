@@ -1,0 +1,5 @@
+{
+  "cases": [],
+  "last_updated": "2026-05-02T23:00:00.000000",
+  "note": "案例注册信息已清空。如需注册新案例，请使用 python core/case_manager.py register 客户名"
+}

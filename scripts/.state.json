@@ -1,0 +1,13 @@
+{
+  "current_step": "collect",
+  "history": [
+    {
+      "step": "init",
+      "timestamp": "2026-04-30T23:41:11.474751"
+    }
+  ],
+  "config_path": "/Users/xiaoy/Desktop/academic-investigation-skill/scripts/config.yaml",
+  "case_name": "贾冀川_南京师范大学",
+  "case_dir": "/Users/xiaoy/Desktop/academic-investigation-skill/scripts",
+  "investigation_type": "domestic"
+}

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>张三学术档案调查报告（模板）</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.6;
+    color: #1a1a1a;
+    background: #fff;
+  }
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 18mm 20mm;
+    margin: 0 auto;
+    page-break-after: always;
+    position: relative;
+    background: #fff;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  /* Cover */
+  .cover-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #ffffff;
+  }
+  .cover-icon { font-size: 48pt; margin-bottom: 24pt; }
+  .cover-title { font-size: 28pt; font-weight: 600; letter-spacing: 2px; margin-bottom: 12pt; color: #1a1a1a; }
+  .cover-subtitle { font-size: 14pt; color: #555; margin-bottom: 36pt; }
+  .cover-meta { font-size: 11pt; color: #777; margin-bottom: 48pt; }
+  .cover-badge { display: inline-block; font-size: 10pt; color: #666; border: 1px solid #ccc; padding: 4pt 12pt; border-radius: 4pt; }
+
+  /* Typography */
+  h1.report-title { font-size: 16pt; font-weight: 600; text-align: center; margin-bottom: 18pt; color: #1a1a1a; }
+  h2 { font-size: 14pt; font-weight: 600; margin-top: 14pt; margin-bottom: 8pt; color: #1a1a1a; border-bottom: 1.5pt solid #1a1a1a; padding-bottom: 4pt; }
+  h3 { font-size: 11.5pt; font-weight: 600; margin-top: 10pt; margin-bottom: 6pt; color: #333; }
+  h4 { font-size: 10.5pt; font-weight: 600; margin-top: 8pt; margin-bottom: 4pt; color: #444; }
+  p { margin-bottom: 6pt; text-align: justify; }
+  ul, ol { margin-left: 16pt; margin-bottom: 6pt; }
+  li { margin-bottom: 3pt; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 8pt 0; font-size: 9.5pt; }
+  th, td { border: 0.5pt solid #ccc; padding: 5pt 6pt; text-align: left; vertical-align: top; }
+  th { background: #f5f5f5; font-weight: 600; }
+  tr:nth-child(even) { background: #fafafa; }
+
+  /* Info grid */
+  .info-grid { display: grid; grid-template-columns: 90pt 1fr; gap: 4pt 8pt; margin: 8pt 0; font-size: 9.5pt; }
+  .info-label { font-weight: 600; color: #444; }
+
+  /* Two column comparison */
+  .compare-box { display: grid; grid-template-columns: 1fr 1fr; gap: 12pt; margin: 10pt 0; }
+  .compare-col { background: #f9f9f9; border-radius: 4pt; padding: 10pt; }
+  .compare-col.pos { border-left: 3pt solid #2e7d32; }
+  .compare-col.neg { border-left: 3pt solid #c62828; }
+  .compare-title { font-weight: 600; font-size: 10pt; margin-bottom: 6pt; }
+  .compare-col.pos .compare-title { color: #2e7d32; }
+  .compare-col.neg .compare-title { color: #c62828; }
+  .compare-col ul { margin-left: 12pt; font-size: 9.5pt; }
+
+  /* Stats row */
+  .stats-row { display: flex; justify-content: space-around; text-align: center; margin: 14pt 0; }
+  .stat-item { flex: 1; }
+  .stat-num { font-size: 20pt; font-weight: 700; color: #1a1a1a; }
+  .stat-label { font-size: 8.5pt; color: #666; margin-top: 2pt; }
+
+  /* Evidence chain */
+  .evidence-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6pt; margin: 10pt 0; font-size: 8.5pt; }
+  .evidence-item { background: #f5f5f5; border-radius: 3pt; padding: 6pt; text-align: center; }
+  .evidence-item strong { display: block; font-size: 9.5pt; margin-bottom: 2pt; color: #333; }
+
+  /* Network diagram text */
+  .network-text { background: #f5f5f5; border-radius: 4pt; padding: 10pt; font-family: monospace; font-size: 9pt; line-height: 1.5; white-space: pre-wrap; margin: 8pt 0; }
+
+  /* Section label */
+  .section-label { font-size: 8pt; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2pt; }
+
+  /* Rating stars */
+  .rating { color: #f5a623; font-size: 9pt; }
+
+  /* Footer on each page */
+  .page-footer { position: absolute; bottom: 10mm; left: 20mm; right: 20mm; font-size: 8pt; color: #999; text-align: center; border-top: 0.5pt solid #ddd; padding-top: 4pt; }
+</style>
+</head>
+<body>
+
+<!-- Page 1: Cover -->
+<div class="page cover-page">
+  <div class="cover-icon">📊</div>
+  <h1 class="cover-title">张三学术档案调查报告</h1>
+  <p class="cover-subtitle">基于多源数据的客观分析</p>
+  <div class="cover-meta">
+    <p>调查时间：2026年4月</p>
+    <p>报告版本：v2.0 优化版</p>
+  </div>
+  <div class="cover-badge">学术调查报告（模板）</div>
+</div>
+
+<!-- Page 2: Executive Summary -->
+<div class="page">
+  <h1 class="report-title">执行摘要</h1>
+
+  <h2>核心发现概述</h2>
+  <p>张三（1977年生，某国家级研究机构研究员）的学术生涯呈现复杂的两面性。本报告基于33篇论文的深入分析、多维度数据交叉验证，揭示其学术成就与潜在问题并存的客观事实。</p>
+
+  <div class="stats-row">
+    <div class="stat-item"><div class="stat-num">33</div><div class="stat-label">审查论文总数</div></div>
+    <div class="stat-item"><div class="stat-num">14</div><div class="stat-label">持续产出年数</div></div>
+    <div class="stat-item"><div class="stat-num">90.9%</div><div class="stat-label">核心期刊占比</div></div>
+    <div class="stat-item"><div class="stat-num">16</div><div class="stat-label">未晋升年数</div></div>
+  </div>
+
+  <div class="compare-box">
+    <div class="compare-col pos">
+      <div class="compare-title">✓ 成就侧（正面评价）</div>
+      <ul>
+        <li>主权资产负债表研究具有开创性价值，首次系统编制中国主权资产负债表，填补国内研究空白</li>
+        <li>经济周期研究采用多种滤波方法，为中国周期分析提供实证支撑</li>
+        <li>学术产出稳定：14年持续产出（2004-2022），核心期刊占比90.9%</li>
+        <li>独立研究能力：60.6%第一作者，具备独立开展研究的能力</li>
+        <li>政策跟踪能力强：年度宏观经济展望系列连续14年</li>
+      </ul>
+    </div>
+    <div class="compare-col neg">
+      <div class="compare-title">✗ 问题侧（风险警示）</div>
+      <ul>
+        <li>职称晋升异常：16年未晋升研究员（同批次学者5-8年）</li>
+        <li>顶级期刊发表依赖资源：5篇《顶级经济期刊》全部依赖导师/领导合著，排名靠后（第3-5作者）</li>
+        <li>论文质量评估：专家评分70.9分，低于核心期刊标准（≥75分）</li>
+        <li>署名与贡献度风险：课题组论文21.2%，存在"挂名"风险</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>总体评价</h2>
+  <p>张三呈现出疑似"有贡献但依附型学术"的特征。其学术成就高度疑似依赖导师李某（《顶级经济期刊》主编，2005-2016）及后续领导资源提供的顶级期刊发表渠道，但在主权资产负债表等特定领域确有实质性贡献。一方面，其开创性研究为中国资产负债表研究奠定基础，14年持续产出体现研究稳定性；另一方面，16年未晋升的困境与5篇顶刊全合著的事实，反映出独立学术能力存在明显短板。学界公开评价资料相对有限，疑似存在"圈内保护"迹象。</p>
+  <div class="page-footer">张三学术档案调查报告 · 第 2 页 / 共 10 页</div>
+</div>
+
+<!-- Page 3-4: Basic Info -->
+<div class="page">
+  <h2>第一章：调查对象基本信息</h2>
+
+  <h3>1.1 个人基本信息</h3>
+  <table>
+    <tr><th style="width:30%">项目</th><th>内容</th></tr>
+    <tr><td>姓名</td><td>张三</td></tr>
+    <tr><td>出生年月</td><td>1977年生（48岁）</td></tr>
+    <tr><td>籍贯</td><td>某省某市</td></tr>
+    <tr><td>现任职务</td><td>某国家级研究机构宏观经济学研究室主任、研究员；某高校经济学院教授、博士生导师</td></tr>
+    <tr><td>兼任职务</td><td>某研究机构高级研究员</td></tr>
+  </table>
+
+  <h3>1.2 教育背景</h3>
+  <table>
+    <tr><th>时间</th><th>院校/机构</th><th>学位/经历</th></tr>
+    <tr><td>1995-1999</td><td>某财经大学金融系</td><td>经济学学士</td></tr>
+    <tr><td>2001-2007</td><td>某研究生院经济系</td><td>经济学硕士、博士（导师：李某）</td></tr>
+    <tr><td>2013-2014</td><td>美国斯坦福大学</td><td>访问学者</td></tr>
+  </table>
+
+  <h3>1.3 职业履历</h3>
+  <table>
+    <tr><th>时间</th><th>单位</th><th>职务/职称</th></tr>
+    <tr><td>1999-2001</td><td>某省属高校经济与管理系</td><td>助教</td></tr>
+    <tr><td>2007-2009</td><td>某国家级研究机构</td><td>助理研究员</td></tr>
+    <tr><td>2009.12-至今</td><td>某国家级研究机构</td><td>副研究员/研究员（已16年）</td></tr>
+  </table>
+  <div class="page-footer">张三学术档案调查报告 · 第 3 页 / 共 10 页</div>
+</div>
+
+<!-- Page 4-5: Contributions -->
+<div class="page">
+  <h2>第二章：学术贡献与正面评价</h2>
+
+  <h3>2.1 开创性研究成果</h3>
+  <h4>（1）主权资产负债表研究（2012年）</h4>
+  <p>《国家资产负债表研究》（上、下）发表于《顶级经济期刊》2012年第6、7期，是该领域的开创性研究。</p>
+  <table>
+    <tr><th>评估维度</th><th>评价</th><th>证据</th></tr>
+    <tr><td>学术价值</td><td>首次系统编制中国主权资产负债表，填补国内研究空白</td><td>开创性研究</td></tr>
+    <tr><td>方法严谨性</td><td>研究方法较为严谨，数据详实</td><td>估算方法说明详细，具有国际视野</td></tr>
+    <tr><td>理论依据</td><td>理论依据充分</td><td>结合国际经验与中国实际</td></tr>
+    <tr><td>质量评级</td><td>A-（优秀）</td><td>综合评分最高，为中国主权资产负债表研究奠定基础</td></tr>
+  </table>
+
+  <h4>（2）经济周期研究（2008年）</h4>
+  <p>《中国经济周期波动经验研究》采用多种滤波方法进行比较分析。</p>
+  <table>
+    <tr><th>评估维度</th><th>评价</th><th>证据</th></tr>
+    <tr><td>方法多样性</td><td>采用多种滤波方法进行比较</td><td>HP滤波、BK滤波、CF滤波</td></tr>
+    <tr><td>实证充分性</td><td>覆盖1949-2006年长周期数据</td><td>数据跨度大，时间序列完整</td></tr>
+    <tr><td>学术贡献</td><td>为中国周期分析提供实证基础</td><td>方法论贡献，被后续研究广泛引用</td></tr>
+    <tr><td>质量评级</td><td>B+（良好）</td><td>方法规范，应用合理</td></tr>
+  </table>
+
+  <h3>2.2 研究方法论优势</h3>
+  <table>
+    <tr><th>优势领域</th><th>具体表现</th><th>代表论文</th></tr>
+    <tr><td>滤波方法应用</td><td>方法选择合理，应用规范</td><td>《滤波方法在经济周期中的应用》</td></tr>
+    <tr><td>数据处理</td><td>官方统计数据使用规范</td><td>数据来源可靠，处理透明</td></tr>
+    <tr><td>技术路线</td><td>研究设计完整，技术路线清晰</td><td>多周期数据对比，逻辑严密</td></tr>
+  </table>
+  <div class="page-footer">张三学术档案调查报告 · 第 4 页 / 共 10 页</div>
+</div>
+
+<!-- Page 5-6: Output Stability & Rating -->
+<div class="page">
+  <h3>2.3 学术产出稳定性</h3>
+  <p><strong>时间跨度分析（2004-2022年，共14年）：</strong></p>
+  <table>
+    <tr><th>阶段</th><th>时间</th><th>发文量</th><th>特点</th></tr>
+    <tr><td>早期阶段</td><td>2004-2008</td><td>6篇</td><td>博士期间及入职初期，奠定基础</td></tr>
+    <tr><td>增长阶段</td><td>2009-2012</td><td>13篇</td><td>职称晋升关键期，产出密集</td></tr>
+    <tr><td>稳定阶段</td><td>2016-2022</td><td>14篇</td><td>持续产出，研究主题聚焦</td></tr>
+  </table>
+  <p><strong>核心发现：</strong></p>
+  <ul>
+    <li>持续产出14年，学术生命力稳定，无间断记录</li>
+    <li>核心期刊占比90.9%（30/33篇），期刊质量高</li>
+    <li>研究主题集中于宏观调控、经济周期等核心领域，形成学术标签</li>
+  </ul>
+
+  <h3>2.4 独立研究能力</h3>
+  <p><strong>署名分析（33篇论文）：</strong></p>
+  <table>
+    <tr><th>类型</th><th>数量</th><th>占比</th><th>说明</th></tr>
+    <tr><td>第一作者</td><td>20篇</td><td>60.6%</td><td>独立研究能力强，主导研究设计</td></tr>
+    <tr><td>独立论文</td><td>20篇</td><td>60.6%</td><td>无合著，独立完成数据收集与分析</td></tr>
+    <tr><td>核心领域论文</td><td>17篇</td><td>51.5%</td><td>宏观调控7篇+周期研究4篇+展望6篇</td></tr>
+  </table>
+
+  <h3>2.5 学术写作规范</h3>
+  <table>
+    <tr><th>评估维度</th><th>评分</th><th>评价</th></tr>
+    <tr><td>写作规范性</td><td>78/100</td><td>结构清晰，格式符合学术规范</td></tr>
+    <tr><td>语言表达</td><td>良好</td><td>准确、专业，符合学术写作标准</td></tr>
+    <tr><td>引用规范</td><td>80/100</td><td>引用清晰，经典文献准确</td></tr>
+  </table>
+
+  <h3>2.6 综合影响力评级</h3>
+  <p><strong>基于33篇论文的学术审查：</strong></p>
+  <table>
+    <tr><th>评估维度</th><th>得分</th><th>评级</th></tr>
+    <tr><td>学术贡献度</td><td>25/25</td><td>优秀</td></tr>
+    <tr><td>期刊质量</td><td>25/25</td><td>优秀</td></tr>
+    <tr><td>研究连贯性</td><td>20/20</td><td>良好</td></tr>
+    <tr><td>产出稳定性</td><td>20/20</td><td>优秀</td></tr>
+    <tr><td>独立研究能力</td><td>10/10</td><td>优秀</td></tr>
+    <tr><td><strong>综合评分</strong></td><td><strong>100/100</strong></td><td><strong>A（优秀）</strong></td></tr>
+  </table>
+  <div class="page-footer">张三学术档案调查报告 · 第 5 页 / 共 10 页</div>
+</div>
+
+<!-- Page 6-7: Problems -->
+<div class="page">
+  <h2>第三章：问题与风险调查</h2>
+
+  <h3>3.1 职称晋升异常（16年停滞）</h3>
+  <p><strong>时间线对比：</strong></p>
+  <table>
+    <tr><th>学者</th><th>入职</th><th>副研</th><th>研究员</th><th>耗时</th><th>现状</th></tr>
+    <tr><td>张三</td><td>2007</td><td>2009</td><td>未晋升</td><td>16年+</td><td>普通研究员</td></tr>
+    <tr><td>王某</td><td>1999</td><td>2003</td><td>2009</td><td>6年</td><td>所长</td></tr>
+    <tr><td>赵某</td><td>约2010</td><td>2013</td><td>2018</td><td>5年</td><td>研究员</td></tr>
+    <tr><td>陈某</td><td>约2005</td><td>2008</td><td>2013</td><td>5年</td><td>研究员</td></tr>
+  </table>
+  <p><strong>关键矛盾：</strong>张三具备持续产出能力（14年33篇），核心期刊占比90.9%，符合评审标准；但晋升速度显著慢于同批次学者10年以上。可能原因：独立学术成果不足、学术影响力有限、或存在其他评审障碍。</p>
+
+  <h3>3.2 顶级期刊发表依赖资源</h3>
+  <p><strong>《顶级经济期刊》发表记录（5篇）：</strong></p>
+  <table>
+    <tr><th>年份</th><th>论文标题</th><th>排序</th><th>第一作者</th><th>李某职务状态</th></tr>
+    <tr><td>2009</td><td>全球经济与中国经济复苏</td><td>第3作者</td><td>王某</td><td>副主编/主任</td></tr>
+    <tr><td>2010</td><td>宏观调控政策分析</td><td>第3作者</td><td>王某</td><td>主编</td></tr>
+    <tr><td>2012</td><td>国家资产负债表研究(上)</td><td>第4作者</td><td>孙某</td><td>主编</td></tr>
+    <tr><td>2012</td><td>国家资产负债表研究(下)</td><td>第4作者</td><td>孙某</td><td>主编</td></tr>
+    <tr><td>2019</td><td>现代化经济体系研究</td><td>第5作者</td><td>周某</td><td>已卸任</td></tr>
+    <tr><td>2020</td><td>宏观经济与高质量发展研究</td><td>第3作者</td><td>吴某</td><td>已卸任</td></tr>
+  </table>
+  <p><strong>核心问题：</strong>5篇全部为李某任期内/后发表；排名靠后（第3-5作者），实际贡献度存疑；李某卸任后，成功转向其他领导（周某、吴某）。</p>
+  <div class="page-footer">张三学术档案调查报告 · 第 6 页 / 共 10 页</div>
+</div>
+
+<!-- Page 7-8: Quality & Network -->
+<div class="page">
+  <h3>3.3 论文质量评估（低于核心期刊标准）</h3>
+  <p><strong>专家评估结果（基于33篇论文）：</strong></p>
+  <table>
+    <tr><th>评估维度</th><th>权重</th><th>得分</th><th>评价</th></tr>
+    <tr><td>学术贡献与创新性</td><td>25%</td><td>70/100</td><td>宏观经济展望类创新有限，经济周期理论基础薄弱</td></tr>
+    <tr><td>研究方法的科学性</td><td>20%</td><td>65/100</td><td>定性分析为主，定量研究不足，缺乏稳健性检验</td></tr>
+    <tr><td>数据使用的规范性</td><td>20%</td><td>72/100</td><td>数据来源可靠，但处理透明度不足</td></tr>
+    <tr><td>理论框架的严谨性</td><td>15%</td><td>68/100</td><td>理论分析停留概念层面，逻辑推理存在跳跃</td></tr>
+    <tr><td>引用规范性</td><td>10%</td><td>80/100</td><td>引用基本规范，但自引比例可能偏高</td></tr>
+    <tr><td>学术写作质量</td><td>10%</td><td>78/100</td><td>写作规范，但政策建议过于笼统</td></tr>
+    <tr><td><strong>综合评分</strong></td><td>100%</td><td><strong>70.9/100</strong></td><td><strong>B级（良好），低于核心期刊标准（≥75分）</strong></td></tr>
+  </table>
+
+  <h3>3.4 署名与贡献度风险</h3>
+  <table>
+    <tr><th>风险类型</th><th>数量</th><th>说明</th></tr>
+    <tr><td>课题组署名</td><td>7篇（21.2%）</td><td>个人贡献难以核实，存在"搭便车"风险</td></tr>
+    <tr><td>疑似重复发表</td><td>1篇</td><td>某论文个人+课题组双版本</td></tr>
+    <tr><td>合著排名靠后</td><td>3篇</td><td>与资深学者合著时多为第4-5作者</td></tr>
+  </table>
+
+  <h2>第四章：关系网络分析</h2>
+
+  <h3>4.1 资源依附链条</h3>
+  <p><strong>资源依附链条时间线（2009-2024）：</strong></p>
+  <table>
+    <tr><th>时期</th><th>核心资源人</th><th>发表成果</th><th>职务状态</th></tr>
+    <tr><td>2009-2012</td><td>李某</td><td>4篇《顶级经济期刊》</td><td>《顶级经济期刊》主编</td></tr>
+    <tr><td>2016</td><td>—</td><td>李某卸任</td><td>权力交接期</td></tr>
+    <tr><td>2019-2020</td><td>周某 / 吴某</td><td>2篇《顶级经济期刊》</td><td>继任领导</td></tr>
+    <tr><td>2024</td><td>郑某</td><td>继续合作发表</td><td>现任所长</td></tr>
+  </table>
+  <p>资源依附链条完整延续近15年：李某（2009-2012）→ 周某（2019）→ 吴某（2020）→ 郑某（2024）。</p>
+
+  <h3>4.2 网络特征分析</h3>
+  <table>
+    <tr><th>特征维度</th><th>具体表现</th></tr>
+    <tr><td>核心节点</td><td>李某（2005-2016）、周某（2019）、吴某（2020）、郑某（2024）</td></tr>
+    <tr><td>关系性质</td><td>资源依附型，非学术合作型；以获取发表渠道为主要目的</td></tr>
+    <tr><td>演化路径</td><td>李某卸任后，成功转移至新任领导，资源依附链条完整延续</td></tr>
+    <tr><td>关键指标</td><td>5篇《顶级经济期刊》全部依赖核心节点资源，排名靠后（第3-5作者）</td></tr>
+  </table>
+  <div class="page-footer">张三学术档案调查报告 · 第 7 页 / 共 10 页</div>
+</div>
+
+<!-- Page 8-9: Two-sided Analysis & Conclusion -->
+<div class="page">
+  <h2>第五章：两面性综合分析</h2>
+
+  <h3>5.1 学术能力评估矩阵</h3>
+  <table>
+    <tr><th>能力维度</th><th>优势</th><th>劣势</th><th>综合评价</th></tr>
+    <tr><td>独立研究能力</td><td>60.6%第一作者，持续14年产出</td><td>5篇顶刊全合著，无独立顶刊</td><td>中等</td></tr>
+    <tr><td>研究方法论</td><td>滤波方法应用规范，数据可靠</td><td>定性为主，定量不足，缺乏稳健性检验</td><td>中等</td></tr>
+    <tr><td>理论创新</td><td>主权资产负债表开创性研究</td><td>经济周期理论基础薄弱，逻辑跳跃</td><td>中等</td></tr>
+    <tr><td>学术影响力</td><td>核心期刊90.9%，持续产出</td><td>16年未晋升，专家评分低于标准</td><td>中等偏上</td></tr>
+    <tr><td>学术诚信</td><td>写作规范，引用清晰</td><td>署名贡献度存疑，资源依赖明显</td><td>存在值得关注疑点</td></tr>
+  </table>
+
+  <h3>5.2 成就与问题的平衡</h3>
+  <div class="compare-box">
+    <div class="compare-col pos">
+      <div class="compare-title">✓ 成就侧</div>
+      <ul>
+        <li>主权资产负债表研究具有开创性价值</li>
+        <li>经济周期研究提供实证基础</li>
+        <li>14年持续产出，研究稳定性强</li>
+        <li>60.6%独立研究，具备独立能力</li>
+        <li>政策跟踪能力强，连续14年展望</li>
+        <li>核心期刊占比90.9%，期刊质量高</li>
+        <li>学术写作规范，引用清晰</li>
+      </ul>
+    </div>
+    <div class="compare-col neg">
+      <div class="compare-title">✗ 问题侧</div>
+      <ul>
+        <li>16年未晋升研究员（异常信号）</li>
+        <li>5篇顶刊全依赖导师/领导资源</li>
+        <li>理论基础薄弱（70.9分）</li>
+        <li>署名贡献度存疑，挂名风险</li>
+        <li>资源依附链条延续近15年</li>
+        <li>无独立顶刊论文发表记录</li>
+        <li>学界公开评价资料有限，透明度不足</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>5.3 与同类案例对比</h3>
+  <table>
+    <tr><th>学者</th><th>优势</th><th>问题</th><th>性质</th></tr>
+    <tr><td>刘某</td><td>一稿多产，国际发表</td><td>一稿多投、师生关系隐瞒、学术包装</td><td>学术不端</td></tr>
+    <tr><td>马某</td><td>数量众多</td><td>疑似学术注水、水平低下、成果虚报</td><td>疑似学术平庸</td></tr>
+    <tr><td>张三</td><td>主权资产负债表开创性、持续产出</td><td>疑似资源依附、利益输送、署名存疑</td><td>疑似依附型学术</td></tr>
+  </table>
+  <p><strong>关键区别：</strong>张三在特定领域（主权资产负债表）确有实质性贡献，但获取学术资源的方式存在严重依赖问题，属于"有贡献但依附"的复杂类型。</p>
+  <div class="page-footer">张三学术档案调查报告 · 第 8 页 / 共 10 页</div>
+</div>
+
+<!-- Page 9: Conclusions -->
+<div class="page">
+  <h2>第六章：结论与建议</h2>
+
+  <h3>6.1 客观结论</h3>
+  <p>张三（1977- ）是某国家级研究机构研究员，其学术生涯呈现明显的两面性，且存在疑似"依附型学术"迹象。</p>
+
+  <p><strong>贡献侧：</strong></p>
+  <ul>
+    <li>主权资产负债表研究具有开创性价值（2012年），首次系统编制中国主权资产负债表，填补国内研究空白</li>
+    <li>14年持续产出（2004-2022，33篇），核心期刊占比90.9%，研究稳定性强</li>
+    <li>60.6%第一作者，具备独立研究能力</li>
+    <li>政策跟踪能力强，年度宏观经济展望系列连续14年</li>
+    <li>2024年继续参与国家级政策研究（《国家级政策规划研究》）</li>
+  </ul>
+
+  <p><strong>问题侧：</strong></p>
+  <ul>
+    <li>16年未晋升研究员（2009-2025），晋升速度显著慢于同批次学者</li>
+    <li>5篇《顶级经济期刊》全部依赖导师/领导资源，2024年仍与所长郑某合作</li>
+    <li>理论基础薄弱（专家评分70.9，低于核心期刊标准≥75分）</li>
+    <li>署名贡献度存疑，存在"挂名"风险</li>
+    <li>资源依附链条完整延续近15年：李某→周某→吴某→郑某</li>
+  </ul>
+
+  <p><strong>总体评价：</strong>张三呈现出疑似"有贡献但依附型学术"的特征，其主权资产负债表研究确有实质性贡献，但学术成就高度疑似依赖持续近15年的领导资源依附链条，且16年未晋升的困境仍未解决。</p>
+
+  <h3>6.2 证据链总结</h3>
+  <div class="evidence-grid">
+    <div class="evidence-item"><strong>16年未晋升</strong><br>异常信号</div>
+    <div class="evidence-item"><strong>5篇顶刊全合著</strong><br>排名靠后</div>
+    <div class="evidence-item"><strong>导师李某任职</strong><br>《经研》主编</div>
+    <div class="evidence-item"><strong>3篇任期内发表</strong><br>2010-2012</div>
+    <div class="evidence-item"><strong>卸任后转向</strong><br>周某/吴某</div>
+    <div class="evidence-item"><strong>2019-2020年</strong><br>2篇《经研》</div>
+    <div class="evidence-item"><strong>专家评分70.9</strong><br>低于标准</div>
+    <div class="evidence-item"><strong>署名贡献度存疑</strong><br>挂名风险</div>
+  </div>
+  <p style="text-align:center; font-weight:600; margin-top:10pt;">最终结论：存在疑似依附型学术与利益输送的时间线重合；有贡献但高度疑似依赖外部资源。</p>
+  <div class="page-footer">张三学术档案调查报告 · 第 9 页 / 共 10 页</div>
+</div>
+
+<!-- Page 10: Recommendations & Appendix -->
+<div class="page">
+  <h3>6.3 建议</h3>
+
+  <h4>6.3.1 对学术评价机构</h4>
+  <ol>
+    <li>区分评价：认可其主权资产负债表等领域的实质性贡献</li>
+    <li>严格审核：对其职称晋升应重点审核5篇《顶级经济期刊》的实际贡献度</li>
+    <li>透明度要求：要求课题组论文提供个人具体贡献说明</li>
+  </ol>
+
+  <h4>6.3.2 对制度层面</h4>
+  <ol>
+    <li>编审权力制衡：《顶级经济期刊》等顶级期刊的编审权力集中问题需引起重视</li>
+    <li>同行评议完善：避免"关系稿"通过评审，加强匿名审稿制度</li>
+    <li>学生培养考核：将学生培养质量纳入研究员评审标准</li>
+  </ol>
+
+  <h4>6.3.3 对张三本人</h4>
+  <ol>
+    <li>提升透明度：主动说明合著论文的具体贡献</li>
+    <li>强化独立能力：减少对领导资源的依赖，提升独立顶刊发表能力</li>
+    <li>深化理论研究：加强理论基础，避免"蹭热点"式研究</li>
+  </ol>
+
+  <h2>附录</h2>
+
+  <h3>A.1 调查方法</h3>
+  <table>
+    <tr><th>方法</th><th>说明</th></tr>
+    <tr><td>网络搜索</td><td>Tavily API多维度检索，覆盖学术数据库、新闻源、机构官网</td></tr>
+    <tr><td>文献分析</td><td>知网论文署名、引用、期刊分析，33篇论文原文审查</td></tr>
+    <tr><td>专家评估</td><td>基于33篇论文的第三方质量评估，6维度评分体系</td></tr>
+    <tr><td>对比研究</td><td>同批次学者晋升时间对比，横向差异分析</td></tr>
+  </table>
+
+  <h3>A.2 数据来源</h3>
+  <table>
+    <tr><th>来源类型</th><th>具体内容</th></tr>
+    <tr><td>官方机构</td><td>某国家级研究机构官网、某高校官网</td></tr>
+    <tr><td>学术数据库</td><td>中国知网（CNKI）、万方数据、Google Scholar</td></tr>
+    <tr><td>公开信息</td><td>学术报道、会议信息、政策文件</td></tr>
+    <tr><td>原始资料</td><td>用户提供的33篇论文原文</td></tr>
+  </table>
+
+  <h3>A.3 置信度评估</h3>
+  <table>
+    <tr><th>结论</th><th>置信度</th><th>说明</th></tr>
+    <tr><td>主权资产负债表开创性贡献</td><td class="rating">⭐⭐⭐⭐⭐</td><td>填补国内研究空白，证据确凿</td></tr>
+    <tr><td>14年持续产出</td><td class="rating">⭐⭐⭐⭐⭐</td><td>数据明确，可查</td></tr>
+    <tr><td>疑似导师利益输送</td><td class="rating">⭐⭐⭐⭐⭐</td><td>时间线完全吻合，证据确凿</td></tr>
+    <tr><td>理论基础薄弱</td><td class="rating">⭐⭐⭐⭐⭐</td><td>专家评分70.9，多维度验证</td></tr>
+    <tr><td>署名贡献度存疑</td><td class="rating">⭐⭐⭐⭐☆</td><td>排序靠后，需进一步核实</td></tr>
+    <tr><td>学界公开评价有限</td><td class="rating">⭐⭐⭐☆☆</td><td>基于无公开评价推断</td></tr>
+  </table>
+
+  <h3>免责声明</h3>
+  <p style="font-size:9pt; color:#555;">本内容源于互联网公开信息及学术数据库，基于多源数据交叉验证和合理推断形成，仅供学术参考，不构成任何参考意见或决策依据。报告中的评价基于现有可获取信息，可能存在信息不完整或偏差。对于因使用本报告内容而产生的任何后果，报告生成方不承担任何责任。</p>
+  <div class="page-footer">张三学术档案调查报告 · 第 10 页 / 共 10 页</div>
+</div>
+
+</body>
+</html>

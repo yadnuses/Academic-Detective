@@ -1,0 +1,337 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "International Scholar Investigation Data Schema",
+  "description": "Extended schema for international scholar/advisor investigations. Inherits all fields from scholar_data.schema.json and adds international-specific fields.",
+  "type": "object",
+  "required": [
+    "name",
+    "institution",
+    "investigation_date",
+    "investigation_type",
+    "basic_profile",
+    "academic_outputs",
+    "quality_assessment",
+    "relationship_network",
+    "anomalies",
+    "confidence_ratings",
+    "student_reviews"
+  ],
+  "allOf": [
+    {
+      "$ref": "./scholar_data.schema.json"
+    }
+  ],
+  "properties": {
+    "investigation_type": {
+      "type": "string",
+      "enum": ["international"],
+      "description": "Must be 'international' for this schema"
+    },
+    "basic_profile": {
+      "type": "object",
+      "required": ["name", "institution", "current_title", "education_background", "career_timeline"],
+      "properties": {
+        "orcid": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{4}-\\d{4}-\\d{3}[\\dX]$",
+          "description": "ORCID iD in standard format"
+        },
+        "institution_en": {
+          "type": "string",
+          "description": "Institution name in English"
+        },
+        "current_title": {
+          "type": "string",
+          "description": "e.g. Assistant Professor, Associate Professor, Full Professor"
+        },
+        "academic_title": {
+          "type": "string",
+          "description": "e.g. PhD Advisor, Graduate Faculty"
+        },
+        "department": {
+          "type": "string"
+        },
+        "discipline": {
+          "type": "string",
+          "description": "e.g. computer_science, life_sciences, physics_math"
+        },
+        "tenure_status": {
+          "type": "string",
+          "enum": ["tenure_track", "tenured", "non_tenure_track", "clinical", "research", "emeritus", "unknown", "[TO BE FILLED]"],
+          "description": "Tenure status at current institution"
+        },
+        "education_background": {
+          "oneOf": [
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["degree", "institution", "year"],
+                "properties": {
+                  "degree": { "type": "string", "enum": ["BA", "BS", "MS", "MA", "PhD", "MD", "Postdoc", "Other"] },
+                  "field": { "type": "string" },
+                  "institution": { "type": "string" },
+                  "year": { "type": "integer" },
+                  "country": { "type": "string" }
+                }
+              }
+            }
+          ]
+        },
+        "career_timeline": {
+          "oneOf": [
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["year", "event"],
+                "properties": {
+                  "year": { "type": "integer" },
+                  "event": { "type": "string" },
+                  "institution": { "type": "string" },
+                  "title": { "type": "string" }
+                }
+              }
+            }
+          ]
+        },
+        "google_scholar_id": {
+          "type": ["string", "null"],
+          "description": "Google Scholar profile ID"
+        },
+        "semantic_scholar_id": {
+          "type": ["string", "null"],
+          "description": "Semantic Scholar author ID"
+        },
+        "openalex_id": {
+          "type": ["string", "null"],
+          "description": "OpenAlex author ID (Axxxxxxxx)"
+        }
+      }
+    },
+    "academic_outputs": {
+      "type": "object",
+      "required": ["claimed_papers", "verified_papers", "claimed_monographs", "verified_monographs", "source_databases", "recent_3yr_papers"],
+      "properties": {
+        "paper_list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["title", "year"],
+            "properties": {
+              "title": { "type": "string" },
+              "authors": { "type": "array", "items": { "type": "string" } },
+              "journal": { "type": "string" },
+              "year": { "type": "integer" },
+              "doi": { "type": "string" },
+              "citation_count": { "type": "integer" },
+              "jcr_quartile": { "type": ["integer", "null"], "enum": [1, 2, 3, 4, null] },
+              "cite_score": { "type": ["number", "null"] },
+              "sjr": { "type": ["number", "null"] },
+              "snip": { "type": ["number", "null"] },
+              "open_access": { "type": "boolean" },
+              "oa_type": { "type": "string", "enum": ["gold", "green", "hybrid", "bronze", "closed"] },
+              "apc_usd": { "type": ["number", "null"] },
+              "author_position": { "type": "string", "enum": ["first", "last", "middle", "single", "unknown"] },
+              "is_predatory_flag": { "type": "boolean" },
+              "pubpeer_comments": { "type": ["integer", "null"] },
+              "retracted": { "type": "boolean" }
+            }
+          }
+        },
+        "preprints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string" },
+              "source": { "type": "string", "enum": ["arXiv", "bioRxiv", "medRxiv", "SSRN", "other"] },
+              "identifier": { "type": "string" },
+              "year": { "type": "integer" },
+              "doi": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "recent_3yr_papers": { "oneOf": [{ "type": "integer" }, { "type": "string" }] },
+        "recent_3yr_first_author": { "type": "integer" },
+        "recent_3yr_corresponding": { "type": "integer" }
+      }
+    },
+    "quality_assessment": {
+      "type": "object",
+      "properties": {
+        "metrics_summary": {
+          "type": "object",
+          "properties": {
+            "h_index": { "type": ["integer", "null"] },
+            "h_index_sources": { "type": "array", "items": { "type": "string" } },
+            "i10_index": { "type": ["integer", "null"] },
+            "total_citations": { "type": ["integer", "null"] },
+            "citations_per_paper": { "type": ["number", "null"] },
+            "self_citation_ratio": { "type": ["number", "null"] },
+            "field_weighted_citation_impact": { "type": ["number", "null"] }
+          }
+        },
+        "journal_quality": {
+          "oneOf": [
+            { "type": "string" },
+            {
+              "type": "object",
+              "properties": {
+                "q1_count": { "type": "integer" },
+                "q2_count": { "type": "integer" },
+                "q3_count": { "type": "integer" },
+                "q4_count": { "type": "integer" },
+                "unknown_count": { "type": "integer" },
+                "oa_ratio": { "type": "number" },
+                "predatory_flagged_count": { "type": "integer" }
+              }
+            }
+          ]
+        },
+        "tenure_evaluation": {
+          "type": "object",
+          "properties": {
+            "applicable": { "type": "boolean" },
+            "years_since_phd": { "type": "integer" },
+            "institution_tier": { "type": "string", "enum": ["r1", "r2", "liberal_arts", "international_top", "unknown"] },
+            "meets_expectations": { "type": "boolean" },
+            "gaps": { "type": "array", "items": { "type": "string" } },
+            "metrics": { "type": "object" }
+          }
+        }
+      }
+    },
+    "relationship_network": {
+      "type": "object",
+      "properties": {
+        "advisors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "institution": { "type": "string" },
+              "relation": { "type": "string", "enum": ["phd_advisor", "postdoc_mentor", "ms_advisor"] }
+            }
+          }
+        },
+        "collaborators": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "co_paper_count": { "type": "integer" },
+              "institution": { "type": "string" }
+            }
+          }
+        },
+        "editorial_boards": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "journal": { "type": "string" },
+              "role": { "type": "string" },
+              "start_year": { "type": "integer" }
+            }
+          }
+        },
+        "institutional_affiliations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "institution": { "type": "string" },
+              "role": { "type": "string" },
+              "start_year": { "type": "integer" },
+              "end_year": { "type": ["integer", "null"] }
+            }
+          }
+        }
+      }
+    },
+    "student_reviews": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": { "type": "string", "enum": ["loaded", "no_report_found", "matched", "unmatched"] },
+        "xiaohongshu": {
+          "type": "object",
+          "properties": {
+            "matched": { "type": "boolean" },
+            "review_count": { "type": "integer" },
+            "sentiment_distribution": {
+              "type": "object",
+              "properties": {
+                "positive": { "type": "integer" },
+                "neutral": { "type": "integer" },
+                "negative": { "type": "integer" }
+              }
+            },
+            "dimension_summary": {
+              "type": "object",
+              "properties": {
+                "graduation_difficulty_avg": { "type": ["number", "null"] },
+                "workload_avg": { "type": ["number", "null"] },
+                "supportiveness_avg": { "type": ["number", "null"] }
+              }
+            },
+            "recommendation_ratio": { "type": ["number", "null"] },
+            "red_flags": { "type": "array", "items": { "type": "object" } }
+          }
+        },
+        "ratemyprofessors": {
+          "type": "object",
+          "properties": {
+            "matched": { "type": "boolean" },
+            "review_count": { "type": "integer" },
+            "overall_quality": { "type": ["number", "null"] },
+            "level_of_difficulty": { "type": ["number", "null"] },
+            "would_take_again": { "type": ["number", "null"] }
+          }
+        }
+      }
+    },
+    "funding_verification": {
+      "type": "object",
+      "properties": {
+        "grants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "agency": { "type": "string" },
+              "title": { "type": "string" },
+              "amount_usd": { "type": "number" },
+              "start_year": { "type": "integer" },
+              "end_year": { "type": ["integer", "null"] },
+              "role": { "type": "string", "enum": ["PI", "Co-PI", "Collaborator"] }
+            }
+          }
+        },
+        "total_funding_usd": { "type": ["number", "null"] },
+        "has_major_grant": { "type": "boolean" }
+      }
+    },
+    "cross_border_info": {
+      "type": "object",
+      "description": "Optional: only populated for cross_border investigation_type",
+      "properties": {
+        "domestic_counterpart": {
+          "type": "object",
+          "properties": {
+            "name_cn": { "type": "string" },
+            "institution_cn": { "type": "string" },
+            "title_cn": { "type": "string" }
+          }
+        },
+        "timeline_consistency": { "type": "boolean" },
+        "position_mapping": { "type": "string" }
+      }
+    }
+  }
+}

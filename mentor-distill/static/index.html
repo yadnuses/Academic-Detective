@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentor Distill — 导师蒸馏器</title>
+  <style>
+    :root {
+      --space-black: #000000;
+      --spectral-white: #f0f0fa;
+      --apple-blue: #0071e3;
+      --apple-blue-hover: #0077ed;
+      --light-gray: #f5f5f7;
+      --near-black: #1d1d1f;
+      --ghost-bg: rgba(240, 240, 250, 0.1);
+      --ghost-border: rgba(240, 240, 250, 0.35);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background-color: var(--space-black);
+      color: var(--spectral-white);
+      line-height: 1.47;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Page */
+    .page { min-height: 100vh; padding-top: 48px; background: var(--space-black); }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 24px 40px;
+    }
+
+    .header {
+      text-align: center;
+      padding: 0 0 40px;
+    }
+
+    .header h1 {
+      font-size: clamp(32px, 6vw, 48px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 12px;
+      background: linear-gradient(180deg, #ffffff 0%, #a0a0b0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header p {
+      font-size: 17px;
+      color: rgba(240,240,250,0.55);
+      line-height: 1.5;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* Glass Card */
+    .glass-card {
+      background: var(--ghost-bg);
+      border: 1px solid var(--ghost-border);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .glass-card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: rgba(240,240,250,0.85);
+      margin-bottom: 16px;
+      letter-spacing: 0.3px;
+    }
+
+    /* Upload */
+    .upload-zone {
+      border: 2px dashed rgba(240,240,250,0.18);
+      border-radius: 16px;
+      padding: 48px 24px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      background: rgba(240,240,250,0.02);
+    }
+
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: var(--apple-blue);
+      background: rgba(0,113,227,0.06);
+    }
+
+    .upload-zone .icon { font-size: 40px; margin-bottom: 12px; opacity: 0.5; }
+    .upload-zone h3 { font-size: 17px; font-weight: 500; margin-bottom: 6px; color: var(--spectral-white); }
+    .upload-zone p { font-size: 13px; color: rgba(240,240,250,0.4); }
+    .upload-zone input[type="file"] { display: none; }
+
+    /* File list */
+    .file-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 14px;
+      background: rgba(0,0,0,0.25);
+      border-radius: 10px;
+      margin-bottom: 6px;
+      border: 1px solid rgba(240,240,250,0.06);
+    }
+    .file-item .file-name { flex: 1; font-size: 13px; color: rgba(240,240,250,0.8); }
+    .file-item .file-size { font-size: 12px; color: rgba(240,240,250,0.35); }
+    .file-item .file-remove { cursor: pointer; opacity: 0.4; font-size: 14px; transition: opacity 0.2s; color: rgba(240,240,250,0.6); }
+    .file-item .file-remove:hover { opacity: 1; color: #ff453a; }
+
+    /* Form */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+
+    .form-group { display: flex; flex-direction: column; }
+    .form-group label {
+      font-size: 12px; font-weight: 500; color: rgba(240,240,250,0.45);
+      margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .form-group input {
+      padding: 11px 14px; border: 1px solid rgba(240,240,250,0.12);
+      border-radius: 10px; background: rgba(0,0,0,0.35);
+      color: var(--spectral-white); font-size: 14px; outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .form-group input:focus { border-color: var(--apple-blue); background: rgba(0,0,0,0.45); }
+    .form-group input::placeholder { color: rgba(240,240,250,0.25); }
+    .form-hint { font-size: 11px; color: rgba(240,240,250,0.3); margin-top: 4px; }
+
+    /* Buttons */
+    .btn-primary {
+      width: 100%; padding: 14px 24px; font-size: 15px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.8px; border: none;
+      border-radius: 10px; background: var(--apple-blue); color: white;
+      cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-bottom: 20px;
+    }
+    .btn-primary:hover:not(:disabled) { background: var(--apple-blue-hover); transform: scale(1.02); }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; background: rgba(240,240,250,0.15); }
+
+    /* Progress */
+    .progress-area { display: none; }
+    .progress-area.active { display: block; }
+    .progress-bar { height: 3px; background: rgba(240,240,250,0.08); border-radius: 2px; overflow: hidden; margin-bottom: 14px; }
+    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--apple-blue), #5ac8fa); border-radius: 2px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); width: 0%; }
+    .progress-text { font-size: 14px; color: rgba(240,240,250,0.6); text-align: center; }
+    .progress-detail { font-size: 12px; color: rgba(240,240,250,0.35); text-align: center; margin-top: 4px; }
+
+    /* Mentor Card */
+    .mentor-card {
+      display: none; align-items: center; gap: 16px;
+      background: linear-gradient(135deg, rgba(0,113,227,0.15), rgba(0,113,227,0.05));
+      border: 1px solid rgba(0,113,227,0.2); border-radius: 16px;
+      padding: 16px 20px; margin-bottom: 16px;
+    }
+    .mentor-card.active { display: flex; }
+    .mentor-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--apple-blue), #5ac8fa);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 700; color: white; flex-shrink: 0;
+    }
+    .mentor-info .mentor-name { font-size: 15px; font-weight: 600; color: var(--spectral-white); }
+    .mentor-info .mentor-desc { font-size: 12px; color: rgba(240,240,250,0.45); margin-top: 2px; }
+
+    /* Chat */
+    .chat-area { display: none; flex-direction: column; height: calc(100vh - 260px); min-height: 420px; }
+    .chat-area.active { display: flex; }
+
+    .chat-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+
+    .style-selector { display: flex; gap: 6px; }
+    .style-option {
+      padding: 5px 14px; border: 1px solid rgba(240,240,250,0.12);
+      border-radius: 20px; font-size: 12px; cursor: pointer;
+      transition: all 0.2s; background: transparent;
+      color: rgba(240,240,250,0.5); font-weight: 500;
+    }
+    .style-option:hover { border-color: rgba(240,240,250,0.3); color: rgba(240,240,250,0.8); }
+    .style-option.active { background: var(--apple-blue); border-color: var(--apple-blue); color: white; }
+
+    .reset-btn {
+      padding: 5px 12px; border: 1px solid rgba(240,240,250,0.12);
+      border-radius: 8px; background: transparent;
+      color: rgba(240,240,250,0.4); font-size: 12px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .reset-btn:hover { border-color: #ff453a; color: #ff453a; }
+
+    .chat-messages { flex: 1; overflow-y: auto; padding: 8px 0 16px; }
+    .chat-message {
+      margin-bottom: 20px; max-width: 85%;
+      animation: msgFadeIn 0.3s ease;
+      display: flex; flex-direction: column;
+    }
+    @keyframes msgFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .chat-message.user { margin-left: auto; align-items: flex-end; }
+    .chat-message.bot { margin-right: auto; align-items: flex-start; }
+
+    .chat-message .msg-bubble {
+      display: inline-block; padding: 12px 16px;
+      border-radius: 18px; font-size: 14px;
+      line-height: 1.65; white-space: pre-wrap;
+    }
+    .chat-message.user .msg-bubble {
+      background: var(--apple-blue); color: white;
+      border-bottom-right-radius: 4px;
+    }
+    .chat-message.bot .msg-bubble {
+      background: rgba(240,240,250,0.08); color: var(--spectral-white);
+      border: 1px solid rgba(240,240,250,0.08);
+      border-bottom-left-radius: 4px;
+    }
+    .chat-message .msg-meta {
+      font-size: 11px; color: rgba(240,240,250,0.25);
+      margin-top: 4px; padding: 0 4px;
+    }
+
+    /* Citations (collapsible) */
+    .chat-citations {
+      margin-top: 8px; background: rgba(0,0,0,0.25);
+      border-radius: 10px; border: 1px solid rgba(240,240,250,0.06);
+      overflow: hidden;
+    }
+    .chat-citations .cite-toggle {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 14px; cursor: pointer; transition: background 0.2s; user-select: none;
+    }
+    .chat-citations .cite-toggle:hover { background: rgba(240,240,250,0.04); }
+    .chat-citations .cite-toggle-text {
+      font-size: 11px; font-weight: 600; color: rgba(240,240,250,0.4);
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .chat-citations .cite-toggle-icon {
+      font-size: 10px; color: rgba(240,240,250,0.3); transition: transform 0.2s;
+    }
+    .chat-citations.expanded .cite-toggle-icon { transform: rotate(180deg); }
+    .chat-citations .cite-body { display: none; padding: 0 14px 10px; }
+    .chat-citations.expanded .cite-body { display: block; }
+    .chat-citations .cite-item {
+      padding: 5px 0; border-bottom: 1px solid rgba(240,240,250,0.05);
+      font-size: 12px; color: rgba(240,240,250,0.45); line-height: 1.5;
+    }
+    .chat-citations .cite-item:last-child { border-bottom: none; }
+    .chat-citations .cite-source { font-weight: 500; color: rgba(240,240,250,0.65); }
+
+    /* Input */
+    .chat-input-area { display: flex; gap: 10px; padding: 12px 0; border-top: 1px solid rgba(240,240,250,0.08); }
+    .chat-input {
+      flex: 1; padding: 12px 16px; border: 1px solid rgba(240,240,250,0.12);
+      border-radius: 12px; background: rgba(0,0,0,0.3); color: var(--spectral-white);
+      font-size: 14px; outline: none; transition: border-color 0.2s;
+    }
+    .chat-input:focus { border-color: var(--apple-blue); }
+    .chat-input::placeholder { color: rgba(240,240,250,0.3); }
+    .chat-send-btn {
+      padding: 12px 22px; border: none; border-radius: 12px;
+      background: var(--apple-blue); color: white;
+      font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s;
+    }
+    .chat-send-btn:hover { background: var(--apple-blue-hover); transform: scale(1.03); }
+
+    /* Typing */
+    .typing-indicator { display: none; }
+    .typing-indicator.active { display: block; }
+    .typing-dots { display: flex; gap: 4px; }
+    .typing-dots span {
+      width: 6px; height: 6px; background: rgba(240,240,250,0.3);
+      border-radius: 50%; animation: typingBounce 1.4s infinite ease-in-out both;
+    }
+    .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+    @keyframes typingBounce {
+      0%, 80%, 100% { transform: scale(0); }
+      40% { transform: scale(1); }
+    }
+
+    /* Scrollbar */
+    .chat-messages::-webkit-scrollbar { width: 4px; }
+    .chat-messages::-webkit-scrollbar-track { background: transparent; }
+    .chat-messages::-webkit-scrollbar-thumb { background: rgba(240,240,250,0.15); border-radius: 2px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="container">
+      <div class="header">
+        <h1>导师蒸馏</h1>
+        <p>上传学者的论文与调查报告，由 AI 现场整理、蒸馏，生成可对话的学术知识库</p>
+      </div>
+
+      <div id="upload-section">
+        <div class="glass-card">
+          <div class="upload-zone" id="uploadZone">
+            <div class="icon">&#128194;</div>
+            <h3>拖拽文件到此处，或点击上传</h3>
+            <p>支持 Markdown (.md)、PDF (.pdf)、纯文本 (.txt)</p>
+            <input type="file" id="fileInput" accept=".md,.pdf,.txt" multiple>
+          </div>
+          <div class="file-list" id="fileList"></div>
+        </div>
+
+        <div class="glass-card">
+          <h3>学者信息（选填）</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>姓名</label>
+              <input type="text" id="scholarName" placeholder="请输入学者姓名">
+            </div>
+            <div class="form-group">
+              <label>所在机构</label>
+              <input type="text" id="scholarInstitution" placeholder="请输入所在机构">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>职称</label>
+              <input type="text" id="scholarTitle" placeholder="如：教授、博士生导师">
+            </div>
+            <div class="form-group">
+              <label>学科领域</label>
+              <input type="text" id="scholarDiscipline" placeholder="如：戏剧影视学">
+            </div>
+          </div>
+          <p class="form-hint">AI 将从上传文件中自动识别并补充以上信息</p>
+        </div>
+
+        <button class="btn-primary" id="processBtn" onclick="startDistill()" disabled>
+          请先上传文件
+        </button>
+      </div>
+
+      <div class="glass-card progress-area" id="progressArea">
+        <div class="progress-bar">
+          <div class="progress-bar-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">正在准备...</div>
+        <div class="progress-detail" id="progressDetail"></div>
+      </div>
+
+      <div class="mentor-card" id="mentorCard">
+        <div class="mentor-avatar" id="mentorAvatar">?</div>
+        <div class="mentor-info">
+          <div class="mentor-name" id="mentorName">学者名称</div>
+          <div class="mentor-desc" id="mentorDesc">正在加载...</div>
+        </div>
+      </div>
+
+      <div class="chat-area" id="chatArea">
+        <div class="chat-toolbar">
+          <div class="style-selector" id="styleSelector">
+            <div class="style-option active" data-style="normal" onclick="selectStyle(this)">普通教授</div>
+            <div class="style-option" data-style="mad" onclick="selectStyle(this)">疯癫教授</div>
+            <div class="style-option" data-style="forgetful" onclick="selectStyle(this)">老年健忘</div>
+          </div>
+          <button class="reset-btn" onclick="resetDistill()">&#8634; 重新开始</button>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+          <div class="typing-indicator" id="typingIndicator">
+            <div class="msg-bubble">
+              <div class="typing-dots"><span></span><span></span><span></span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-input-area">
+          <input type="text" class="chat-input" id="chatInput"
+                 placeholder="向这位学者提问..."
+                 onkeydown="if(event.key==='Enter')sendMessage()">
+          <button class="chat-send-btn" onclick="sendMessage()">发送</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = location.origin;
+    let uploadedFiles = [];
+    let sessionId = null;
+    let currentStyle = 'normal';
+    let chatHistory = [];
+    let isProcessing = false;
+
+    // Upload
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+    const fileList = document.getElementById('fileList');
+    const processBtn = document.getElementById('processBtn');
+
+    uploadZone.addEventListener('click', () => fileInput.click());
+    uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+    uploadZone.addEventListener('drop', (e) => {
+      e.preventDefault(); uploadZone.classList.remove('dragover'); handleFiles(e.dataTransfer.files);
+    });
+    fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+    function handleFiles(files) {
+      for (const file of files) {
+        const ext = file.name.split('.').pop().toLowerCase();
+        if (!['md', 'pdf', 'txt'].includes(ext)) { alert('仅支持 .md、.pdf、.txt 格式'); continue; }
+        uploadedFiles.push(file);
+      }
+      renderFileList(); updateProcessBtn();
+    }
+
+    function renderFileList() {
+      fileList.innerHTML = uploadedFiles.map((f, i) => `
+        <div class="file-item">
+          <span class="file-name">${escapeHtml(f.name)}</span>
+          <span class="file-size">${formatSize(f.size)}</span>
+          <span class="file-remove" onclick="removeFile(${i})">&#10005;</span>
+        </div>
+      `).join('');
+    }
+
+    function removeFile(index) { uploadedFiles.splice(index, 1); renderFileList(); updateProcessBtn(); }
+    function updateProcessBtn() {
+      processBtn.disabled = uploadedFiles.length === 0;
+      processBtn.textContent = uploadedFiles.length > 0 ? `开始蒸馏（${uploadedFiles.length} 个文件）` : '请先上传文件';
+    }
+    function formatSize(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+    function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
+
+    // Distill
+    async function startDistill() {
+      if (uploadedFiles.length === 0 || isProcessing) return;
+      isProcessing = true;
+      document.getElementById('upload-section').style.display = 'none';
+      document.getElementById('progressArea').classList.add('active');
+      setProgress(8, '正在上传文件...', '');
+
+      try {
+        const formData = new FormData();
+        uploadedFiles.forEach(f => formData.append('files', f));
+        formData.append('name', document.getElementById('scholarName').value || '');
+        formData.append('institution', document.getElementById('scholarInstitution').value || '');
+        formData.append('title', document.getElementById('scholarTitle').value || '');
+        formData.append('discipline', document.getElementById('scholarDiscipline').value || '');
+
+        setProgress(20, '正在上传文件...', '');
+        const uploadResp = await fetch(`${API_BASE}/api/upload`, { method: 'POST', body: formData });
+        if (!uploadResp.ok) throw new Error('上传失败');
+        const uploadData = await uploadResp.json();
+        sessionId = uploadData.session_id;
+
+        setProgress(35, 'AI 正在阅读文件...', '提取学者信息、整理学术档案');
+        const processResp = await fetch(`${API_BASE}/api/distill`, {
+          method: 'POST', headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({session_id: sessionId})
+        });
+        if (!processResp.ok) { const err = await processResp.json(); throw new Error(err.error || '蒸馏失败'); }
+        const processData = await processResp.json();
+
+        setProgress(100, '蒸馏完成！', `${processData.chunks} 个文本片段已向量化`);
+        setTimeout(() => { showChat(processData.profile); isProcessing = false; }, 600);
+      } catch (err) {
+        alert('蒸馏失败：' + err.message); console.error(err);
+        document.getElementById('upload-section').style.display = 'block';
+        document.getElementById('progressArea').classList.remove('active');
+        isProcessing = false;
+      }
+    }
+
+    function setProgress(percent, text, detail) {
+      document.getElementById('progressFill').style.width = percent + '%';
+      document.getElementById('progressText').textContent = text;
+      document.getElementById('progressDetail').textContent = detail || '';
+    }
+
+    // Chat
+    function showChat(profile) {
+      document.getElementById('progressArea').classList.remove('active');
+      document.getElementById('chatArea').classList.add('active');
+      const name = profile.name || '未知学者';
+      const institution = profile.institution || '';
+      const title = profile.current_title || profile.academic_title || '';
+      const discipline = profile.discipline || '';
+      const descParts = [institution, title, discipline].filter(Boolean);
+      document.getElementById('mentorAvatar').textContent = name.charAt(0);
+      document.getElementById('mentorName').textContent = name;
+      document.getElementById('mentorDesc').textContent = descParts.join(' · ') || '学者';
+      document.getElementById('mentorCard').classList.add('active');
+      addMessage('bot', `你好！我是基于${name}教授公开发表成果的学术信息助手。你可以问我关于${name}教授的学术研究方向、代表作、教育背景等问题。`);
+    }
+
+    function selectStyle(el) {
+      document.querySelectorAll('.style-option').forEach(o => o.classList.remove('active'));
+      el.classList.add('active'); currentStyle = el.dataset.style;
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text || !sessionId) return;
+      addMessage('user', text); input.value = ''; showTyping(true);
+      try {
+        const resp = await fetch(`${API_BASE}/api/chat`, {
+          method: 'POST', headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ session_id: sessionId, message: text, style: currentStyle, history: chatHistory.slice(-6) })
+        });
+        const data = await resp.json();
+        showTyping(false); addMessage('bot', data.reply, data.citations);
+      } catch (err) { showTyping(false); addMessage('bot', '对话出错：' + err.message); }
+    }
+
+    function showTyping(show) {
+      document.getElementById('typingIndicator').classList.toggle('active', show);
+    }
+
+    function addMessage(role, text, citations) {
+      const container = document.getElementById('chatMessages');
+      const div = document.createElement('div');
+      div.className = 'chat-message ' + role;
+      let citationsHtml = '';
+      if (citations && citations.length > 0) {
+        const citeItems = citations.map(c => `<div class="cite-item"><span class="cite-source">${escapeHtml(c.source)}</span> <span style="opacity:0.4">${c.score}</span><br>${escapeHtml(c.text)}</div>`).join('');
+        citationsHtml = `<div class="chat-citations" onclick="toggleCitations(this)">
+          <div class="cite-toggle"><span class="cite-toggle-text">引用来源 (${citations.length})</span><span class="cite-toggle-icon">&#9662;</span></div>
+          <div class="cite-body">${citeItems}</div>
+        </div>`;
+      }
+      div.innerHTML = `<div class="msg-bubble">${escapeHtml(text)}</div>${citationsHtml}<div class="msg-meta">${new Date().toLocaleTimeString('zh-CN', {hour: '2-digit', minute: '2-digit'})}</div>`;
+      container.appendChild(div); container.scrollTop = container.scrollHeight;
+      if (role === 'user') chatHistory.push({role: 'user', content: text});
+      else chatHistory.push({role: 'assistant', content: text});
+    }
+
+    function toggleCitations(el) { el.classList.toggle('expanded'); }
+
+    function resetDistill() {
+      uploadedFiles = []; sessionId = null; chatHistory = []; currentStyle = 'normal'; isProcessing = false;
+      document.getElementById('upload-section').style.display = 'block';
+      document.getElementById('progressArea').classList.remove('active');
+      document.getElementById('chatArea').classList.remove('active');
+      document.getElementById('mentorCard').classList.remove('active');
+      document.getElementById('chatMessages').innerHTML = `
+        <div class="typing-indicator" id="typingIndicator"><div class="msg-bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div></div>`;
+      document.getElementById('fileList').innerHTML = ''; updateProcessBtn();
+      document.querySelectorAll('.style-option').forEach(o => o.classList.remove('active'));
+      document.querySelector('[data-style="normal"]').classList.add('active');
+      setProgress(0, '正在准备...', '');
+    }
+  </script>
+</body>
+</html>

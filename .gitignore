@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+.env.local
+*.env.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data - 保留脱敏数据库，排除客户原始文件和备份
+data/*.bak*
+data/*.new
+data/*.bak.v1
+data/scholar_profile_database_complete.csv
+data/scholar_profile_database_legacy.csv
+
+# Private - 含客户数据的文件不上传
+_private/*.xlsx
+_private/*.csv
+# 但保留目录和占位文件
+!_private/.gitkeep
+
+# 调查名单 - 已清空，仅保留 README 占位
+调查名单/*.pdf
+调查名单/*.docx
+调查名单/*.xlsx
+
+# Backup files
+*.bak
+*.bak.*
+*.old
+*.new
+
+# Logs
+logs/
+*.log
+
+# Large binaries
+*.pdf
+*.docx
+*.zip
+*.tar.gz

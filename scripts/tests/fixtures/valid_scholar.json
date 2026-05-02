@@ -1,0 +1,67 @@
+{
+  "name": "张三",
+  "institution": "北京大学",
+  "investigation_date": "2026-04-18",
+  "basic_profile": {
+    "name": "张三",
+    "institution": "北京大学",
+    "current_title": "教授",
+    "education_background": [
+      {"degree": "博士", "field": "经济学", "institution": "北京大学", "year": 2010}
+    ],
+    "career_timeline": [
+      {"year": 2010, "event": "博士毕业", "institution": "北京大学"},
+      {"year": 2015, "event": "晋升为副教授", "institution": "北京大学"},
+      {"year": 2020, "event": "晋升为教授", "institution": "北京大学"}
+    ],
+    "academic_title": "博士生导师"
+  },
+  "academic_outputs": {
+    "claimed_papers": "70余篇",
+    "verified_papers": [
+      {"title": "中国经济增长研究", "journal": "经济研究", "year": 2023, "authors": ["张三", "李四"]},
+      {"title": "金融市场波动分析", "journal": "管理世界", "year": 2022, "authors": ["张三", "王五"]}
+    ],
+    "claimed_monographs": "4部",
+    "verified_monographs": [
+      {"title": "中国经济发展史", "publisher": "商务印书馆", "year": 2019}
+    ],
+    "source_databases": ["CNKI", "万方"],
+    "recent_3yr_papers": [
+      {"title": "中国经济增长研究", "journal": "经济研究", "year": 2023},
+      {"title": "金融市场波动分析", "journal": "管理世界", "year": 2022}
+    ]
+  },
+  "quality_assessment": {
+    "overall_score": 3.5,
+    "assessment_text": "学术产出质量中等偏上",
+    "journal_tier_distribution": {"tier1": 5, "tier2": 10, "tier3": 15},
+    "citation_metrics": {"total_citations": 500, "h_index": 12}
+  },
+  "relationship_network": {
+    "advisors": [{"name": "李四", "institution": "清华大学", "relation": "博士导师"}],
+    "collaborators": [{"name": "王五", "institution": "复旦大学", "co_papers": 8}],
+    "editorial_roles": [{"journal": "经济研究", "role": "编委", "since": 2018}],
+    "institutional_affiliations": [{"institution": "中国社会科学院", "role": "兼职研究员"}]
+  },
+  "anomalies": [
+    {
+      "category": "S2",
+      "severity": "medium",
+      "description": "早期论文质量显著高于近期",
+      "evidence": {"early_avg_score": 4.2, "recent_avg_score": 2.8}
+    }
+  ],
+  "confidence_ratings": {
+    "identity": 0.95,
+    "education": 0.90,
+    "publications": 0.85,
+    "claims": 0.70
+  },
+  "student_reviews": {
+    "source": "导师评价网",
+    "overall_rating": 3.8,
+    "review_count": 45,
+    "key_themes": ["学术严谨", "指导细致"]
+  }
+}

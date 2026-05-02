@@ -1,0 +1,9 @@
+{
+  "agent": "zhu_xiansheng",
+  "task": "preprint_monitor_summary",
+  "status": "completed",
+  "signals_count": 3,
+  "alert_types": ["duplicate_submission", "content_reuse", "suspicious_gap"],
+  "max_confidence": 0.85,
+  "anomaly": "无"
+}
