@@ -362,9 +362,9 @@ def show_validation(results: list[dict]):
     mc_low = [r for r in misconduct if r["risk_level"] == "low"]
     
     node2 = tree.add("[bold]🔍 确认不端案例识别（共 24 例）[/bold]")
-    node2.add(f"[red]High 风险: {len(mc_high)} 例[/red] — Tumor Biology论文工厂、批量撤稿模式、钟华")
-    node2.add(f"[yellow]Medium 风险: {len(mc_medium)} 例[/yellow] — 张裕卿、黄飞若")
-    node2.add(f"[green]Low 风险: {len(mc_low)} 例[/green] — 贺海波、翟天临、刘翔峰及 15 例 NSFC 匿名案例")
+    node2.add(f"[red]High 风险: {len(mc_high)} 例[/red] — Tumor Biology论文工厂、批量撤稿模式、某教授D")
+    node2.add(f"[yellow]Medium 风险: {len(mc_medium)} 例[/yellow] — 某教授A、某教授B")
+    node2.add(f"[green]Low 风险: {len(mc_low)} 例[/green] — 某教授C、某博士、CASE_002及 15 例 NSFC 匿名案例")
     
     sep_node = node2.add("[dim]分离度验证[/dim]")
     if misconduct:
@@ -372,7 +372,7 @@ def show_validation(results: list[dict]):
         normal_scores = [r["score"] for r in results if not r["is_confirmed_misconduct"]]
         sep_node.add(f"不端案例最高分: [red]{max(mc_scores):.2f}[/red]")
         sep_node.add(f"不端案例中位数: [red]{sorted(mc_scores)[len(mc_scores)//2]:.2f}[/red]")
-        sep_node.add(f"正常学者最高分: [yellow]{max(normal_scores):.2f}[/yellow]（谷文萍，A8 基金命中率误报）")
+        sep_node.add(f"正常学者最高分: [yellow]{max(normal_scores):.2f}[/yellow]（CASE_020，A8 基金命中率误报）")
         sep_node.add(f"正常学者中位数: [green]{sorted(normal_scores)[len(normal_scores)//2]:.2f}[/green]")
     
     # 4.3 误报分析
@@ -389,8 +389,8 @@ def show_validation(results: list[dict]):
     # 4.4 规则有效性
     node4 = tree.add("[bold]🛡️ 规则有效性[/bold]")
     node4.add("A005 撤稿历史: [red]最强信号[/red] — 24 次触发，100% 命中已确认不端")
-    node4.add("A001 超高产: [yellow]需分层过滤[/yellow] — 5 次触发，谢毅/郝玉峰因 top 被豁免")
-    node4.add("A008 基金命中率: [yellow]需人工复核[/yellow] — 谷文萍/胡子欣统计上超 P99，需验证数据源")
+    node4.add("A001 超高产: [yellow]需分层过滤[/yellow] — 5 次触发，CASE_019/CASE_022因 top 被豁免")
+    node4.add("A008 基金命中率: [yellow]需人工复核[/yellow] — CASE_020/CASE_015统计上超 P99，需验证数据源")
     node4.add("A002 引用异常: [dim]数据限制 — 19 例 h_index=0 匿名案例无法触发[/dim]")
     
     console.print(tree)

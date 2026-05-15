@@ -4,8 +4,8 @@
 从学者档案库中找出与目标学者最相似的已有案例
 
 用法:
-    python scholar_profile_matcher.py --name "姚俊" --top 3
-    python scholar_profile_matcher.py --db /path/to/scholar_profile_database.csv --name "汤铎铎"
+    python scholar_profile_matcher.py --name "CASE_005" --top 3
+    python scholar_profile_matcher.py --db /path/to/scholar_profile_database.csv --name "CASE_011"
 """
 
 import os
@@ -152,7 +152,7 @@ class ScholarProfileMatcher:
 
 def main():
     parser = argparse.ArgumentParser(description='学者档案基准比对工具')
-    parser.add_argument('--db', default='/Users/xiaoy/Desktop/端上台来/data/scholar_profile_database.csv',
+    parser.add_argument('--db', default='./data/scholar_profile_database.csv',
                         help='学者档案库CSV路径')
     parser.add_argument('--misconduct-db',
                         help='学术不端特征数据库CSV路径（可选）')

@@ -2,7 +2,7 @@
 """
 investigation_demo_visual.py — 魅影学术侦探 · 调查流程终端动画演示
 
-以谢毅院士为例，三步骤视觉化呈现：
+以某院士院士为例，三步骤视觉化呈现：
   步骤1 开始初步调查（身份基线核实）
   步骤2 审查论文质量（产出核实 + 六维评估）
   步骤3 多agent深度挖掘（全网并发扫描）
@@ -35,12 +35,12 @@ from rich.layout import Layout
 console = Console()
 
 # ──────────────────────────────────────────────
-# 模拟数据：谢毅
+# 模拟数据：某院士
 # ──────────────────────────────────────────────
 SCHOLAR = {
-    "name": "谢毅",
-    "name_en": "Yi Xie",
-    "institution": "中国科学技术大学",
+    "name": "某院士",
+    "name_en": "某某",
+    "institution": "目标院校",
     "institution_en": "USTC",
     "gender": "女",
     "birth": "1967年7月23日",
@@ -48,7 +48,7 @@ SCHOLAR = {
     "title": "中国科学院院士",
     "titles": ["中国科学院院士(2013)", "发展中国家科学院院士(2015)", "亚太材料科学院院士(2015)", "英国皇家化学会会士(2013)"],
     "phd_year": 1996,
-    "phd_institution": "中国科学技术大学",
+    "phd_institution": "目标院校",
     "phd_major_claimed": "应用化学系",
     "phd_major_actual": "凝聚态物理",
     "phd_advisor": "钱逸泰",
@@ -121,7 +121,7 @@ def intro():
     ║                                                                       ║
     ║     🔍 魅 影 学 术 侦 探    ·    调 查 流 程 演 示                     ║
     ║                                                                       ║
-    ║     目标锁定: 谢毅院士 (Yi Xie) · 中国科学技术大学 · 无机化学           ║
+    ║     目标锁定: 某院士院士 (某某) · 目标院校 · 目标学科           ║
     ║                                                                       ║
     ╚═══════════════════════════════════════════════════════════════════════╝
     """, style="bold bright_cyan")
@@ -135,7 +135,7 @@ def intro():
         f"[bold]头衔:[/bold] {SCHOLAR['title']}\n"
         f"[bold]性别/出生:[/bold] {SCHOLAR['gender']} / {SCHOLAR['birth']}\n"
         f"[bold]籍贯:[/bold] {SCHOLAR['hometown']}\n"
-        f"[bold]学科:[/bold] 无机化学 / 纳米材料 / 能源材料\n"
+        f"[bold]学科:[/bold] 目标学科 / 纳米材料 / 能源材料\n"
         f"[bold]预计调查深度:[/bold] 三阶段 · 七方向 · 多源交叉验证",
         title="[bold bright_yellow]📋 调查目标档案[/bold bright_yellow]",
         border_style="bright_yellow",
@@ -166,7 +166,7 @@ def step1_identity_baseline():
     table1.add_column("状态", width=8)
     
     checks = [
-        ("姓名/性别/出生", "谢毅，女，1967年生", "百度百科/院士名单", "[green]✓一致[/green]"),
+        ("姓名/性别/出生", "某院士，女，1967年生", "百度百科/院士名单", "[green]✓一致[/green]"),
         ("学士学位", "1988年厦门大学化学系", "中国化学会会士页", "[green]✓一致[/green]"),
         ("博士学位", "1996年中科大博士", "多源一致", "[green]✓一致[/green]"),
         ("博士专业", "应用化学系", "化学会:凝聚态物理", "[yellow]⚠差异[/yellow]"),
@@ -188,10 +188,10 @@ def step1_identity_baseline():
     
     # 导师网络树
     tree = Tree("[bold bright_cyan]📁 学术谱系[/bold bright_cyan]")
-    advisor = tree.add(f"[bold]导师[/bold]: 钱逸泰院士 (中科大，无机化学)")
+    advisor = tree.add(f"[bold]导师[/bold]: 钱逸泰院士 (中科大，目标学科)")
     advisor.add("[dim]· 院士(1997)、第三世界科学院院士[/dim]")
     advisor.add("[dim]· 固体化学与纳米材料领域奠基人之一[/dim]")
-    xie = tree.add(f"[bold]本人[/bold]: 谢毅 (1967- )")
+    xie = tree.add(f"[bold]本人[/bold]: 某院士 (1967- )")
     xie.add("[green]✓[/green] 1996年博士毕业，留校任教")
     xie.add("[green]✓[/green] 1998年破格晋升教授")
     xie.add("[green]✓[/green] 2013年当选中国科学院院士")
@@ -269,11 +269,11 @@ def step2_paper_quality():
     
     # 雷达图（字符画）
     dimensions = ["原创性", "严谨性", "证据质量", "逻辑结构", "文献规范", "表达清晰"]
-    scores = [9.2, 9.0, 8.8, 9.1, 8.5, 8.7]  # 谢毅的实际水平
+    scores = [9.2, 9.0, 8.8, 9.1, 8.5, 8.7]  # 某院士的实际水平
     radar = ascii_radar(dimensions, scores)
     
     radar_panel = Panel(
-        f"[bold]评估对象:[/bold] 谢毅团队近5年代表性论文 (JACS/Angew/AM/PNAS)\n"
+        f"[bold]评估对象:[/bold] 某院士团队近5年代表性论文 (JACS/Angew/AM/PNAS)\n"
         f"[bold]样本量:[/bold] 20篇通讯作者论文\n\n"
         f"[bold bright_yellow]六维质量雷达图 (满分10)[/bold bright_yellow]\n"
         f"{radar}\n\n"
@@ -378,7 +378,7 @@ def step3_multi_agent():
     # 证据链
     console.print("[bold bright_magenta]▸ 证据链构建[/bold bright_magenta]")
     
-    evidence_tree = Tree("[bold bright_magenta]🔗 谢毅院士 · 完整证据链[/bold bright_magenta]")
+    evidence_tree = Tree("[bold bright_magenta]🔗 某院士院士 · 完整证据链[/bold bright_magenta]")
     
     id_branch = evidence_tree.add("[bold]身份基线[/bold]")
     id_branch.add("[green]✓[/green] 学历: 厦大本科(1988) → 中科大博士(1996)，多源一致")
@@ -407,7 +407,7 @@ def final_verdict():
     console.print()
     
     verdict = Panel(
-        f"[bold]调查对象:[/bold] 谢毅 (Yi Xie) · 中国科学技术大学\n"
+        f"[bold]调查对象:[/bold] 某院士 (某某) · 目标院校\n"
         f"[bold]调查深度:[/bold] 三阶段 / 七方向 / 多源交叉验证\n"
         f"[bold]agent数量:[/bold] 7个独立并发agent\n"
         f"[bold]数据来源:[/bold] 高校官网、学位论文库、CNKI、WoS、PubPeer、Retraction Watch、知乎、导师评价网等\n\n"

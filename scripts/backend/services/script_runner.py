@@ -8,7 +8,10 @@ import json
 from pathlib import Path
 from typing import List, Optional
 
-SCRIPTS_DIR = "/Users/xiaoy/Desktop/端上台来/scripts"
+SCRIPTS_DIR = os.environ.get(
+    "ACADEMIC_DETECTIVE_SCRIPTS_DIR",
+    str(Path(__file__).resolve().parent.parent.parent)
+)
 
 # 脚本映射表
 SCRIPT_MAP = {

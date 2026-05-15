@@ -219,7 +219,7 @@ class ScholarProfileMatcherV2:
 
 def main():
     parser = argparse.ArgumentParser(description='学者档案基准比对工具 v2.0')
-    parser.add_argument('--db', default='/Users/xiaoy/Desktop/端上台来/data/scholar_profile_database.csv')
+    parser.add_argument('--db', default='./data/scholar_profile_database.csv')
     parser.add_argument('--name', required=True)
     parser.add_argument('--top', type=int, default=5)
     parser.add_argument('--mode', default='composite', choices=['composite', 'prefilter', 'mode', 'risk_profile', 'misconduct_ranking'])

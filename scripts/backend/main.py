@@ -9,7 +9,7 @@ from fastapi.staticfiles import StaticFiles
 
 from routers import cases, chat, upload
 
-FRONTEND_DIR = "/Users/xiaoy/Downloads/academic-detective-site"
+FRONTEND_DIR = os.environ.get("ACADEMIC_DETECTIVE_FRONTEND_DIR", "../frontend")
 
 app = FastAPI(
     title="魅影 Backend",

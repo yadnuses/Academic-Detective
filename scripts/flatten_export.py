@@ -4,12 +4,13 @@ Flatten export script.
 Copies all working engines into a flat directory and rewrites imports.
 """
 
+import os
 import shutil
 import re
 from pathlib import Path
 
-SRC = Path("/Users/xiaoy/Downloads/academic-investigation-skill/scripts")
-DST = Path("/Users/xiaoy/Downloads/academic-investigation-engine")
+SRC = Path(os.environ.get("ACADEMIC_DETECTIVE_SRC", "./scripts"))
+DST = Path(os.environ.get("ACADEMIC_DETECTIVE_DST", "./academic-investigation-engine"))
 
 # Mapping: (source_path, dest_name)
 FILES = [

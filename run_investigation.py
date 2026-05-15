@@ -7,8 +7,8 @@
     python run_investigation.py --name "导师姓名" --school "学校名称" [选项]
 
 示例：
-    python run_investigation.py --name "贾冀川" --school "南京师范大学"
-    python run_investigation.py --name "贾冀川" --school "南京师范大学" --depth deep
+    python run_investigation.py --name "学者姓名" --school "目标院校"
+    python run_investigation.py --name "学者姓名" --school "目标院校" --depth deep
     python run_investigation.py --list-tools
 
 说明：
@@ -116,8 +116,8 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 示例：
-  python run_investigation.py --name "贾冀川" --school "南京师范大学"
-  python run_investigation.py --name "贾冀川" --school "南京师范大学" --depth deep
+  python run_investigation.py --name "学者姓名" --school "目标院校"
+  python run_investigation.py --name "学者姓名" --school "目标院校" --depth deep
   python run_investigation.py --list-tools
         """,
     )

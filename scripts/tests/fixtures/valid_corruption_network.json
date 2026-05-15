@@ -2,9 +2,9 @@
   "network_name": "湘雅系腐败网络",
   "investigation_date": "2026-04-18",
   "nodes": [
-    {"id": "n1", "name": "刘翔峰", "type": "core_subject", "institution": "中南大学湘雅二医院", "detail": "调查对象"},
-    {"id": "n2", "name": "罗帅宇", "type": "victim", "institution": "中南大学湘雅二医院", "detail": "研究生，已离世"},
-    {"id": "n3", "name": "谭志刚", "type": "accomplice", "institution": "中南大学湘雅二医院", "detail": "同事"}
+    {"id": "n1", "name": "某医生A", "type": "core_subject", "institution": "中南大学湘雅二医院", "detail": "调查对象"},
+    {"id": "n2", "name": "某实习生B", "type": "victim", "institution": "中南大学湘雅二医院", "detail": "研究生，已离世"},
+    {"id": "n3", "name": "某同事C", "type": "accomplice", "institution": "中南大学湘雅二医院", "detail": "同事"}
   ],
   "links": [
     {"source": "n1", "target": "n2", "type": "victimization", "detail": "导师-学生关系", "weight": 3, "is_anomaly": true},
@@ -13,7 +13,7 @@
   "timelines": [
     {
       "id": "t1",
-      "title": "刘翔峰职业晋升时间轴",
+      "title": "某医生A职业晋升时间轴",
       "events": [
         {"date": "2018-06", "event": "晋升为副主任医师", "description": "晋升为副主任医师", "nodes": ["n1"]},
         {"date": "2022-03", "event": "晋升为主任医师", "description": "晋升为主任医师", "nodes": ["n1"]}
@@ -49,7 +49,7 @@
       "title": "过度医疗举报",
       "status": "investigating",
       "parties": ["n1"],
-      "description": "患者举报刘翔峰存在过度医疗行为"
+      "description": "患者举报某医生A存在过度医疗行为"
     }
   ]
 }

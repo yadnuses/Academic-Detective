@@ -9,7 +9,7 @@ investigate_visual.py — 魅影学术侦探 · Rich 可视化包装层
   - 子脚本输出实时渲染到 Rich Live 面板
 
 用法（与 investigate.py 一致）：
-    python3 scripts/investigate_visual.py init --case-dir ./cases/xxx --name 谢毅
+    python3 scripts/investigate_visual.py init --case-dir ./cases/xxx --name CASE_019
     python3 scripts/investigate_visual.py step --case-dir ./cases/xxx
     python3 scripts/investigate_visual.py advance --case-dir ./cases/xxx
     python3 scripts/investigate_visual.py status --case-dir ./cases/xxx
@@ -843,7 +843,7 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 示例:
-  python investigate_visual.py init --case-dir ./cases/xieyi --name 谢毅
+  python investigate_visual.py init --case-dir ./cases/xieyi --name CASE_019
   python investigate_visual.py step --case-dir ./cases/xieyi
   python investigate_visual.py advance --case-dir ./cases/xieyi
   python investigate_visual.py status --case-dir ./cases/xieyi

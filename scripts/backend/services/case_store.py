@@ -4,7 +4,7 @@ import yaml
 from datetime import datetime
 from typing import Optional, Dict, List
 
-CASES_DIR = "/Users/xiaoy/Desktop/端上台来/调查名单"
+CASES_DIR = os.environ.get("ACADEMIC_DETECTIVE_CASES_DIR", "./cases")
 
 
 class CaseStore:

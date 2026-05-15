@@ -3,7 +3,7 @@
 openalex_enricher.py
 
 Enrich domestic scholar_data.json with English publications from OpenAlex.
-Many domestic scholars (e.g. 计憬煊) may also have records in OpenAlex,
+Many domestic scholars (e.g. CASE_017) may also have records in OpenAlex,
 especially when they have English collaborative papers.
 
 Usage:

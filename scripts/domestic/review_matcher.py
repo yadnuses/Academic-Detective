@@ -13,7 +13,7 @@ summary with:
       • Verification action items with specific databases and queries
 
 Usage:
-    python review_matcher.py --db "../reviews.xlsx" --name "田增山" --school "重庆邮电大学" --output ./data/reviews.json
+    python review_matcher.py --db "../reviews.xlsx" --name "CASE_014" --school "重庆邮电大学" --output ./data/reviews.json
 """
 
 import json

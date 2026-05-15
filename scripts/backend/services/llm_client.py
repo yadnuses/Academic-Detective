@@ -9,7 +9,10 @@ DEEPSEEK_BASE_URL = os.environ.get("OPENAI_BASE_URL", "https://api.deepseek.com/
 DEFAULT_MODEL = os.environ.get("LLM_MODEL", "deepseek-chat")
 
 # Load Meiying behavior spec as core system prompt (cleaned: no script-calling descriptions)
-_BEHAVIOR_PATH = "/Users/xiaoy/Desktop/端上台来/魅影行为逻辑规范_clean.md"
+_BEHAVIOR_PATH = os.environ.get(
+    "MEIYING_BEHAVIOR_PATH",
+    "./docs/魅影行为逻辑规范_clean.md"
+)
 try:
     with open(_BEHAVIOR_PATH, "r", encoding="utf-8") as f:
         _BEHAVIOR_SPEC = f.read()

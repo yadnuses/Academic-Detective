@@ -36,7 +36,7 @@ from chart_generator import generate_chart
 
 
 # ──────────────────────────────────────────────
-# HTML/CSS 模板（复刻谷文萍 PDF 风格）
+# HTML/CSS 模板（复刻CASE_020 PDF 风格）
 # ──────────────────────────────────────────────
 HTML_TEMPLATE = """<!DOCTYPE html>
 <html lang="zh-CN">

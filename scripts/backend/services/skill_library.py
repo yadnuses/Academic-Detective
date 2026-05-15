@@ -1,8 +1,14 @@
 """SKILL.md chapter library for on-demand loading via function calling."""
+import os
 import re
 from pathlib import Path
 
-SKILL_PATH = Path("/Users/xiaoy/.local/share/uv/tools/kimi-cli/lib/python3.13/site-packages/kimi_cli/skills/academic-investigation-skill/SKILL.md")
+SKILL_PATH = Path(
+    os.environ.get(
+        "ACADEMIC_INVESTIGATION_SKILL_PATH",
+        str(Path(__file__).resolve().parent.parent.parent.parent / "SKILL.md")
+    )
+)
 
 # Map section display names to regex patterns for finding the section
 SECTIONS = {

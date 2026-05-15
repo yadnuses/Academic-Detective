@@ -1,7 +1,7 @@
 [
   {
     "researcher_id": "CASE_001",
-    "name": "Jingrong Tong",
+    "name": "CASE_001",
     "career_tier": "normal",
     "discipline_id": "COMM_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -30,7 +30,7 @@
   },
   {
     "researcher_id": "CASE_002",
-    "name": "刘翔峰",
+    "name": "CASE_002",
     "career_tier": "normal",
     "discipline_id": "MED_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -77,7 +77,7 @@
   },
   {
     "researcher_id": "CASE_003",
-    "name": "刘阳",
+    "name": "CASE_003",
     "career_tier": "normal",
     "discipline_id": "COMM_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -87,7 +87,7 @@
   },
   {
     "researcher_id": "CASE_004",
-    "name": "吴军军",
+    "name": "CASE_004",
     "career_tier": "normal",
     "discipline_id": "COMM_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -116,7 +116,7 @@
   },
   {
     "researcher_id": "CASE_005",
-    "name": "姚俊",
+    "name": "CASE_005",
     "career_tier": "normal",
     "discipline_id": "COMM_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -126,7 +126,7 @@
   },
   {
     "researcher_id": "CASE_006",
-    "name": "朱俊河",
+    "name": "CASE_006",
     "career_tier": "normal",
     "discipline_id": "COMM_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -155,7 +155,7 @@
   },
   {
     "researcher_id": "CASE_007",
-    "name": "朱怡淼",
+    "name": "CASE_007",
     "career_tier": "normal",
     "discipline_id": "COMM_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -165,7 +165,7 @@
   },
   {
     "researcher_id": "CASE_008",
-    "name": "李明华",
+    "name": "CASE_008",
     "career_tier": "normal",
     "discipline_id": "COMM_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -194,7 +194,7 @@
   },
   {
     "researcher_id": "CASE_009",
-    "name": "杜琳",
+    "name": "CASE_009",
     "career_tier": "normal",
     "discipline_id": "COMM_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -204,7 +204,7 @@
   },
   {
     "researcher_id": "CASE_010",
-    "name": "汤文军",
+    "name": "CASE_010",
     "career_tier": "leading",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -251,7 +251,7 @@
   },
   {
     "researcher_id": "CASE_011",
-    "name": "汤铎铎",
+    "name": "CASE_011",
     "career_tier": "normal",
     "discipline_id": "COMM_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -261,7 +261,7 @@
   },
   {
     "researcher_id": "CASE_012",
-    "name": "焦俊波",
+    "name": "CASE_012",
     "career_tier": "normal",
     "discipline_id": "COMM_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -271,7 +271,7 @@
   },
   {
     "researcher_id": "CASE_013",
-    "name": "王新兵",
+    "name": "CASE_013",
     "career_tier": "top",
     "discipline_id": "CS_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -281,7 +281,7 @@
   },
   {
     "researcher_id": "CASE_014",
-    "name": "田增山",
+    "name": "CASE_014",
     "career_tier": "normal",
     "discipline_id": "CS_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -291,7 +291,7 @@
   },
   {
     "researcher_id": "CASE_015",
-    "name": "胡子欣",
+    "name": "CASE_015",
     "career_tier": "normal",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -320,7 +320,7 @@
   },
   {
     "researcher_id": "CASE_016",
-    "name": "蔡正兰",
+    "name": "CASE_016",
     "career_tier": "normal",
     "discipline_id": "COMM_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -330,7 +330,7 @@
   },
   {
     "researcher_id": "CASE_017",
-    "name": "计憬煊",
+    "name": "CASE_017",
     "career_tier": "normal",
     "discipline_id": "COMM_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -359,7 +359,7 @@
   },
   {
     "researcher_id": "CASE_018",
-    "name": "许畅",
+    "name": "CASE_018",
     "career_tier": "top",
     "discipline_id": "CS_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -369,7 +369,7 @@
   },
   {
     "researcher_id": "CASE_019",
-    "name": "谢毅",
+    "name": "CASE_019",
     "career_tier": "top",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -379,7 +379,7 @@
   },
   {
     "researcher_id": "CASE_020",
-    "name": "谷文萍",
+    "name": "CASE_020",
     "career_tier": "normal",
     "discipline_id": "MED_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -408,7 +408,7 @@
   },
   {
     "researcher_id": "CASE_021",
-    "name": "贾冀川",
+    "name": "CASE_021",
     "career_tier": "normal",
     "discipline_id": "COMM_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -437,7 +437,7 @@
   },
   {
     "researcher_id": "CASE_022",
-    "name": "郝玉峰",
+    "name": "CASE_022",
     "career_tier": "top",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -447,7 +447,7 @@
   },
   {
     "researcher_id": "CASE_023",
-    "name": "陈昌凤",
+    "name": "CASE_023",
     "career_tier": "top",
     "discipline_id": "COMM_CN_2020_2024",
     "is_confirmed_misconduct": false,
@@ -457,7 +457,7 @@
   },
   {
     "researcher_id": "CASE_024",
-    "name": "翟天临",
+    "name": "CASE_024",
     "career_tier": "normal",
     "discipline_id": "COMM_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -486,7 +486,7 @@
   },
   {
     "researcher_id": "CASE_025",
-    "name": "张裕卿",
+    "name": "CASE_025",
     "career_tier": "normal",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -533,7 +533,7 @@
   },
   {
     "researcher_id": "CASE_026",
-    "name": "黄飞若",
+    "name": "CASE_026",
     "career_tier": "normal",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -580,7 +580,7 @@
   },
   {
     "researcher_id": "CASE_027",
-    "name": "贺海波",
+    "name": "CASE_027",
     "career_tier": "normal",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -627,7 +627,7 @@
   },
   {
     "researcher_id": "CASE_028",
-    "name": "钟华",
+    "name": "CASE_028",
     "career_tier": "normal",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -692,7 +692,7 @@
   },
   {
     "researcher_id": "CASE_029",
-    "name": "西安交大王某某",
+    "name": "CASE_029",
     "career_tier": "normal",
     "discipline_id": "COMM_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -721,7 +721,7 @@
   },
   {
     "researcher_id": "CASE_030",
-    "name": "对外经贸李某某",
+    "name": "CASE_030",
     "career_tier": "normal",
     "discipline_id": "COMM_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -750,7 +750,7 @@
   },
   {
     "researcher_id": "CASE_031",
-    "name": "天津大学/厦门大学硕士论文雷同",
+    "name": "CASE_031",
     "career_tier": "normal",
     "discipline_id": "CS_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -779,7 +779,7 @@
   },
   {
     "researcher_id": "CASE_032",
-    "name": "唐博/王立明",
+    "name": "CASE_032",
     "career_tier": "normal",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -826,7 +826,7 @@
   },
   {
     "researcher_id": "CASE_033",
-    "name": "陈磊/陈可斌",
+    "name": "CASE_033",
     "career_tier": "normal",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -873,7 +873,7 @@
   },
   {
     "researcher_id": "CASE_034",
-    "name": "周建",
+    "name": "CASE_034",
     "career_tier": "normal",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -902,7 +902,7 @@
   },
   {
     "researcher_id": "CASE_035",
-    "name": "杨耀/王进进/李文彦",
+    "name": "CASE_035",
     "career_tier": "normal",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -931,7 +931,7 @@
   },
   {
     "researcher_id": "CASE_036",
-    "name": "黄冠群",
+    "name": "CASE_036",
     "career_tier": "normal",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -960,7 +960,7 @@
   },
   {
     "researcher_id": "CASE_037",
-    "name": "钟文/月福财",
+    "name": "CASE_037",
     "career_tier": "normal",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -1007,7 +1007,7 @@
   },
   {
     "researcher_id": "CASE_038",
-    "name": "公绪合",
+    "name": "CASE_038",
     "career_tier": "normal",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -1036,7 +1036,7 @@
   },
   {
     "researcher_id": "CASE_039",
-    "name": "周伟/刘涛/李永峰",
+    "name": "CASE_039",
     "career_tier": "normal",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -1065,7 +1065,7 @@
   },
   {
     "researcher_id": "CASE_040",
-    "name": "林兴/韦锦斌等",
+    "name": "CASE_040",
     "career_tier": "normal",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -1094,7 +1094,7 @@
   },
   {
     "researcher_id": "CASE_041",
-    "name": "燕东亮",
+    "name": "CASE_041",
     "career_tier": "normal",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -1123,7 +1123,7 @@
   },
   {
     "researcher_id": "CASE_042",
-    "name": "甘莉",
+    "name": "CASE_042",
     "career_tier": "normal",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -1152,7 +1152,7 @@
   },
   {
     "researcher_id": "CASE_043",
-    "name": "贺聚良",
+    "name": "CASE_043",
     "career_tier": "normal",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -1181,7 +1181,7 @@
   },
   {
     "researcher_id": "CASE_044",
-    "name": "陈岩",
+    "name": "CASE_044",
     "career_tier": "normal",
     "discipline_id": "CHEM_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -1210,7 +1210,7 @@
   },
   {
     "researcher_id": "CASE_045",
-    "name": "批量撤稿模式原型（Tumor Biology等）",
+    "name": "CASE_045",
     "career_tier": "normal",
     "discipline_id": "MED_CN_2020_2024",
     "is_confirmed_misconduct": true,
@@ -1257,7 +1257,7 @@
   },
   {
     "researcher_id": "CASE_046",
-    "name": "Tumor Biology论文工厂模式",
+    "name": "CASE_046",
     "career_tier": "normal",
     "discipline_id": "MED_CN_2020_2024",
     "is_confirmed_misconduct": true,
