@@ -6,7 +6,7 @@ Investigation type detection and track resolution.
 Routes investigations to the correct pipeline based on config and metadata.
 
 Usage:
-    from core.router import detect_investigation_type, get_track_scripts, InvestigationType
+    from core_router import detect_investigation_type, get_track_scripts, InvestigationType
 
     inv_type = detect_investigation_type(config)
     scripts = get_track_scripts(inv_type)

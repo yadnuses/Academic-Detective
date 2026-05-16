@@ -22,9 +22,9 @@ import subprocess
 from pathlib import Path
 from datetime import datetime
 
-from core.utils import get_logger, get_case_dir as utils_get_case_dir, ensure_dirs, load_config
-from core.db import InvestigationDB
-from core.router import detect_investigation_type, get_track_scripts, get_step_definitions, InvestigationType
+from core_utils import get_logger, get_case_dir as utils_get_case_dir, ensure_dirs, load_config
+from core_db import InvestigationDB
+from core_router import detect_investigation_type, get_track_scripts, get_step_definitions, InvestigationType
 
 
 STEPS = [
@@ -335,7 +335,7 @@ def cmd_status(args):
 
 def _load_validator_for_type(inv_type: str):
     """Dynamically import the correct validator module based on investigation type."""
-    from core.utils import is_corruption_network
+    from core_utils import is_corruption_network
 
     if inv_type == "international":
         from international import data_validator as dv

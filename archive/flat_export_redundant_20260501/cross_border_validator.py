@@ -18,7 +18,7 @@ from pathlib import Path
 from datetime import datetime
 from typing import Optional
 
-from core.utils import get_logger
+from core_utils import get_logger
 
 logger = get_logger("cross_border_validator")
 

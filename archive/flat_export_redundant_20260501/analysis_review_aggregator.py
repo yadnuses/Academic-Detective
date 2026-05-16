@@ -23,7 +23,7 @@ from pathlib import Path
 from collections import Counter
 from typing import Optional
 
-from core.utils import get_logger, save_json
+from core_utils import get_logger, save_json
 
 logger = get_logger("review_aggregator")
 

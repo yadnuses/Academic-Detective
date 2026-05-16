@@ -15,7 +15,7 @@ import json
 from pathlib import Path
 from typing import Optional
 
-from core.utils import get_logger, load_json
+from core_utils import get_logger, load_json
 
 logger = get_logger("missing_reporter")
 

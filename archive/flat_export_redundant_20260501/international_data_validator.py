@@ -14,7 +14,7 @@ import json
 from pathlib import Path
 from datetime import datetime
 
-from core.utils import get_logger
+from core_utils import get_logger
 
 logger = get_logger("intl_data_validator")
 

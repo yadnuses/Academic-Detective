@@ -14,7 +14,7 @@ import json
 from pathlib import Path
 from datetime import datetime
 
-from core.utils import get_logger, load_json, save_json, load_config as utils_load_config
+from core_utils import get_logger, load_json, save_json, load_config as utils_load_config
 
 logger = get_logger("intl_scholar_builder")
 

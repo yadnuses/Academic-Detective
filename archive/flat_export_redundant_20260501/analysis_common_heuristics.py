@@ -18,7 +18,7 @@ from collections import Counter
 from dataclasses import dataclass, field
 from typing import Optional
 
-from core.utils import get_logger
+from core_utils import get_logger
 
 logger = get_logger("common_heuristics")
 

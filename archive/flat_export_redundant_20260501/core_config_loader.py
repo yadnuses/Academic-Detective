@@ -6,7 +6,7 @@ Unified configuration loading with automatic v1→v2 migration
 and investigation type inference.
 
 Usage:
-    from core.config_loader import load_config_with_defaults
+    from core_config_loader import load_config_with_defaults
 
     config = load_config_with_defaults("./cases/test/config.yaml")
 """
@@ -15,7 +15,7 @@ import yaml
 from pathlib import Path
 from typing import Optional
 
-from core.router import detect_investigation_type, InvestigationType
+from core_router import detect_investigation_type, InvestigationType
 
 
 CONFIG_VERSION = "2.0"

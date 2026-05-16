@@ -22,7 +22,7 @@ import re
 from collections import Counter
 from typing import Optional
 
-from core.utils import get_logger
+from core_utils import get_logger
 
 logger = get_logger("intl_heuristics")
 
