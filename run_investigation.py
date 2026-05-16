@@ -36,6 +36,8 @@ from pathlib import Path
 
 # 预装脚本根目录
 SCRIPTS_DIR = Path(__file__).parent / "archive" / "flat_export_redundant_20260501"
+# scripts/ 活跃目录（部分工具在此）
+SCRIPTS_ACTIVE_DIR = Path(__file__).parent / "scripts"
 
 # 所有可用工具及其路径
 TOOLS = {
@@ -60,8 +62,8 @@ TOOLS = {
     "report_prompt_optimizer": SCRIPTS_DIR / "report_report_prompt_optimizer.py",
     
     # 基准线引擎
-    "benchmark_engine": SCRIPTS_DIR / "benchmark_engine.py",
-    "profile_matcher": SCRIPTS_DIR / "scholar_profile_matcher_v2.py",
+    "benchmark_engine": SCRIPTS_ACTIVE_DIR / "benchmark_engine.py",
+    "profile_matcher": SCRIPTS_ACTIVE_DIR / "scholar_profile_matcher_v2.py",
 }
 
 
@@ -189,7 +191,7 @@ def main():
     print(f"    - data_validator.py（数据逻辑验证）")
     print(f"    - common_heuristics.py（通用异常规则）")
     print(f"    - benchmark_engine.py（学科基准线偏差计算）")
-    if SCRIPTS_DIR.joinpath("scholar_profile_matcher_v2.py").exists():
+    if SCRIPTS_ACTIVE_DIR.joinpath("scholar_profile_matcher_v2.py").exists():
         print(f"    - scholar_profile_matcher_v2.py（与已知案例的模式比对）")
 
     # Step 6: 多源交叉验证

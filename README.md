@@ -51,10 +51,14 @@ cd academic-detective
 # 2. 安装依赖
 pip install -r archive/flat_export_redundant_20260501/requirements.txt
 
-# 3. 查看所有可用工具
+# 3. 初始化配置
+cp scripts/config.template.yaml ./config.yaml
+# 然后编辑 config.yaml 填写学者信息
+
+# 4. 查看所有可用工具
 python run_investigation.py --list-tools
 
-# 4. 启动调查
+# 5. 启动调查
 python run_investigation.py --name "导师姓名" --school "学校名称"
 ```
 
