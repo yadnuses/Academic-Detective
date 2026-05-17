@@ -45,8 +45,8 @@
 
 ```bash
 # 1. 克隆
-git clone https://github.com/your-org/academic-detective.git
-cd academic-detective
+git clone https://github.com/yadnuses/Academic-Detective.git
+cd Academic-Detective
 
 # 2. 安装依赖
 pip install -r archive/flat_export_redundant_20260501/requirements.txt
@@ -80,7 +80,7 @@ python run_investigation.py --name "导师姓名" --school "学校名称"
 ## 项目结构
 
 ```
-academic-detective/
+Academic-Detective/
 ├── run_investigation.py          # 一键入口
 ├── SKILL.md                      # 完整调查方法论（7步框架）
 ├── archive/flat_export_redundant_20260501/  # 37个核心脚本
