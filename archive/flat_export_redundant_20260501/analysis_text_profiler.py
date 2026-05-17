@@ -35,7 +35,7 @@ def extract_text(input_path: str) -> str:
     # Try pdfplumber first (best for Chinese academic layouts)
     try:
         import pdfplumber
-        with pdfplumber.open(pdf_path) as pdf:
+        with pdfplumber.open(input_path) as pdf:
             for page in pdf.pages:
                 page_text = page.extract_text()
                 if page_text:
