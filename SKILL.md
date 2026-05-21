@@ -2023,8 +2023,23 @@ Zixin Hu 案例展示了风险评级如何在调查进程中发生动态升级�
 | `scripts/` | **系统脚本工具链**：core/analysis/network/report 等模块，**禁止放入个案文件** | `investigate.py`, `core/db.py`, `analysis/text_profiler.py` |
 | `website/` | **前端宣传材料**：服务介绍页面、商务简介、海报 | `index.html`, `investigate.html`, `竖版宣传海报.pdf` |
 | `templates/` | **模板与示例**：报告模板、数据结构模板、示例PDF | `学术档案调查报告_模板.html`, `demo_scholar.json` |
-| `guides/` | **调查方法论指南**：各类专项调查的操作手册 | `systemic_corruption_investigation_guide.md` |
+| `guides/` | **调查方法论指南**：各类专项调查的操作手册（详见下方索引） | `systemic_corruption_investigation_guide.md` |
 | `data/` | **通用原始数据/测试数据**：非特定于某个调查对象的中间文件 | `研学网导师评价表.xlsx`, `test_paper_profile.json`, `scholar_profile_database.csv` |
+
+### 专项调查方法论索引（按需加载）
+
+当调查过程中出现以下场景时，**必须**读取对应操作手册并遵循其流程：
+
+| 触发条件 | 参考文档 | 核心内容 |
+|:---|:---|:---|
+| 发现学者持股、企业任职、专利转让、或利益冲突未披露 | `guides/business_network_guide.md` | 天眼查/企查查工商查询 + 专利归属分析 + 利益冲突披露核查 |
+| 需要追溯已删除/修改的网页、历史版本、或被撤回的信息 | `guides/digital_archaeology_guide.md` | Wayback Machine + Google Cache + 版本对比 + 数字痕迹保全 |
+| 涉及多人串联、院系级/机构级系统性问题 | `guides/systemic_corruption_investigation_guide.md` | 网络拓扑构建 + 资金流追踪 + 时间线耦合窗口检测 |
+| 新手首次执行调查 / 不确定从哪一步开始 | `guides/新手上手指南.md` | 最小可行调查路径 + 工具选择决策树 |
+| 需要完整七步法每步的具体操作清单 | `guides/调查工作手册_详细步骤.md` | 数据采集→验证→分析→报告全流程 checklist |
+| 需要调查框架总览和方法论原则 | `guides/调查指南手册.md` | 调查伦理 + 证据标准 + 报告规范 |
+
+> **加载规则**：不要一次性读取所有 guide。仅在调查过程中触发对应条件时，读取相关文档的具体章节。
 | `archive/` | **历史备份**：SKILL.md 等核心文档的版本备份 | `SKILL.md.v1.2.bak` |
 
 ### 调查名单命名规则

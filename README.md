@@ -55,12 +55,14 @@ pip install -r archive/flat_export_redundant_20260501/requirements.txt
 cp scripts/config.template.yaml ./config.yaml
 # 然后编辑 config.yaml 填写学者信息
 
-# 4. 查看所有可用工具
-python run_investigation.py --list-tools
+# 4. 初始化案例目录
+python scripts/investigate.py init --case-dir ./output/案例名
 
-# 5. 启动调查
-python run_investigation.py --name "导师姓名" --school "学校名称"
+# 5. 查看当前状态与推荐步骤
+python scripts/investigate.py status --case-dir ./output/案例名
 ```
+
+> 💡 `examples/quickstart_demo.py` 提供了七步调查框架的演示说明，适合快速了解整体流程。
 
 ---
 
@@ -81,11 +83,12 @@ python run_investigation.py --name "导师姓名" --school "学校名称"
 
 ```
 Academic-Detective/
-├── run_investigation.py          # 一键入口
+├── scripts/investigate.py        # CLI 主入口（40个子命令）
 ├── SKILL.md                      # 完整调查方法论（7步框架）
-├── archive/flat_export_redundant_20260501/  # 37个核心脚本
-├── scripts/                      # 工具索引 + 可视化包装
+├── scripts/                      # 核心脚本 + 分析引擎
+├── guides/                       # 专项调查方法论手册
 ├── data/                         # 脱敏案例数据库 + 基准线
+├── examples/                     # 演示脚本（quickstart_demo.py）
 ├── mentor-distill/               # 导师蒸馏器（可选）
 ├── _private/                     # 研学网评价数据库（脱敏）
 └── 调查名单/                     # 占位（案例数据已脱敏）
