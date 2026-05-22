@@ -5,8 +5,8 @@ description: Academic integrity investigation and scholar profile analysis syste
 
 > ⚠️ **LLM 强制指令（请逐条执行）**：
 > 
-> 1. **不要自己创建脚本**。本系统的所有工具脚本已预装在 `archive/flat_export_redundant_20260501/` 目录下。不要自己写 Python 代码替代现有工具。
-> 2. **所有脚本路径以 `archive/flat_export_redundant_20260501/` 开头**。SKILL.md 中描述的路径是抽象路径（如 `scripts/analysis/text_profiler.py`），实际文件在 `archive/flat_export_redundant_20260501/analysis_text_profiler.py`。
+> 1. **优先使用现有脚本**。本系统的当前维护工具链位于 `scripts/` 目录下，不要自己写 Python 代码替代现有工具。
+> 2. **所有脚本路径以当前 `scripts/` 分层目录为准**。历史扁平导出位于 `archive/flat_export_redundant_20260501/`，仅作为备份参考。
 > 3. **执行流程**：先 ls 确认文件存在 → 再执行。如果不确定某个脚本的具体路径或参数，先 read_file 查看该脚本头部的 docstring 和 main() 函数，不要猜测。
 > 4. **遵循七步顺序**：Basic Profile → Output Quantity → Quality Assessment → Relationship Network → Anomaly Detection → Multi-Source Validation → Report Generation。不要跳步。
 
@@ -181,11 +181,11 @@ For **foreign graduate advisors / international scholars**, use the **Internatio
 
 **Key CLI commands for international track:**
 ```bash
-python investigate.py init --type international --config ./config.yaml
-python investigate.py international-fetch --config ./config.yaml
-python investigate.py international-build --config ./config.yaml --xiaohongshu ./data/xhs_reviews.json
-python investigate.py missing-report --scholar-data ./scholar_data.json
-python investigate.py review-aggregate --domestic ./reviews.json --xiaohongshu ./xhs.json --output ./merged_reviews.json
+python3 scripts/investigate.py init --type international --config ./config.yaml
+python3 scripts/investigate.py international-fetch --config ./config.yaml
+python3 scripts/investigate.py international-build --config ./config.yaml --xiaohongshu ./data/xhs_reviews.json
+python3 scripts/investigate.py missing-report --scholar-data ./scholar_data.json
+python3 scripts/investigate.py review-aggregate --domestic ./reviews.json --xiaohongshu ./xhs.json --output ./merged_reviews.json
 ```
 
 See `scripts/README.md` for detailed usage instructions.
@@ -307,12 +307,12 @@ Beyond raw database searches, the following low-tech but high-yield methods shou
 
 ```bash
 # 基础模式：仅从 text_profiler 输出推断
-python analysis/text_profiler.py --input ./pdfs/paper.pdf --output ./data/paper_profile.json
-python analysis/paper_quality_rubric.py --profile ./data/paper_profile.json --output ./data/paper_quality.json
+python3 scripts/analysis/text_profiler.py --input ./pdfs/paper.pdf --output ./data/paper_profile.json
+python3 scripts/analysis/paper_quality_rubric.py --profile ./data/paper_profile.json --output ./data/paper_quality.json
 
 # 增强模式：叠加人工观察（推荐）
-python analysis/text_profiler.py --input ./pdfs/paper.pdf --output ./data/paper_profile.json
-python analysis/paper_quality_rubric.py \
+python3 scripts/analysis/text_profiler.py --input ./pdfs/paper.pdf --output ./data/paper_profile.json
+python3 scripts/analysis/paper_quality_rubric.py \
   --profile ./data/paper_profile.json \
   --observations ./data/paper_observations.json \
   --output ./data/paper_quality.json
@@ -337,8 +337,8 @@ python scripts/hybrid_scorer.py apply -i ./pdfs -o ./data/hybrid_scores
 该工作流可通过 `investigate.py` 直接调用：
 
 ```bash
-python investigate.py score -i ./pdfs -o ./data/hybrid_scores
-python investigate.py score -i ./pdfs -o ./data/hybrid_scores --apply
+python3 scripts/investigate.py score -i ./pdfs -o ./data/hybrid_scores
+python3 scripts/investigate.py score -i ./pdfs -o ./data/hybrid_scores --apply
 ```
 
 ##### 3.3.2 `observations.json` 字段说明
@@ -1542,9 +1542,9 @@ Three foundational anonymized case studies demonstrating methodology:
 某实习生2024年论文（PMC11208394）的基金资助栏同时标注了：
 > 国家自然科学基金(82070774，82370760)；湖南省自然科学基金(2021JJ40864，2024JJ2088)
 
-该论文作者序列为：某实习生、聂曼华、**宋磊**、谢益欣、钟明达、**谭书波**、安荣、李潘、**谭亮**、**某主任K**。
+该论文作者序列中同时包含某实习生、某主任K及多名课题组成员共10人。
 
-**意义**：这是公开文献中首次将82070774、82370760、2021JJ40864三个与事件核心人物相关的基金号**同时绑定到同一篇论文、同一批作者**。它无可辩驳地证明：宋磊（2021JJ40864负责人）、谭亮（82370760负责人）、某主任K（82070774关联PI）三人处于同一科研网络和同一资助体系内。
+**意义**：这是公开文献中首次将82070774、82370760、2021JJ40864三个与事件核心人物相关的基金号**同时绑定到同一篇论文、同一批作者**。它无可辩驳地证明：2021JJ40864负责人、82370760负责人、某主任K（82070774关联PI）三人处于同一科研网络和同一资助体系内。
 
 ---
 
@@ -1708,8 +1708,8 @@ Three foundational anonymized case studies demonstrating methodology:
 **本案例中的典型应用**：
 - 调查对象于2020年6月获得复旦大学博士学位，2020年8月入职上海交通大学医学院（博士后/助理研究员）
 - 2023年3月，调查对象注册成立上海亿枭信息科技有限公司，担任法定代表人并持股51%
-- 2025年，调查对象与学术合作者（王正一、赵一瑾等人）共同出现在上海信神润企业管理合伙企业的股东名单中（成立于2025年9月）
-- 时间线叠合显示：商业实体的形成与其从博士后向独立PI/教职过渡的窗口高度重合，且其配偶缪晓蕾出现在多家关联企业中，构成家庭利益网络的雏形
+- 2025年，调查对象与多名学术合作者共同出现在某企业管理合伙企业的股东名单中（成立于2025年9月）
+- 时间线叠合显示：商业实体的形成与其从博士后向独立PI/教职过渡的窗口高度重合，且其配偶出现在多家关联企业中，构成家庭利益网络的雏形
 
 **操作要点**：
 ```
@@ -1732,8 +1732,8 @@ Three foundational anonymized case studies demonstrating methodology:
 
 **本案例中的典型应用**：
 - 初始调查仅发现调查对象本人持股的上海亿枭信息科技有限公司
-- 进一步追踪发现，其学术合作者王正一（Zhengyi Wang）、赵一瑾（Yijin Zhao）于2025年9月共同入股上海信神润企业管理合伙企业
-- 王正一与赵一瑾均为调查对象多篇SCI论文的共同作者（含2025年Baoteng Biotech联合申请专利CN119993279A的发明人名单）
+- 进一步追踪发现，其多名学术合作者（均为调查对象多篇SCI论文的共同作者）于2025年9月共同入股某企业管理合伙企业
+- 其中部分合作者同时出现在2025年某生物科技公司联合申请专利的发明人名单中
 - 该发现将孤立的"个人开公司"升级为"学术-商业网络重叠"，直接推高风险评级
 
 **操作要点**：
@@ -1754,7 +1754,7 @@ Three foundational anonymized case studies demonstrating methodology:
 - 调查对象在复旦大学的博士专业为"生物统计学"，导师为数学科学学院/公共卫生学院背景
 - 但其在2022-2024年间发表的三篇论文中，通讯地址却标注为"复旦大学高分子科学系"
 - 高分子科学系与调查对象的博士专业、研究方向、导师体系均无关联
-- 进一步追溯发现，这三篇论文的合作者中包含高分子科学系的刘宝珠（Baozhu Liu），疑似通过合作关系获得复旦大学署名背书
+- 进一步追溯发现，这三篇论文的合作者中包含高分子科学系的某研究者，疑似通过合作关系获得复旦大学署名背书
 - 该异常被评定为**中度异常**：关系型挂名的迹象明显，但尚未发现直接的利益交换证据
 
 **操作要点**：
@@ -1805,8 +1805,8 @@ Three foundational anonymized case studies demonstrating methodology:
 
 | 平台 | 发明人名单 | 差异点 |
 |:---|:---|:---|
-| 企查查 | CASE_015、王正一、赵一瑾、罗丹、赵成林 | 包含赵成林 |
-| 启信宝 | CASE_015、王正一、赵一瑾、罗丹 | 不包含赵成林 |
+| 企查查 | CASE_015、合作者P、合作者Q、合作者R、合作者S | 包含合作者S |
+| 启信宝 | CASE_015、合作者P、合作者Q、合作者R | 不包含合作者S |
 
 **教训**：商业数据库的信息来源和更新频率不同，可能出现互相排斥的记录。在遇到关键专利/企业信息时：
 - **必须以国家知识产权局（SIPO）原始检索结果为准**，商业数据库只能作为初步线索
@@ -1834,7 +1834,7 @@ Zixin Hu 案例展示了风险评级如何在调查进程中发生动态升级�
 | 阶段1：基础画像 | 职位头衔夸大、UTHealth误标 | 中-高 | 履历美化迹象 |
 | 阶段2：学术产出审查 | 2篇Cell子刊通讯作者身份存疑、高分子科学系 affiliation 异常 | 中-高 | 作者贡献边界模糊 |
 | 阶段3：专利与商业利益 | 发现上海亿枭信息科技（持股51%，法定代表人） | 高 | 学术身份与商业利益直接捆绑 |
-| 阶段4：网络穿透 | 学术合作者王正一、赵一瑾进入同一商业控股平台 | 高 | 学术-商业网络重叠，疑似资源转移通道 |
+| 阶段4：网络穿透 | 多名学术合作者进入同一商业控股平台 | 高 | 学术-商业网络重叠，疑似资源转移通道 |
 
 **核心教训**：
 - 风险评级不应在调查初期就固化，而应随着新证据的出现动态调整
@@ -1879,11 +1879,11 @@ Zixin Hu 案例展示了风险评级如何在调查进程中发生动态升级�
 #### 错误1：标签化概括——自创"淮南帮"称谓
 
 **错误表现**：
-- 将CASE_016与王琍琍的高度重合轨迹概括为"淮南帮"利益网络
+- 将CASE_016与某副校长W的高度重合轨迹概括为"淮南帮"利益网络
 - 将CASE_005等本无淮南背景的人员也划入该范畴
 
 **错误内容**：
-> "与王琍琍等 forming a '淮南帮' 利益网络"
+> "与某副校长W等 forming a '淮南帮' 利益网络"
 
 **事实核查后**：
 - CASE_005是上海人，安徽广播电视台出身，2021年才入职安徽艺术学院，与"淮南系统"毫无关系
@@ -1900,13 +1900,13 @@ Zixin Hu 案例展示了风险评级如何在调查进程中发生动态升级�
 - 使用"党政双控"等过度简化的表述
 
 **错误内容**：
-> "王琍琍主管组织部，负责全校干部选拔任用——CASE_0162022年任院长、2025年晋升二级教授，均须经组织部考察"
+> "某副校长W主管组织部，负责全校干部选拔任用——CASE_016 2022年任院长、2025年晋升二级教授，均须经组织部考察"
 > "两人形成'党政双控'格局"
 
 **事实核查后**：
 - 中国高校处级干部任免须经"民主推荐→组织考察→党委常委会集体研究决定"三道程序
 - 组织部负责考察和推荐的**程序性工作**，最终决定权在党委常委会
-- CASE_016的任命"并非由王琍琍个人决定"
+- CASE_016的任命"并非由某副校长W个人决定"
 
 **错误性质**：对高校干部管理制度理解不深入，将程序参与权误读为决定权
 
@@ -2657,13 +2657,13 @@ Round N:
 
 ```bash
 # 启动多 agent 协作模式（默认 manual，每轮等待确认）
-python investigate.py orchestrate --case-dir ./cases/xxx/
+python3 scripts/investigate.py orchestrate --case-dir ./cases/xxx/
 
 # 自动模式（运行到 CRITICAL 或完成）
-python investigate.py orchestrate --case-dir ./cases/xxx/ --mode auto
+python3 scripts/investigate.py orchestrate --case-dir ./cases/xxx/ --mode auto
 
 # 只启动指定 agent
-python investigate.py orchestrate --case-dir ./cases/xxx/ --agents zhu,dudu
+python3 scripts/investigate.py orchestrate --case-dir ./cases/xxx/ --agents zhu,dudu
 ```
 
 ---
@@ -2710,16 +2710,16 @@ delivery/
 
 ```bash
 # 运行小糖豆收集素材
-python investigate.py collect --case-dir ./cases/xxx/
+python3 scripts/investigate.py collect --case-dir ./cases/xxx/
 
 # 运行小金金生成报告
-python investigate.py generate --case-dir ./cases/xxx/
+python3 scripts/investigate.py generate --case-dir ./cases/xxx/
 
 # 强制交付（自检有警告时）
-python investigate.py generate --case-dir ./cases/xxx/ --force
+python3 scripts/investigate.py generate --case-dir ./cases/xxx/ --force
 
 # 智能辅助推进：自动检查阶段条件，确认后自动推进
-python investigate_visual.py --case-dir ./cases/xxx/ smart-step
+python3 scripts/investigate_visual.py --case-dir ./cases/xxx/ smart-step
 ```
 
 #### 状态机集成
