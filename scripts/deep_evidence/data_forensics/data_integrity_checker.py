@@ -47,11 +47,11 @@ logger = get_logger("data_integrity_checker")
 @dataclass
 class IntegrityConfig:
     """Detection thresholds and parameters."""
-    significance_threshold: float = 0.05   # p-value cutoff for chi-square
-    effect_size_threshold: float = 0.3     # Cramer's V threshold
-    min_duplicate_count: int = 3           # exact-value repeat count to flag
-    decimal_places: list = field(default_factory=lambda: [2, 3])
-    min_sample_size: int = 10              # skip columns with fewer values
+    p_cutoff: float = 0.05                 # p-value cutoff for chi-square
+    effect_floor: float = 0.3              # minimum effect size to report
+    repeat_floor: int = 3                  # exact-value repeat count to flag
+    decimal_depths: list = field(default_factory=lambda: [2, 3])
+    min_rows: int = 10                     # skip columns with fewer values
 
 
 # ---------------------------------------------------------------------------
@@ -78,52 +78,76 @@ class IntegrityFinding:
 # ---------------------------------------------------------------------------
 
 
+def _detect_precision(values: np.ndarray) -> int:
+    """Detect the actual decimal precision of a numeric array.
+
+    Returns the most common number of significant decimal places (0 = integers).
+    """
+    precisions = []
+    for v in values[:200]:  # sample for speed
+        s = f"{v:.10f}".rstrip("0")
+        dec_part = s.split(".")[-1]
+        precisions.append(len(dec_part) if dec_part else 0)
+    if not precisions:
+        return 0
+    # Use the mode (most common precision)
+    counts = pd.Series(precisions).value_counts()
+    return int(counts.index[0])
+
+
 def _check_tail_distribution(
     sheet: str, col: str, values: np.ndarray, cfg: IntegrityConfig
 ) -> Optional[IntegrityFinding]:
     """Last digit of each value should be approximately uniform 0-9."""
+    precision = _detect_precision(values)
+    if precision == 0:
+        return None  # integers have no meaningful tail digit
+
     tails = []
     for v in values:
-        s = f"{v:.6f}"
+        s = f"{v:.{precision}f}"
         dec_part = s.split(".")[-1]
         tails.append(int(dec_part[-1]) if dec_part else 0)
 
-    observed = pd.Series(tails).value_counts().sort_index()
-    expected_freq = pd.Series([len(tails) / 10] * 10, index=range(10))
-
-    # Align indices
-    contingency = pd.DataFrame({"observed": observed, "expected": expected_freq}).fillna(0).T
-    chi2, p_value = sp_stats.chi2_contingency(contingency)[0:2]
-
     n = len(tails)
     k = 10
-    v = np.sqrt(chi2 / (n * (k - 1)))  # Cramer's V
+    # Build observed counts for digits 0-9
+    observed_counts = np.zeros(k)
+    for t in tails:
+        observed_counts[t] += 1
+    expected_counts = np.full(k, n / k)
 
-    if p_value >= cfg.significance_threshold:
+    # Goodness-of-fit chi-square test (correct for single-variable uniformity)
+    chi2, p_value = sp_stats.chisquare(observed_counts, f_exp=expected_counts)
+
+    # For 1-d goodness-of-fit, effect size = sqrt(chi2 / n)
+    v_effect = np.sqrt(chi2 / n)
+
+    if p_value >= cfg.p_cutoff:
         return None
 
     tail_counts = pd.Series(tails).value_counts()
     max_tail = int(tail_counts.idxmax())
     max_count = int(tail_counts.max())
-    expected_count = n / 10
+    expected_count = n / k
     deviation_ratio = max_count / expected_count
 
-    if v > 0.5 or deviation_ratio > 3:
+    if v_effect > 0.5 or deviation_ratio > 3:
         severity = "HIGH"
-    elif v > cfg.effect_size_threshold:
+    elif v_effect > cfg.effect_floor:
         severity = "MEDIUM"
     else:
         severity = "LOW"
 
     return IntegrityFinding(
         sheet=sheet, column=col, method="tail_digit",
-        severity=severity, confidence=min(0.95, 0.5 + v),
+        severity=severity, confidence=min(0.95, 0.5 + v_effect),
         description=f"尾数分布异常: 尾数{max_tail}出现{max_count}次(期望{expected_count:.1f}), "
                     f"偏差比{deviation_ratio:.1f}x, p={p_value:.4f}",
-        p_value=p_value, effect_size=v,
+        p_value=p_value, effect_size=v_effect,
         statistics={
             "chi2": round(chi2, 2), "p_value": round(p_value, 4),
-            "cramers_v": round(v, 3), "sample_size": n,
+            "effect_size": round(v_effect, 3), "sample_size": n,
             "max_tail": max_tail, "max_count": max_count,
             "expected_count": round(expected_count, 1),
             "deviation_ratio": round(deviation_ratio, 1),
@@ -137,13 +161,33 @@ def _check_tail_distribution(
 # ---------------------------------------------------------------------------
 
 
+def _expected_duplicate_rate(n: int, possible_values: int) -> float:
+    """Birthday-problem expected duplicate group rate for n draws from possible_values slots."""
+    if possible_values <= 0 or n <= 1:
+        return 0.0
+    # Expected number of slots with >=2 hits: possible_values * (1 - ((pv-1)/pv)^n - n/pv * ((pv-1)/pv)^(n-1))
+    # Simplified approximation for large possible_values:
+    # E[collisions] ≈ n^2 / (2 * possible_values)
+    expected_collisions = (n * (n - 1)) / (2 * possible_values)
+    # Convert to rate: how many slots have duplicates vs total unique slots
+    expected_unique = possible_values * (1 - (1 - 1 / possible_values) ** n)
+    if expected_unique == 0:
+        return 0.0
+    expected_dup_slots = min(expected_collisions, expected_unique)
+    return expected_dup_slots / expected_unique
+
+
 def _check_decimal_consistency(
     sheet: str, col: str, values: np.ndarray, decimal_place: int, cfg: IntegrityConfig
 ) -> Optional[IntegrityFinding]:
     """Repeated decimal suffixes suggest manual data construction."""
+    precision = _detect_precision(values)
+    if precision < decimal_place:
+        return None  # data doesn't actually have this many decimal places
+
     decimals = []
     for v in values:
-        s = f"{v:.6f}"
+        s = f"{v:.{precision}f}"
         dec_part = s.split(".")[-1]
         if len(dec_part) >= decimal_place:
             decimals.append(dec_part[:decimal_place])
@@ -151,32 +195,56 @@ def _check_decimal_consistency(
     if not decimals:
         return None
 
+    n = len(decimals)
+    possible_values = 10 ** decimal_place  # e.g. 100 for 2-digit, 1000 for 3-digit
+    expected_rate = _expected_duplicate_rate(n, possible_values)
+
     dec_series = pd.Series(decimals)
     value_counts = dec_series.value_counts()
     duplicate_groups = int((value_counts >= 2).sum())
     max_count = int(value_counts.max())
-    duplicate_rate = duplicate_groups / len(value_counts) if len(value_counts) > 0 else 0
+    unique_count = len(value_counts)
+    observed_rate = duplicate_groups / unique_count if unique_count > 0 else 0
 
-    is_anomaly = duplicate_groups >= 5 or max_count >= 3 or duplicate_rate > 0.15
+    # Use deviation ratio from expected baseline instead of absolute threshold
+    # Only flag when observed EXCEEDS expected (ratio > 1 means more repetition than random)
+    if expected_rate > 0:
+        deviation_ratio = observed_rate / expected_rate
+    else:
+        deviation_ratio = observed_rate * 100  # no expected duplicates → any is suspicious
+
+    # Expected count per bin: n / possible_values
+    # max_count is suspicious only if it greatly exceeds what birthday problem predicts
+    # Simulation shows: for 100 draws from 100 bins, P(max>=4)=87%, P(max>=5)=30%, P(max>=6)=5%
+    # So we need max_count_ratio > 5 to reach ~95% confidence
+    expected_per_bin = n / possible_values
+    max_count_ratio = max_count / max(expected_per_bin, 1)
+
+    # deviation_ratio < 1 means LESS repetition than random → not suspicious
+    # max_count_ratio must exceed 5x expected to be noteworthy (≈95th percentile)
+    is_anomaly = (deviation_ratio > 2.5 and observed_rate > expected_rate) or max_count_ratio > 5
     if not is_anomaly:
         return None
 
-    if max_count >= 3:
+    if max_count_ratio > 8 or deviation_ratio > 5:
         severity = "HIGH"
-    elif duplicate_groups >= 5:
+    elif max_count_ratio > 6 or deviation_ratio > 3:
         severity = "MEDIUM"
     else:
         severity = "LOW"
 
     return IntegrityFinding(
         sheet=sheet, column=col, method="decimal_consistency",
-        severity=severity, confidence=min(0.9, 0.4 + duplicate_rate * 2),
+        severity=severity, confidence=min(0.9, 0.4 + min(deviation_ratio / 10, 0.5)),
         description=f"小数点后{decimal_place}位重复: {duplicate_groups}组重复, "
-                    f"最高{max_count}次, 重复率{duplicate_rate:.1%}",
+                    f"最高{max_count}次, 偏离期望{deviation_ratio:.1f}x "
+                    f"(期望重复率{expected_rate:.1%}, 实际{observed_rate:.1%})",
         statistics={
-            "decimal_place": decimal_place, "total_values": len(values),
+            "decimal_place": decimal_place, "total_values": n,
             "duplicate_groups": duplicate_groups, "max_repeat": max_count,
-            "duplicate_rate": f"{duplicate_rate:.1%}",
+            "observed_rate": f"{observed_rate:.1%}",
+            "expected_rate": f"{expected_rate:.1%}",
+            "deviation_ratio": round(deviation_ratio, 1),
             "top5": {str(k): int(v) for k, v in value_counts.head(5).items()},
         },
     )
@@ -195,7 +263,7 @@ def _check_data_duplication(
     duplicate_values = int((value_counts >= 2).sum())
     max_count = int(value_counts.max())
 
-    is_anomaly = duplicate_values >= 5 or max_count >= cfg.min_duplicate_count
+    is_anomaly = duplicate_values >= 5 or max_count >= cfg.repeat_floor
     if not is_anomaly:
         return None
 
@@ -224,7 +292,14 @@ def _check_data_duplication(
 
 
 def _calculate_risk_score(findings: list[IntegrityFinding]) -> tuple[int, str]:
-    """Compute 0-100 risk score from findings. Returns (score, level)."""
+    """Compute 0-100 risk score from findings. Returns (score, level).
+
+    Key insight: multiple methods flagging the SAME column is much stronger
+    evidence than methods flagging different columns independently.
+    """
+    if not findings:
+        return 0, "low"
+
     score = 0
     methods = set(f.method for f in findings)
 
@@ -245,16 +320,30 @@ def _calculate_risk_score(findings: list[IntegrityFinding]) -> tuple[int, str]:
     high_count = sum(1 for f in findings if f.severity == "HIGH")
     score += high_count * 5
 
+    # --- Cross-method convergence on same column (strongest signal) ---
+    from collections import defaultdict
+    col_methods = defaultdict(set)
+    for f in findings:
+        key = f"{f.sheet}/{f.column}"
+        col_methods[key].add(f.method)
+
+    for col_key, col_m in col_methods.items():
+        if len(col_m) >= 3:
+            score += 20  # all three methods converge on one column
+        elif len(col_m) == 2:
+            score += 10  # two methods converge
+
     score = min(score, 100)
 
-    if score >= 81:
-        level = "实锤造假"
-    elif score >= 61:
-        level = "中度异常"
-    elif score >= 31:
-        level = "轻度异常"
+    # Align with project-wide L1-L5 confidence system and benchmark_engine risk levels
+    if score >= 75:
+        level = "critical"   # L5: 多方法交叉验证，数据造假证据确凿
+    elif score >= 50:
+        level = "high"       # L4: 强信号，高度可能存在数据造假
+    elif score >= 25:
+        level = "medium"     # L3: 有异常迹象，存在其他解释空间
     else:
-        level = "正常"
+        level = "low"        # L2: 微弱信号或正常范围
 
     return score, level
 
@@ -288,24 +377,31 @@ def check_file(file_path: str, cfg: Optional[IntegrityConfig] = None) -> dict:
     for sheet_name, df in sheets.items():
         numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
         for col in numeric_cols:
+            # Skip pure integer columns (sample IDs, years, counts)
+            if df[col].dropna().apply(lambda x: x == int(x)).all():
+                logger.debug("Skipping integer column: %s / %s", sheet_name, col)
+                continue
             values = df[col].dropna().values
-            if len(values) < cfg.min_sample_size:
+            if len(values) < cfg.min_rows:
                 continue
 
             logger.debug("Checking %s / %s (%d values)", sheet_name, col, len(values))
 
-            f1 = _check_tail_distribution(sheet_name, col, values, cfg)
+            # Method 1: Exact-value duplication (simplest, most direct signal)
+            f1 = _check_data_duplication(sheet_name, col, values, cfg)
             if f1:
                 findings.append(f1)
 
-            for dp in cfg.decimal_places:
-                f2 = _check_decimal_consistency(sheet_name, col, values, dp, cfg)
-                if f2:
-                    findings.append(f2)
+            # Method 2: Tail-digit distribution
+            f2 = _check_tail_distribution(sheet_name, col, values, cfg)
+            if f2:
+                findings.append(f2)
 
-            f3 = _check_data_duplication(sheet_name, col, values, cfg)
-            if f3:
-                findings.append(f3)
+            # Method 3: Decimal-place consistency
+            for dp in cfg.decimal_depths:
+                f3 = _check_decimal_consistency(sheet_name, col, values, dp, cfg)
+                if f3:
+                    findings.append(f3)
 
     risk_score, risk_level = _calculate_risk_score(findings)
 
@@ -353,8 +449,8 @@ def main():
         logger.setLevel(10)
 
     cfg = IntegrityConfig(
-        significance_threshold=args.significance,
-        min_duplicate_count=args.min_dup,
+        p_cutoff=args.significance,
+        repeat_floor=args.min_dup,
     )
 
     result = check_file(str(args.input), cfg)

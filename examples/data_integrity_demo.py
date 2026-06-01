@@ -62,6 +62,57 @@ def demo_with_sample_data():
     os.unlink(tmp_path)
 
 
+def demo_borderline_case():
+    """用灰色地带数据演示：70% 均匀 + 30% 尾数偏好。
+
+    这种数据更接近真实造假场景——不是 100% 明显，而是部分数据被人工修改。
+    """
+    import pandas as pd
+    import tempfile, os
+    import numpy as np
+
+    rng = np.random.default_rng(42)
+
+    # 70% 真实随机数据（尾数均匀）
+    real_data = rng.uniform(1.0, 50.0, size=70).round(2)
+    # 30% 人工构造数据（尾数偏好 3 和 7）
+    fake_base = rng.uniform(1.0, 50.0, size=30)
+    fake_data = []
+    for v in fake_base:
+        # 强制尾数为 3 或 7
+        s = f"{v:.2f}"
+        prefix = s[:-1]
+        tail = rng.choice([3, 7])
+        fake_data.append(float(prefix + str(tail)))
+
+    combined = np.concatenate([real_data, np.array(fake_data)])
+    rng.shuffle(combined)
+
+    # 第二列：正常数据（对照组）
+    normal_data = rng.uniform(10.0, 100.0, size=100).round(3)
+
+    data = {"Measurement_A": combined, "Measurement_B": normal_data}
+
+    tmp = tempfile.NamedTemporaryFile(suffix=".xlsx", delete=False)
+    tmp_path = tmp.name
+    tmp.close()
+    pd.DataFrame(data).to_excel(tmp_path, index=False)
+
+    print("=" * 60)
+    print("数据完整性检测 — 边界案例（70%正常 + 30%偏好）")
+    print("=" * 60)
+    print(f"临时文件: {tmp_path}")
+    print(f"数据特点: Measurement_A 有30%尾数被人工改为3/7")
+    print(f"          Measurement_B 完全随机（对照组）")
+    print(f"预期结果: A列应被检出轻度-中度异常，B列应正常")
+    print()
+
+    result = check_data_integrity(tmp_path)
+    _print_result(result)
+
+    os.unlink(tmp_path)
+
+
 def demo_with_file(file_path: str):
     """检测用户指定的数据文件。"""
     print("=" * 60)
@@ -110,12 +161,19 @@ def main():
     import argparse
     parser = argparse.ArgumentParser(description="数据完整性检测演示")
     parser.add_argument("--file", help="Excel 或 CSV 文件路径（不指定则使用内置示例数据）")
+    parser.add_argument("--borderline", action="store_true",
+                        help="运行边界案例演示（70%%正常 + 30%%偏好）")
     args = parser.parse_args()
 
     if args.file:
         demo_with_file(args.file)
+    elif args.borderline:
+        demo_borderline_case()
     else:
         demo_with_sample_data()
+        print("\n" + "=" * 60)
+        print("提示: 使用 --borderline 运行灰色地带案例演示")
+        print("=" * 60)
 
 
 if __name__ == "__main__":
