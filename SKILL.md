@@ -141,6 +141,7 @@ scripts/
 | `scholar_profile_matcher_v2.py` | `scripts/` | **Profile similarity + misconduct pattern matching** (v2.0). Compares target scholar against 46-case database (20 normal + 24 confirmed_misconduct + 2 suspicious) using 17-dim feature vectors + prefilter metrics | **After** Step 3 quality assessment + Step 5 anomaly detection: benchmark target against known cases |
 | `benchmark_engine.py` | `scripts/` | **Discipline benchmark database engine** (v1.0). 5-layer architecture (discipline/journal/researcher/rule/case-link). Calculates deviation scores (Z-score / lognormal / t-distribution), anomaly probabilities, confidence intervals, and composite risk scores across three comparison modes (individual / peer_group / global) | **Step 5**: after collecting structured metrics (h-index, avg papers, coauthor count, review days) for quantitative anomaly detection |
 | `benchmark_demo.py` | `scripts/` | **One-command demo**: initializes SQLite DB, imports 46-case profile DB, creates discipline baselines, runs batch anomaly calculation, outputs Top-N report + JSON export | **Development / validation**: verify benchmark engine behavior against existing cases |
+| `data_integrity_checker.py` | `scripts/deep_evidence/data_forensics/` | **Data fabrication detection** (耿同学方法论). Three statistical methods: tail-digit distribution, decimal-place consistency, exact-value duplication. Outputs 0-100 risk score + per-finding severity. | **Step 5 Anomaly Detection**: when you have raw numerical data from paper figures/tables (Excel/CSV) and need to check for fabrication patterns |
 | `kimi-webbridge` | Browser automation skill | Control user's real browser for anti-bot sites | When `xiaohongshu_client.py` / `wechat_search.py` fail due to anti-bot; or CNKI/Xiaohongshu require live session |
 
 > **Note on `kimi-webbridge`**: For platforms with strict anti-bot measures (e.g., 小红书, 中国知网), the built-in `fetch` tool or headless scripts are often blocked. In these cases, invoke the `kimi-webbridge` skill to drive the user's real browser directly. It navigates, clicks, fills forms, and extracts content using the user's actual login sessions and IP reputation, bypassing most bot detection. Typical workflow: `navigate` → `snapshot` → `click` / `evaluate` → `snapshot` → read content. React-based custom inputs may require `evaluate` with manual DOM manipulation rather than `fill`.
@@ -203,6 +204,32 @@ See `scripts/README.md` for detailed usage instructions.
 1. 每次启动新调查，`investigate.py init` 完成后必须将 `scripts/templates/CHECKLIST.md` 复制到案件目录，并命名为 `CHECKLIST.md`。
 2. 执行任何脚本前，先在 `scripts/TOOLS_INDEX.md` 中确认该工具的真实路径。**`scripts/` 根目录下绝大多数 <500 字节的 `.py` 文件是兼容性 shim，真实实现位于 `analysis/`、`domestic/`、`international/`、`network/`、`report/` 等子目录中。**
 3. Step 3 质量评估中，**每篇 PDF 必须依次经过 `analysis/text_profiler.py` → `analysis/paper_quality_rubric.py` 完整流程**，禁止跳过六维评分直接输出主观质量判断。
+
+### 补充流程：PDF 论文直接审查
+
+当用户直接提供论文 PDF（而非从数据库导出的结构化数据）时，使用此补充流程。此流程与主 7 步框架并行，LLM 作为主要分析者。
+
+**适用场景**：
+- 用户提供单篇论文 PDF 要求"查重"、"打假"、"检测造假"
+- 用户提供 PDF 作为调查线索的一部分
+- 无法获取结构化数据（如 Excel/CSV），仅有论文原文
+
+**流程**：
+
+| 步骤 | 动作 | 输出 |
+|:---|:---|:---|
+| 1. 读取 PDF | 用 `Read` 工具读取 PDF 全文，提取文本、表格、Figure caption | 论文基本信息（标题、作者、期刊、DOI） |
+| 2. 六式扫描 | 按"LLM 视觉/文本检测清单"逐项检查（见 Step 5 子章节） | 每个可疑点的位置、类型、证据、严重程度 |
+| 3. 数值提取 | 从表格中手动提取数值数据，保存为 CSV | 可选：喂给 `data_integrity_checker.py` 做统计验证 |
+| 4. 交叉验证 | 执行 Step 5.5 内部一致性交叉验证 | 异常点关联性判断 |
+| 5. 报告输出 | 按报告模板生成结构化发现 | Markdown 格式审查报告 |
+
+**与主流程的关系**：
+- PDF 直接审查的输出可作为主 7 步框架 Step 5（异常检测）的输入之一
+- 如果同时有结构化数据（Excel），PDF 审查结果应与脚本分析结果交叉验证
+- PDF 审查中的数值提取结果可直接喂给 `data_integrity_checker.py` 进行自动化统计检测
+
+> **局限性声明**：LLM 对 PDF 图片的分析基于视觉理解，无法进行像素级 ELA（Error Level Analysis）或 EXIF 元数据分析。对于需要精确图像比对的情况，标注"建议使用专业工具（如 ImageTwin、Forensically）进一步验证"。
 
 ---
 
@@ -500,6 +527,71 @@ Beyond the quantity and relationship-network red flags above, watch for the foll
 | **Quality Collapse** | Early career shows solid journals; recent 5 years shift predominantly to low-tier/paid-open-access venues | Figurehead-elder or company-boss pattern; has stopped doing rigorous peer-reviewed research |
 | **Mentorship Vacuum** | No verifiable student mentorship record despite holding a professor/b doctoral-supervisor title for many years | May indicate the scholar was promoted on political or networking grounds rather than academic merit |
 
+#### LLM 视觉/文本检测清单（PDF 直接审查）
+
+当用户提供论文 PDF（而非结构化 Excel/CSV 数据）时，LLM 应按以下清单逐项审查。此清单与脚本自动化检测互补：脚本做数值统计，LLM 做视觉+文本判断。
+
+**第一式：图片复用检测**
+- 逐一比对论文中所有 Figure/Subfigure，关注视觉相似的面板
+- 重点检查：Western blot、凝胶电泳图、显微镜图、流式细胞图
+- 检查是否有旋转、翻转、裁剪后重复使用的痕迹
+- 对比 Figure caption 中声称的实验条件是否与图片一致
+- 同一个 control/loading control 是否在不同图中重复出现
+
+**红旗信号**：
+- 两个声称不同实验的图，背景噪点模式完全一致
+- Loading control（如 β-actin、GAPDH）在不同条件下完全相同
+- 图片边缘有裁切痕迹
+
+**第二式：数据造假检测**
+- 检查表格中数值数据的末位数字分布（真实数据末位 0-9 应近似均匀）
+- 分析标准差/标准误：过于整齐的 SD 值（如全部为整数或固定小数位）高度可疑
+- 检查重复实验的一致性：真实的三次独立重复不可能给出几乎相同的值
+- 计算报告的均值±SD 是否数学自洽
+- 寻找"太完美"的剂量-效应曲线——真实数据通常有噪声
+- 检查同一表格的不同列是否存在可疑的数学关系（如两列差值恒定）
+
+**红旗信号**：
+- 不同实验组的数据列之间差值完全相同
+- 标准差全部相同或呈现明显规律
+- p 值精确到不合理的小数位数
+- 数据点分布过于"教科书式完美"
+
+**第三式：图片拼接检测**
+- Western blot 泳道之间是否有不自然的分界线
+- 背景灰度/纹理在图片不同区域是否一致
+- 相邻泳道的曝光水平是否突变
+- 图片是否有不同分辨率/压缩质量的区域
+
+**红旗信号**：
+- 泳道之间出现清晰的垂直分界线
+- 背景在某条线处突然变化
+- 同一 blot 不同区域的噪声模式明显不同
+
+**第四式：统计异常检测**
+- p 值分布检测（p-hacking）：大量 p 值恰好在 0.04-0.05 区间
+- 样本量与效应量的匹配性：小样本却得到极显著结果
+- 检查统计方法是否适合数据类型（如对非正态数据用 t-test）
+- ANOVA 结果与事后比较的逻辑一致性
+
+**红旗信号**：
+- 所有比较都"恰好显著"
+- 报告的 F 值/t 值与自由度不匹配
+- 样本量在同一实验的不同结果中不一致
+
+**第五式：产出异常检测**
+- 检查论文的实验时间线是否合理（方法部分声称的实验周期 vs 投稿时间）
+- 多篇论文是否共享高度相似的方法描述（copy-paste）
+
+**第六式：方法矛盾检测**
+- 方法部分是否存在内部矛盾（如前面说 n=5，后面表格只有 4 组数据）
+- 引用的参考文献是否真的支持所声称的观点
+- 试剂/设备型号是否存在（有时造假者编造不存在的试剂编号）
+- 伦理审批号是否真实有效
+- 时间线冲突：使用了投稿时尚未上市的试剂或设备
+
+> **使用方式**：当用户直接提供 PDF 时，LLM 按六式逐项扫描，每发现一个可疑点立即记录（位置、异常类型、具体证据、严重程度）。此流程与脚本分析并行，结果汇总到最终报告的"核心发现"部分。
+
 #### Scholar Profile Database Benchmarking (NEW)
 
 **数据库概况** (`data/scholar_profile_database.csv`)：
@@ -622,6 +714,33 @@ python scripts/benchmark_engine.py --init --import-profiles --batch --export dat
 - **Profile similarity check (NEW)**: Run `python scripts/scholar_profile_matcher_v2.py --name "学者姓名" --top 5` to benchmark the target against the 46-case database (20 normal + 24 confirmed_misconduct + 2 suspicious). If the top matches are confirmed_misconduct cases with high mode similarity (>30%), flag as high-risk pattern match. If top matches are normal scholars, the target likely falls within baseline range.
 - **Credential verification must cite the issuing body**: university registrar, embassy certification, or official award announcement. Unverifiable credentials must be marked **待核实**.
 - Every anomaly flagged must be labeled with a **confidence level** (low / medium / high / very high) and the reasoning behind it.
+
+#### Step 5.5: 内部一致性交叉验证
+
+在 Step 5 完成异常检测后、进入 Step 6 多源验证之前，执行**同一论文/同一学者内部**的异常点关联性判断。此步骤区分"孤立疏忽"与"系统性造假"。
+
+**验证逻辑**：
+
+1. **异常点聚类**：将 Step 5 发现的所有异常点按位置（Figure/Table/Page）聚类，检查是否存在多个异常点指向同一组数据或同一实验
+2. **方向一致性**：多个异常是否指向同一方向？例如：
+   - 尾数分布异常 + 数据重复 + 小数点一致性异常 → 三重统计信号交叉，指向同一组数据造假
+   - 图片复用 + 方法矛盾（声称两批独立实验但图片相同）→ 图像+文本双重信号
+3. **核心结论依赖性**：可疑数据是否支撑论文的核心结论？如果可疑数据仅出现在补充材料中，严重程度降低；如果出现在主 Figure 的关键比较中，严重程度升高
+4. **排除合理解释**：
+   - 计数数据的尾数偏好是否因数据类型导致？
+   - 小数位一致是否因使用了同一仪器/同一格式化脚本？
+   - 数据重复是否因四舍五入导致？
+
+**判定矩阵**：
+
+| 异常数量 | 方向一致性 | 核心结论依赖 | 综合判定 |
+|:---:|:---:|:---:|:---|
+| 1-2 处 | 无关联 | 否 | 🟡 存疑，可能是疏忽 |
+| 3+ 处 | 指向同一问题 | 是 | 🟠 高度可疑，建议深入调查 |
+| 3+ 处 | 指向同一问题 | 是 + 无法用疏忽解释 | 🔴 实锤，系统性造假 |
+| 任意数量 | 不一致 | 否 | 🟡 逐条记录，不作整体判定 |
+
+> **此步骤不引入新的检测工具**，仅对 Step 5 已有发现做逻辑关联分析。输出为"内部一致性评估"段落，附加到核心发现之前。
 
 ### Step 6: Multi-Source Cross-Validation
 
@@ -2160,7 +2279,7 @@ Zixin Hu 案例展示了风险评级如何在调查进程中发生动态升级�
 v3.0 在 v2.0 基础上新增 deep_evidence/ 层：
 
 ├─ deep_evidence/
-│   ├─ data_forensics/         ← 数据层取证（统计反推 + 图像元数据 + 数据可用性验证）
+│   ├─ data_forensics/         ← 数据层取证（统计反推 + 图像元数据 + 数据可用性验证 + 数据统计指纹检测）
 │   ├─ publication_trace/      ← 发表链追踪（预印本 + 会议 + 双语发表 + Crossref事件）
 │   ├─ ethics_audit/           ← 伦理审计（伦理声明解析 + 临床试验注册核查）
 │   ├─ peer_review_intel/      ← 同行评议情报（周期异常 + 编委自发文 + 撤稿历史）
@@ -2217,6 +2336,46 @@ v3.0 在 v2.0 基础上新增 deep_evidence/ 层：
 - 声明"数据包含在补充材料中"但补充材料缺失
 
 **人类介入点**：对"未声明"或"链接失效"的论文，标记为"数据可及性不足"，纳入证据链。
+
+#### 3.4 data_integrity_checker.py — 数据统计指纹检测（耿同学方法论）
+
+**功能**：通过三种独立的统计方法检测实验数据中的可疑模式，基于"耿同学"统计学打假方法论。
+
+**输入**：论文图表中的原始数值数据（Excel/CSV，通常几十到几百个数值）
+**输出**：0-100 风险评分 + 每项发现的严重程度（HIGH/MEDIUM/LOW）+ JSON 信号
+
+**三种检测方法**：
+1. **尾数分布分析**：真实实验数据的尾数（0-9）应近似均匀分布，人工编造数据时会产生尾数偏好
+2. **小数点一致性检测**：真实数据的小数位精度应有随机性，固定小数位模式是人工构造的痕迹
+3. **数据重复检测**：独立生物实验中，完全重复的数据值应极为罕见
+
+**判定标准**：
+- 尾数分析：p < 0.05 且 Cramer's V > 0.3 → 异常
+- 小数点一致性：重复组数 > 5 或最高重复 ≥ 3 次 → 异常
+- 数据重复：重复值 > 5 个或最高重复 ≥ 3 次 → 异常
+
+**典型发现**：
+- 多个数据列中特定尾数出现频率是期望值的 3 倍以上
+- 17-20% 的数据小数点后 2 位完全重复（正常应 < 5%）
+- 关键数据列出现 3-4 次完全相同的数值
+
+**人类介入点**：统计异常只是筛查工具，需排除特殊实验设计、数据预处理等合理解释后才能作为证据。
+
+**红旗信号速查表**：
+
+| 检测方法 | 红旗信号 | 严重程度 |
+|:---|:---|:---:|
+| 尾数分布 | 某尾数出现频率 ≥ 期望值的 3 倍 | HIGH |
+| 尾数分布 | p < 0.001 且 Cramer's V > 0.5 | HIGH |
+| 尾数分布 | 尾数 0 或 5 占比 > 20%（人工偏好"整数"） | MEDIUM |
+| 小数点一致性 | 最高重复次数 ≥ 3（独立实验几乎不可能） | HIGH |
+| 小数点一致性 | 小数点后 2 位重复率 > 15% | MEDIUM |
+| 小数点一致性 | 所有数据的小数位数完全一致（如全部 .00） | HIGH |
+| 数据重复 | 某数值出现 ≥ 4 次（极强造假证据） | HIGH |
+| 数据重复 | ≥ 5 个不同数值各出现 ≥ 2 次 | HIGH |
+| 数据重复 | 两组"独立实验"的原始数据完全相同 | HIGH |
+
+> **注意**：上述红旗信号需结合实验背景判断。例如，计数数据（如细胞计数）的尾数分布可能天然不均；使用同一仪器的重复测量小数位可能一致。单一信号不足以定性，多信号交叉验证才有意义。
 
 ---
 
