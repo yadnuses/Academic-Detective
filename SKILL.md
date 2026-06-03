@@ -5,11 +5,12 @@ description: Academic integrity investigation and scholar profile analysis syste
 
 > ⚠️ **LLM 强制指令（请逐条执行）**：
 > 
-> 1. **优先使用现有脚本**。本系统的工具链位于 `scripts/` 目录下，不要自己写 Python 代码替代现有工具。
+> 1. **优先使用现有脚本**。本系统的工具链位于 `scripts/` 目录下，一般情况下不要自己写 Python 代码替代现有工具。
 > 2. **所有脚本路径以下方工具索引表为准**。`scripts/` 根目录下绝大多数 <500 字节的 `.py` 文件是兼容性 shim，真实实现位于子目录中。
 > 3. **执行流程**：先 ls 确认文件存在 → 再执行。如果不确定某个脚本的具体路径或参数，先 Read 该脚本头部的 docstring。
 > 4. **遵循七步顺序**：Basic Profile → Output Quantity → Quality Assessment → Relationship Network → Anomaly Detection → Multi-Source Validation → Report Generation。不要跳步。
 > 5. **分层加载**：执行具体步骤前，先 Read 对应的 `docs/skill/` 文档获取详细流程。
+> 6. **自由边界**：对于客户要求但没有在目录写出的功能，可由LLM编写脚本或自主筛查以保证功能实现。
 
 # Academic Investigation Skill
 
@@ -94,6 +95,7 @@ scripts/
 | common_heuristics | `scripts/analysis/common_heuristics.py` | 共享异常检测规则 (C01-C07): 产出量、期刊集中度、引用模式等 | 论文列表 + author_profile | 异常 flags 列表 | Step 5 | all | Step 2 数据 |
 | review_aggregator | `scripts/analysis/review_aggregator.py` | 多源评价合并（研学网 + 小红书 + RMP） | 多个评价 JSON | 合并评价 JSON | Step 6 | all | 各评价源 |
 | journal_credibility_checker | `scripts/analysis/journal_credibility_checker.py` | 期刊可信度评估（掠夺性期刊检测） | ISSN/期刊名列表 | 风险评级 JSON | Step 5 | all | — |
+| source_evaluation | `scripts/analysis/source_evaluation.py` | CRAAP Test 信息源评估（时效性/相关性/权威性/准确性/目的性） | 信息源 URL/描述 + 五维评分 | 评估报告 JSON | Step 6 | all | — |
 
 ### Network（关系网络）
 

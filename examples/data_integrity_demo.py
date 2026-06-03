@@ -9,10 +9,14 @@
     python data_integrity_demo.py                    # 使用内置示例数据
     python data_integrity_demo.py --file your.xlsx   # 检测你的数据文件
 
-三种检测方法：
+四种检测方法：
     1. 尾数分布分析 — 真实数据尾数(0-9)应均匀分布
-    2. 小数点一致性 — 固定小数位模式暗示人工构造
-    3. 数据重复检测 — 独立实验中完全重复的数值极为罕见
+    2. 首位数字检测 — 符合Benford定律(数据取证标准工具)
+    3. 小数点一致性 — 固定小数位模式暗示人工构造
+    4. 数据重复检测 — 独立实验中完全重复的数值极为罕见
+
+置信度等级（L2-L5）：
+    L2 线索 | L3 疑似 | L4 高度可能 | L5 确凿（多方法交叉验证）
 """
 
 import sys
@@ -130,6 +134,7 @@ def _print_result(result: dict):
     print(f"{'=' * 60}")
     print(f"风险评分:   {result['risk_score']}/100")
     print(f"风险等级:   {result['risk_level']}")
+    print(f"置信等级:   {result['confidence_level']}")
     print(f"异常总数:   {result['summary']['total_findings']}")
     print(f"  HIGH:     {result['summary']['high_severity']}")
     print(f"  MEDIUM:   {result['summary']['medium_severity']}")
@@ -142,14 +147,13 @@ def _print_result(result: dict):
         print(f"详细发现")
         print(f"{'=' * 60}")
         for i, f in enumerate(result["findings"], 1):
-            print(f"\n[{i}] {f['severity']} — {f['method']}")
+            cl = f.get("confidence_level", "L2")
+            print(f"\n[{i}] {f['severity']} ({cl}) — {f['method']}")
             print(f"    位置: {f['sheet']} / {f['column']}")
             print(f"    描述: {f['description']}")
             if f["statistics"]:
                 for k, v in f["statistics"].items():
-                    if k == "tail_distribution":
-                        print(f"    {k}: {v}")
-                    elif k == "top5":
+                    if k in ("digit_freq", "top5", "benford_expected"):
                         print(f"    {k}: {v}")
                     else:
                         print(f"    {k}: {v}")
