@@ -16,6 +16,10 @@ PyYAML>=6.0
 # Testing
 pytest>=7.4.0
 
+# Citation verifier (citation extraction from documents)
+python-docx>=0.8.11        # .docx parsing
+bibtexparser>=2.0.0        # .bib parsing
+
 # Optional: for wechat_search.py (camoufox/playwright)
 # playwright>=1.40.0
 

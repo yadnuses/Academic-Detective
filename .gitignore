@@ -40,6 +40,10 @@ _private/*.csv
 调查名单/*.docx
 调查名单/*.xlsx
 
+# User config (may contain API keys — use config.template.yaml as reference)
+config.yaml
+scripts/config.yaml
+
 # Backup files
 *.bak
 *.bak.*

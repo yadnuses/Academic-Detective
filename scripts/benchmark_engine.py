@@ -811,6 +811,15 @@ class BenchmarkEngine:
         Returns:
             DeviationResult 或 None（如果数据不足）
         """
+        _ALLOWED_METRICS = {
+            "avg_papers_per_year", "avg_citations_per_paper", "h_index",
+            "total_publications", "total_citations", "i10_index",
+            "first_author_ratio", "corresponding_author_ratio",
+            "solo_author_ratio", "collaboration_network_size",
+            "top_journal_ratio", "open_access_ratio", "preprint_ratio",
+        }
+        if metric not in _ALLOWED_METRICS:
+            raise ValueError(f"Invalid metric: {metric!r}. Allowed: {sorted(_ALLOWED_METRICS)}")
         cursor = self.conn.cursor()
 
         # 1. 获取研究者观测值

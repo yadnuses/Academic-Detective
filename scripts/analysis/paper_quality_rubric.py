@@ -39,6 +39,7 @@ import json
 import sys
 import math
 import argparse
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -215,7 +216,7 @@ def compute_literature(profile: dict, obs: dict) -> dict:
             base -= 5
 
     if latest_year:
-        current_year = 2026  # Approximate
+        current_year = datetime.now().year
         if current_year - latest_year <= 3:
             base += 5
         elif current_year - latest_year >= 10:

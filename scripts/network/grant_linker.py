@@ -34,7 +34,7 @@ def _extract_grant_ids(text: str) -> list:
     found = []
     for label, pat in GRANT_PATTERNS:
         for m in pat.finditer(text):
-            raw = m.group(1)
+            raw = m.group(m.lastindex)
             ids = [x.strip() for x in re.split(r"[,;，\s]+", raw) if x.strip()]
             found.extend(ids)
     # Deduplicate while preserving order

@@ -310,6 +310,7 @@ def main():
             "version": "1.0",
             "timestamp": datetime.now().isoformat(),
             "input_file": str(args.papers) if args.papers else str(args.dois),
+            "total_events": sum(s.total_events for s in summaries),
         },
         "signals": signals,
         "details": {

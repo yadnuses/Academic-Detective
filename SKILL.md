@@ -92,6 +92,7 @@ scripts/
 | hybrid_scorer | `scripts/analysis/hybrid_scorer.py` | 综合评分（合并多维度） | 多个评分 JSON | 综合分 JSON | Step 3 | all | paper_quality_rubric |
 | stylometry_profiler | `scripts/analysis/stylometry_profiler.py` | 风格计量学：虚词频率、句法结构、相似度矩阵 | 多篇文本 | 相似度热力图 + JSON | Step 5 代笔检测 | all | 多篇 PDF |
 | citation_profiler | `scripts/analysis/citation_profiler.py` | 引用分析：自引率、互引、引用质量分布 | 论文 JSON (含引用) | 引用分析 JSON | Step 4/5 | all | data_importer/data_fetcher |
+| citation_verifier | `scripts/analysis/citation_verifier/` | AI 引用核查：从 .docx/.tex 提取引用，两级 LLM 验证（存在性/元数据/语义支持度） | .docx 或 .tex+.bib 文件 | 引用核查 JSON+CSV 报告 | Step 5 | all | LLM API key |
 | common_heuristics | `scripts/analysis/common_heuristics.py` | 共享异常检测规则 (C01-C07): 产出量、期刊集中度、引用模式等 | 论文列表 + author_profile | 异常 flags 列表 | Step 5 | all | Step 2 数据 |
 | review_aggregator | `scripts/analysis/review_aggregator.py` | 多源评价合并（研学网 + 小红书 + RMP） | 多个评价 JSON | 合并评价 JSON | Step 6 | all | 各评价源 |
 | journal_credibility_checker | `scripts/analysis/journal_credibility_checker.py` | 期刊可信度评估（掠夺性期刊检测） | ISSN/期刊名列表 | 风险评级 JSON | Step 5 | all | — |
@@ -205,6 +206,53 @@ scripts/
 
 ---
 
+## 引用核查补充流程（LLM 操作）
+
+当需要验证论文中引用的真实性时，LLM 按以下三步操作。
+
+> 📖 判定框架（造假类型学 A–E）、判据顺序（先全网题名检索、再期次目录穷尽）、验证源优先级与字段级核对表模板，请先 Read `docs/skill/citation_fabrication_audit.md`。核查必须 100% 逐条覆盖，禁止抽样。
+
+### Step 1: 提取引用
+
+```bash
+python scripts/citation_verifier.py -i paper.docx -o output/citation_task.json --extract-only
+```
+
+输出一个 JSON 文件，每条引用包含 `key`、`ref_text`（参考文献原文）、`context_block`（引用在正文中的使用上下文），以及空的 `verification` 字段。
+
+> ⚠️ 提取盲区：docx 解析不覆盖脚注/尾注。脚注或尾注制稿件须另行抽取 `word/footnotes.xml` 与 `word/endnotes.xml`（命令见 `docs/skill/citation_fabrication_audit.md` 的 Extraction Caveats 节），否则引注会整片漏掉。
+
+### Step 2: LLM 逐条验证
+
+读取 Step 1 输出的 JSON，对每条引用执行以下核查：
+
+| 检查项 | 方法 | 填入字段 |
+|:---|:---|:---|
+| 引用是否存在 | 搜索 Google Scholar / 查 DOI / 查期刊官网 | `citation_exists` |
+| 元数据是否正确 | 对比搜索结果中的作者、年份、标题 | `citation_integrity` + `citation_integrity_details` |
+| 是否支持文内断言 | 阅读摘要或全文，判断引用是否支撑了论文中的说法 | `citation_usage_correct` + `citation_usage_reasoning` |
+| 处理建议 | 综合判断保留/替换/移除 | `recommendation` + `suggested_replacement` |
+
+**多引用规则**：当正文用 `(1, 2)` 同时引用多篇文献时，只要被核查的这篇支持断言的**某一部分**即可标记为 `Yes`。
+
+**填写完成后保存 JSON**。
+
+### Step 3: 生成报告
+
+```bash
+python scripts/citation_verifier.py --report output/citation_task.json -o output/citation_report.json
+```
+
+输出结构化 JSON 报告（含统计摘要 + 问题引用列表）和 CSV 快速审阅文件。
+
+### 何时使用
+
+- Step 3 质量评估中发现引用可疑时
+- Step 5 异常检测中需要核实引用真实性时
+- 用户直接提供论文 PDF 要求审查引用时
+
+---
+
 ## PDF 直接审查补充流程
 
 当用户直接提供论文 PDF（而非结构化数据）时：
@@ -229,6 +277,7 @@ scripts/
 | 执行国际 track 某步骤的详细流程 | `docs/skill/workflow_international.md` |
 | 执行海归 track 的合并/验证流程 | `docs/skill/workflow_cross_border.md` |
 | 需要了解 13+8 种调查类型定义 | `docs/skill/investigation_types.md` |
+| 核查参考文献真实性（造假类型学/判据顺序/字段核对表） | `docs/skill/citation_fabrication_audit.md` |
 | 需要扩展调查模块 A-E 的详细方法 | `docs/skill/extended_modules.md` |
 | 需要深度证据层的架构设计细节 | `docs/skill/deep_evidence_layer.md` |
 | 需要多智能体/交付层的协作协议 | `docs/skill/multi_agent_delivery.md` |

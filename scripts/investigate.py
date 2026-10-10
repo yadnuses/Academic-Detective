@@ -371,6 +371,15 @@ def cmd_regress(args):
 
 def cmd_add_task(args):
     case_dir = get_case_dir(args); tool, extra = args.tool, args.tool_args or []
+    tool_path = Path(tool).resolve()
+    scripts_dir = Path(__file__).resolve().parent
+    if not str(tool_path).startswith(str(scripts_dir)):
+        print(f"[ERROR] Tool must be under {scripts_dir}, got: {tool}", file=sys.stderr)
+        sys.exit(1)
+    if not tool_path.exists():
+        print(f"[ERROR] Tool script not found: {tool}", file=sys.stderr)
+        sys.exit(1)
+    tool = str(tool_path)
     cmd = [sys.executable, tool] + extra
     print(f"[INFO] Running: {' '.join(cmd)}")
     res = subprocess.run(cmd, env=_get_script_env())

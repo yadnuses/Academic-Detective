@@ -194,7 +194,7 @@ def detect_conflicts_for_paper(
         return conflicts
 
     paper_authors = [normalize_name(extract_name(a)) for a in paper.get("authors", [])]
-    paper_authors = [a for a in paper if a]
+    paper_authors = [a for a in paper_authors if a]
 
     for rev in recommended:
         rev_name = normalize_name(extract_name(rev))

@@ -141,7 +141,7 @@ def check_scimago(issn: str = "") -> Dict:
         return result
 
     result["found"] = True
-    sjr_m = re.search(r'SJR\s*2023[^0-9]*([0-9]+(?:\.[0-9]+)?)', text2, re.I)
+    sjr_m = re.search(r'SJR\s*\d{4}[^0-9]*([0-9]+(?:\.[0-9]+)?)', text2, re.I)
     if not sjr_m:
         sjr_m = re.search(r'SJR\s*SCImago Journal Rank[^0-9]*([0-9]+(?:\.[0-9]+)?)', text2, re.I)
     if sjr_m:
@@ -305,7 +305,7 @@ def check_journal(issn: str = "", journal_name: str = "", publisher: str = "") -
         reasons.append("DOAJ未收录")
 
     if scimago["quartile"]:
-        score += scimago["quartile"] * 5  # Q1=5, Q2=10, Q3=15, Q4=20
+        score += (5 - scimago["quartile"]) * 5  # Q1=20, Q2=15, Q3=10, Q4=5
         reasons.append(f"SCImago Q{scimago['quartile']}")
     else:
         reasons.append("SCImago无记录")
